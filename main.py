@@ -14,14 +14,6 @@ class Window(QMainWindow):
         self.setWindowState(QtCore.Qt.WindowMaximized)
         self.setWindowTitle("PhotoBlend")
         #self.setStyleSheet("background:black")
-        self.preview = QLabel(self)
-        self.preview.setStyleSheet("border: 1px solid black")
-        #self.preview.setPixmap(QPixmap("Alex.jpg"))
-        #self.preview.setGeometry(1000, 100, 1000, self.preview.pixmap().height())
-        self.preview.setGeometry(1000, 50, 800, 800)
-        self.temp_label = QLabel(self)
-        self.temp_label.setText("Image Preview")
-        self.temp_label.setGeometry(1350, 400, 100, 100)
         self.labels()
         self.buttons()
         self.checkboxes()
@@ -29,6 +21,14 @@ class Window(QMainWindow):
         self.show()
 
     def labels(self):
+        self.pane_label = QLabel(self)
+        self.pane_label.setStyleSheet("border: 1px solid black")
+        self.pane_label.setGeometry(1000, 50, 800, 800)
+
+        self.preview_label = QLabel(self)
+        self.preview_label.setText("Image preview")
+        self.preview_label.setGeometry(1350, 0, 100, 25)
+
         self.blend_label = QLabel(self)
         self.blend_label.setText("Blending Modes")
         #self.blend_label.setStyleSheet("color:white")
@@ -38,11 +38,11 @@ class Window(QMainWindow):
     def buttons(self):
         self.file_select1 = QPushButton("Select the first image", self)
         self.file_select1.setGeometry(25, 25, 300, 30)
-        self.file_select1.clicked.connect(self.clicked)
+        self.file_select1.clicked.connect(self.image1_clicked)
 
         self.file_select2 = QPushButton("Select the second image", self)
         self.file_select2.setGeometry(25, 150, 300, 30)
-        self.file_select2.clicked.connect(self.clicked)
+        self.file_select2.clicked.connect(self.image2_clicked)
 
         self.rotate_button = QPushButton(self)
         self.rotate_button.setText("Rotate Clockwise")
@@ -85,9 +85,9 @@ class Window(QMainWindow):
         self.dodge_checkbox.setText("Color Dodge")
         self.dodge_checkbox.setGeometry(175, 250, 150, 30)
 
-        self.dark_checkbox = QCheckBox(self, "Color Burn")
-        self.dark_checkbox.setText("Color Burn")
-        self.dark_checkbox.setGeometry(275, 250, 150, 30)
+        self.burn_checkbox = QCheckBox(self, "Color Burn")
+        self.burn_checkbox.setText("Color Burn")
+        self.burn_checkbox.setGeometry(275, 250, 150, 30)
 
         self.crop_checkbox = QCheckBox(self, "Crop")
         self.crop_checkbox.setText("Crop")
@@ -97,9 +97,9 @@ class Window(QMainWindow):
         self.gray_checkbox.setText("Gray Scale")
         self.gray_checkbox.setGeometry(25, 500, 150, 30)
 
-        self.gray_checkbox = QCheckBox(self, "Filters")
-        self.gray_checkbox.setText("Filters")
-        self.gray_checkbox.setGeometry(25, 700, 150, 30)
+        self.filters_checkbox = QCheckBox(self, "Filters")
+        self.filters_checkbox.setText("Filters")
+        self.filters_checkbox.setGeometry(25, 700, 150, 30)
 
 
     def sliders(self):
@@ -109,9 +109,16 @@ class Window(QMainWindow):
         self.gray_slider.setGeometry(25, 600, 150, 30)
 
 
-    def clicked(self):
-            self.image1 = QFileDialog.getOpenFileName(self, "Image 1", QDir.homePath())
+    def image1_clicked(self):
+        self.image1 = QFileDialog.getOpenFileName(self, "Image 1", QDir.homePath())
+        self.pane_label.setPixmap(QPixmap(self.image1[0]))
+        self.pane_label.setGeometry(1000, 100, self.pane_label.pixmap().width(), self.pane_label.pixmap().height())
 
+
+    def image2_clicked(self):
+        self.image2 = QFileDialog.getOpenFileName(self, "Image 2", QDir.homePath())
+        self.pane_label.setPixmap(QPixmap(self.image2[0]))
+        self.pane_label.setGeometry(1000, 100, self.pane_label.pixmap().width(), self.pane_label.pixmap().height())
 
 if __name__ == '__main__':
     #wsl.set_display_to_host()
