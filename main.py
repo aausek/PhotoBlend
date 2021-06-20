@@ -112,7 +112,7 @@ class Window(QMainWindow):
     def image1_clicked(self):
         self.image1 = QFileDialog.getOpenFileName(self, "Image 1", QDir.homePath())
         self.pane_label.setPixmap(QPixmap(self.image1[0]))
-        self.pane_label.setGeometry(1000, 100, self.pane_label.pixmap().width(), self.pane_label.pixmap().height())
+        self.pane_label.pixmap().
 
 
     def image2_clicked(self):
