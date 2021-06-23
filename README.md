@@ -6,7 +6,7 @@
        ██║     ██║  ██║╚██████╔╝   ██║   ╚██████╔╝██████╔╝███████╗███████╗██║ ╚████║██████╔╝
        ╚═╝     ╚═╝  ╚═╝ ╚═════╝    ╚═╝    ╚═════╝ ╚═════╝ ╚══════╝╚══════╝╚═╝  ╚═══╝╚═════╝
       
-                                    Developed by Team Senioritis
+                                 Developed by Team Senioritis
                                          Summer 2021
 ```
 ### Completed Features
