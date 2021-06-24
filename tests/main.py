@@ -176,17 +176,19 @@ class Window(QMainWindow):
 
     def image1_clicked(self):
         self.image1 = QFileDialog.getOpenFileName(self, "Image 1", QDir.homePath())
-        self.pixmap1 = QPixmap(self.image1[0])
-        self.pane_label.setPixmap(self.pixmap1.scaled(self.pane_label.width(), self.pane_label.height(), QtCore.Qt.KeepAspectRatio))
-        self.pane_label.setGeometry(600, 50, self.pane_label.pixmap().width(), self.pane_label.pixmap().height())
-        self.images_selected["image1"] = True
+        if self.image1[0] != '': # don't update pane if user cancels file opening
+            self.pixmap1 = QPixmap(self.image1[0])
+            self.pane_label.setPixmap(self.pixmap1.scaled(self.pane_label.width(), self.pane_label.height(), QtCore.Qt.KeepAspectRatio))
+            self.pane_label.setGeometry(600, 50, self.pane_label.pixmap().width(), self.pane_label.pixmap().height())
+            self.images_selected["image1"] = True
 
     def image2_clicked(self):
         self.image2 = QFileDialog.getOpenFileName(self, "Image 2", QDir.homePath())
-        self.pixmap2 = QPixmap(self.image2[0])
-        self.pane_label.setPixmap(self.pixmap2.scaled(self.pane_label.width(), self.pane_label.height(), QtCore.Qt.KeepAspectRatio))
-        self.pane_label.setGeometry(600, 50, self.pane_label.pixmap().width(), self.pane_label.pixmap().height())
-        self.images_selected["image2"] = True
+        if self.image2[0] != '': # don't update pane if user cancels file opening
+            self.pixmap2 = QPixmap(self.image2[0])
+            self.pane_label.setPixmap(self.pixmap2.scaled(self.pane_label.width(), self.pane_label.height(), QtCore.Qt.KeepAspectRatio))
+            self.pane_label.setGeometry(600, 50, self.pane_label.pixmap().width(), self.pane_label.pixmap().height())
+            self.images_selected["image2"] = True
         
         
     def num_checkboxes_selected(self):
