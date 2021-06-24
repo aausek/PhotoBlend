@@ -36,6 +36,8 @@ def call_blend(image1_name, image2_name, blend_type):
 
     def subtraction_blend(size, image1, image2, result):
         _lib.SubtractionBlend(ctypes.c_int(width1 * height1 * 3), image1, image2, result)
+
+
     # Open images/get dimensions
     try:
         img1 = Image.open(str(image1_name))

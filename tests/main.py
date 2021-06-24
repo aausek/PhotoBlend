@@ -27,7 +27,7 @@ class Window(QMainWindow):
         self.setIcon()
         self.show()
 
-        self.images_selected = {"image1": False, "image2": False}       
+        self.images_selected = {"image1": False, "image2": False}
 
 
     def labels(self):
@@ -72,37 +72,47 @@ class Window(QMainWindow):
         self.add_checkbox = QCheckBox(self, "Add")
         self.add_checkbox.setText("Add")
         self.add_checkbox.setGeometry(25, 200, 150, 30)
+        self.add_checkbox.stateChanged.connect(self.update_blend_checkboxes)
+
         self.subtract_checkbox = QCheckBox(self, "Subtract")
         self.subtract_checkbox.setText("Subtract")
         self.subtract_checkbox.setGeometry(125, 200, 150, 30)
+        self.subtract_checkbox.stateChanged.connect(self.update_blend_checkboxes)
 
         self.mult_checkbox = QCheckBox(self, "Multiply")
         self.mult_checkbox.setText("Multiply")
         self.mult_checkbox.setGeometry(225, 200, 150, 30)
+        self.mult_checkbox.stateChanged.connect(self.update_blend_checkboxes)
 
         self.screen_checkbox = QCheckBox(self, "Screen")
         self.screen_checkbox.setText("Screen")
         self.screen_checkbox.setGeometry(25, 250, 150, 30)
+        self.screen_checkbox.stateChanged.connect(self.update_blend_checkboxes)
 
         self.overlay_checkbox = QCheckBox(self, "Overlay")
         self.overlay_checkbox.setText("Overlay")
         self.overlay_checkbox.setGeometry(125, 250, 150, 30)
+        self.overlay_checkbox.stateChanged.connect(self.update_blend_checkboxes)
 
         self.light_checkbox = QCheckBox(self, "Lighten")
         self.light_checkbox.setText("Lighten")
         self.light_checkbox.setGeometry(225, 250, 150, 30)
+        self.light_checkbox.stateChanged.connect(self.update_blend_checkboxes)
 
         self.dark_checkbox = QCheckBox(self, "Darken")
         self.dark_checkbox.setText("Darken")
         self.dark_checkbox.setGeometry(25, 300, 150, 30)
+        self.dark_checkbox.stateChanged.connect(self.update_blend_checkboxes)
 
         self.dodge_checkbox = QCheckBox(self, "Color Dodge")
         self.dodge_checkbox.setText("Color Dodge")
         self.dodge_checkbox.setGeometry(125, 300, 150, 30)
+        self.dodge_checkbox.stateChanged.connect(self.update_blend_checkboxes)
 
         self.burn_checkbox = QCheckBox(self, "Color Burn")
         self.burn_checkbox.setText("Color Burn")
         self.burn_checkbox.setGeometry(225, 300, 150, 30)
+        self.burn_checkbox.stateChanged.connect(self.update_blend_checkboxes)
 
         self.crop_checkbox = QCheckBox(self, "Crop")
         self.crop_checkbox.setText("Crop")
@@ -115,6 +125,41 @@ class Window(QMainWindow):
         self.filters_checkbox = QCheckBox(self, "Filters")
         self.filters_checkbox.setText("Filters")
         self.filters_checkbox.setGeometry(25, 700, 150, 30)
+
+
+    def update_blend_checkboxes(self):
+        # enable checkboxes if one is deselected (meaning none are selected)
+        if self.num_checkboxes_selected() == 0:
+            self.add_checkbox.setCheckable(True)
+            self.subtract_checkbox.setCheckable(True)
+            self.mult_checkbox.setCheckable(True)
+            self.screen_checkbox.setCheckable(True)
+            self.overlay_checkbox.setCheckable(True)
+            self.light_checkbox.setCheckable(True)
+            self.dark_checkbox.setCheckable(True)
+            self.dodge_checkbox.setCheckable(True)
+            self.burn_checkbox.setCheckable(True)
+
+        # otherwise, disable all non-checked blend checkboxes
+        else:
+            if not self.add_checkbox.isChecked():
+                self.add_checkbox.setCheckable(False)
+            if not self.subtract_checkbox.isChecked():
+                self.subtract_checkbox.setCheckable(False)
+            if not self.mult_checkbox.isChecked():
+                self.mult_checkbox.setCheckable(False)
+            if not self.screen_checkbox.isChecked():
+                self.screen_checkbox.setCheckable(False)
+            if not self.overlay_checkbox.isChecked():
+                self.overlay_checkbox.setCheckable(False)
+            if not self.light_checkbox.isChecked():
+                self.light_checkbox.setCheckable(False)
+            if not self.dark_checkbox.isChecked():
+                self.dark_checkbox.setCheckable(False)
+            if not self.dodge_checkbox.isChecked():
+                self.dodge_checkbox.setCheckable(False)
+            if not self.burn_checkbox.isChecked():
+                self.burn_checkbox.setCheckable(False)
 
 
     def sliders(self):
@@ -198,6 +243,10 @@ class Window(QMainWindow):
             image2_name = image2_name[2:]
             image1_name = image1_name[:-19]
             image2_name = image2_name[:-19]
+
+            # call blend functions below based on user selection
+            # note that blend modes are mutually exclusive
+
             # addition blend
             if self.add_checkbox.isChecked():
                call_blend(image1_name, image2_name, "add")
@@ -207,8 +256,30 @@ class Window(QMainWindow):
             # subtraction blend
             elif self.subtract_checkbox.isChecked():
                 call_blend(image1_name, image2_name, "subtract")
-            else:
+
+            # update below when the following functions are supported
+            # multiply blend
+            elif self.mult_checkbox.isChecked():
                 pass
+            # screen blend
+            elif self.screen_checkbox.isChecked():
+                pass
+            # overlay blend
+            elif self.overlay_checkbox.isChecked():
+                pass
+            # light blend
+            elif self.light_checkbox.isChecked():
+                pass
+            # dark blend
+            elif self.dark_checkbox.isChecked():
+                pass
+            # color dodge blend
+            elif self.dodge_checkbox.isChecked():
+                pass
+            # color burn blend
+            elif self.burn_checkbox.isChecked():
+                pass
+
 
 
     def crop_clicked(self):
