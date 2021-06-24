@@ -2,9 +2,10 @@ from PySide2 import QtCore
 from PySide2.QtCore import *
 from PySide2.QtWidgets import *
 from PySide2.QtGui import *
+from library import *
 import sys
-#import os
-#import wsl
+import os
+import wsl
 
 
 class Window(QMainWindow):
@@ -64,6 +65,7 @@ class Window(QMainWindow):
 
         self.save_button = QPushButton("Save image", self)
         self.save_button.setGeometry(800, 600, 100, 30)
+        self.save_button.clicked.connect(self.save_clicked)
 
 
     def checkboxes(self):
@@ -190,7 +192,23 @@ class Window(QMainWindow):
             msgBox.setWindowTitle("Warning")
             msgBox.exec_()
         else:
-            pass
+            image1_name = str(self.image1)
+            image1_name = image1_name[2:]
+            image2_name = str(self.image2)
+            image2_name = image2_name[2:]
+            image1_name = image1_name[:-19]
+            image2_name = image2_name[:-19]
+            # addition blend
+            if self.add_checkbox.isChecked():
+               call_blend(image1_name, image2_name, "add")
+               result = QPixmap("test_image.jpg")
+               self.pane_label.setPixmap(result.scaled(self.pane_label.width(), self.pane_label.height(), QtCore.Qt.KeepAspectRatio))
+               self.pane_label.setGeometry(600, 50, self.pane_label.pixmap().width(), self.pane_label.pixmap().height())
+            # subtraction blend
+            elif self.subtract_checkbox.isChecked():
+                call_blend(image1_name, image2_name, "subtract")
+            else:
+                pass
 
 
     def crop_clicked(self):
@@ -200,6 +218,10 @@ class Window(QMainWindow):
     def grayscale_clicked(self):
         pass
 
+
+    def save_clicked(self):
+        save_name = QFileDialog.getSaveFileName(self, "Blended Image", QDir.homePath(), "Images (*.png *.xpm *.jpg)")
+        self.pane_label.pixmap().save(save_name[0])
 
     def rotate_clicked(self):
         transform = QTransform().rotate(90.0)
@@ -212,7 +234,7 @@ class Window(QMainWindow):
 
 
 if __name__ == '__main__':
-    #wsl.set_display_to_host()
+    wsl.set_display_to_host()
     app = QApplication(sys.argv)
     window = Window()
     browse1 = QPushButton
