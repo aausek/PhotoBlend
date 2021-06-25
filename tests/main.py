@@ -52,6 +52,11 @@ class Window(QMainWindow):
         self.blend_label.setGeometry(137, 150, 100, 30)
 
         self.blend_label = QLabel(self)
+        self.blend_label.setText("Image Rotations")
+        self.blend_label.setStyleSheet("border-bottom-width: 1px; border-bottom-style: solid;border-radius: 0px; border-color: white;")
+        self.blend_label.setGeometry(137, 650, 100, 30)
+
+        self.blend_label = QLabel(self)
         self.blend_label.setText("Other Options")
         self.blend_label.setStyleSheet("border-bottom-width: 1px; border-bottom-style: solid;border-radius: 0px; border-color: white;")
         self.blend_label.setGeometry(137, 400, 100, 30)
@@ -71,7 +76,7 @@ class Window(QMainWindow):
         
         self.rotate_button = QPushButton("Rotate", self)
         self.rotate_button.setText("Rotate Clockwise")
-        self.rotate_button.setGeometry(75, 750, 200, 30)
+        self.rotate_button.setGeometry(75, 700, 200, 30)
         self.rotate_button.clicked.connect(self.rotate_clicked)
 
         self.save_button = QPushButton("Save image", self)
@@ -127,15 +132,15 @@ class Window(QMainWindow):
 
         self.crop_checkbox = QCheckBox(self, "Crop")
         self.crop_checkbox.setText("Crop")
-        self.crop_checkbox.setGeometry(25, 450, 150, 30)
+        self.crop_checkbox.setGeometry(150, 450, 150, 30)
 
         self.gray_checkbox = QCheckBox(self, "Gray Scale")
         self.gray_checkbox.setText("Gray Scale")
-        self.gray_checkbox.setGeometry(25, 500, 150, 30)
+        self.gray_checkbox.setGeometry(150, 500, 150, 30)
 
         self.filters_checkbox = QCheckBox(self, "Filters")
         self.filters_checkbox.setText("Filters")
-        self.filters_checkbox.setGeometry(25, 700, 150, 30)
+        self.filters_checkbox.setGeometry(150, 600, 150, 30)
 
 
     def update_blend_checkboxes(self):
@@ -177,7 +182,7 @@ class Window(QMainWindow):
         self.gray_slider = QSlider(Qt.Horizontal, self)
         self.gray_slider.setRange(0, 255)
         self.gray_slider.setTickInterval(1)
-        self.gray_slider.setGeometry(25, 550, 150, 30)
+        self.gray_slider.setGeometry(150, 550, 100, 30)
         
 
     def setIcon(self):
