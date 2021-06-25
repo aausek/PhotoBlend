@@ -47,24 +47,24 @@ class Window(QMainWindow):
 
     def buttons(self):
         self.file_select1 = QPushButton("Select the first image", self)
-        self.file_select1.setGeometry(25, 25, 300, 30)
+        self.file_select1.setGeometry(75, 25, 200, 30)
         self.file_select1.clicked.connect(self.image1_clicked)
 
         self.file_select2 = QPushButton("Select the second image", self)
-        self.file_select2.setGeometry(25, 100, 300, 30)
+        self.file_select2.setGeometry(75, 100, 200, 30)
         self.file_select2.clicked.connect(self.image2_clicked)
 
         self.blend = QPushButton("Blend Images", self)
-        self.blend.setGeometry(25, 350, 300, 30)
+        self.blend.setGeometry(75, 350, 200, 30)
         self.blend.clicked.connect(self.blend_clicked)
         
         self.rotate_button = QPushButton("Rotate", self)
         self.rotate_button.setText("Rotate Clockwise")
-        self.rotate_button.setGeometry(25, 750, 150, 30)
+        self.rotate_button.setGeometry(75, 750, 200, 30)
         self.rotate_button.clicked.connect(self.rotate_clicked)
 
         self.save_button = QPushButton("Save image", self)
-        self.save_button.setGeometry(800, 600, 100, 30)
+        self.save_button.setGeometry(800, 600, 200, 30)
         self.save_button.clicked.connect(self.save_clicked)
 
 
