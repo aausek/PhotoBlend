@@ -195,7 +195,7 @@ class Window(QMainWindow):
         if self.image1[0] != '': # don't update pane if user cancels file opening
             self.pixmap1 = QPixmap(self.image1[0])
             self.pane_label.setPixmap(self.pixmap1.scaled(self.pane_label.width(), self.pane_label.height(), QtCore.Qt.KeepAspectRatio))
-            self.pane_label.setGeometry(600, 50, self.pane_label.pixmap().width(), self.pane_label.pixmap().height())
+            self.pane_label.setGeometry(400, 75, self.pane_label.pixmap().width(), self.pane_label.pixmap().height())
             self.images_selected["image1"] = True
 
     def image2_clicked(self):
@@ -203,7 +203,7 @@ class Window(QMainWindow):
         if self.image2[0] != '': # don't update pane if user cancels file opening
             self.pixmap2 = QPixmap(self.image2[0])
             self.pane_label.setPixmap(self.pixmap2.scaled(self.pane_label.width(), self.pane_label.height(), QtCore.Qt.KeepAspectRatio))
-            self.pane_label.setGeometry(600, 50, self.pane_label.pixmap().width(), self.pane_label.pixmap().height())
+            self.pane_label.setGeometry(400, 75, self.pane_label.pixmap().width(), self.pane_label.pixmap().height())
             self.images_selected["image2"] = True
         
         
@@ -270,7 +270,7 @@ class Window(QMainWindow):
                call_blend(image1_name, image2_name, "add")
                result = QPixmap("test_image.jpg")
                self.pane_label.setPixmap(result.scaled(self.pane_label.width(), self.pane_label.height(), QtCore.Qt.KeepAspectRatio))
-               self.pane_label.setGeometry(600, 50, self.pane_label.pixmap().width(), self.pane_label.pixmap().height())
+               self.pane_label.setGeometry(400, 75, self.pane_label.pixmap().width(), self.pane_label.pixmap().height())
             # subtraction blend
             elif self.subtract_checkbox.isChecked():
                 call_blend(image1_name, image2_name, "subtract")
@@ -315,7 +315,7 @@ class Window(QMainWindow):
     def rotate_clicked(self):
         transform = QTransform().rotate(90.0)
         self.pane_label.setPixmap(self.pane_label.pixmap().transformed(transform))
-        self.pane_label.setGeometry(600, 50, self.pane_label.pixmap().width(), self.pane_label.pixmap().height())
+        self.pane_label.setGeometry(400, 75, self.pane_label.pixmap().width(), self.pane_label.pixmap().height())
 
 
     def filters_clicked(self):
