@@ -16,8 +16,8 @@ class Window(QMainWindow):
         self.setGeometry(0, 0, 1300, 800)
         self.setMinimumHeight(250)
         self.setMinimumWidth(250)
-        self.setMaximumHeight(2000)
-        self.setMaximumWidth(2000)
+        self.setMaximumHeight(1000)
+        self.setMaximumWidth(1000)
         self.setWindowTitle("PhotoBlend")
         #self.setStyleSheet("background:black")
         self.labels()
@@ -33,21 +33,32 @@ class Window(QMainWindow):
     def labels(self):
         self.pane_label = QLabel(self)
         self.pane_label.setStyleSheet("border: 1px solid black")
-        self.pane_label.setGeometry(600, 60, 500, 500)
+        self.pane_label.setGeometry(400, 75, 500, 500)
 
         self.preview_label = QLabel(self)
         self.preview_label.setText("Image preview")
-        self.preview_label.setGeometry(800, 25, 100, 25)
+        self.preview_label.setStyleSheet(
+            "border-bottom-width: 1px; border-bottom-style: solid;border-radius: 0px; border-color: white;")
+        self.preview_label.setGeometry(600, 25, 100, 25)
+
+        self.blend_label = QLabel(self)
+        self.blend_label.setText("Image Selection")
+        self.blend_label.setStyleSheet("border-bottom-width: 1px; border-bottom-style: solid;border-radius: 0px; border-color: white;")
+        self.blend_label.setGeometry(137, 25, 100, 30)
 
         self.blend_label = QLabel(self)
         self.blend_label.setText("Blending Modes")
-        #self.blend_label.setStyleSheet("color:white")
-        self.blend_label.setGeometry(137, 150, 150, 30)
+        self.blend_label.setStyleSheet("border-bottom-width: 1px; border-bottom-style: solid;border-radius: 0px; border-color: white;")
+        self.blend_label.setGeometry(137, 150, 100, 30)
 
+        self.blend_label = QLabel(self)
+        self.blend_label.setText("Other Options")
+        self.blend_label.setStyleSheet("border-bottom-width: 1px; border-bottom-style: solid;border-radius: 0px; border-color: white;")
+        self.blend_label.setGeometry(137, 400, 100, 30)
 
     def buttons(self):
         self.file_select1 = QPushButton("Select the first image", self)
-        self.file_select1.setGeometry(75, 60, 200, 30)
+        self.file_select1.setGeometry(75, 70, 200, 30)
         self.file_select1.clicked.connect(self.image1_clicked)
 
         self.file_select2 = QPushButton("Select the second image", self)
@@ -64,7 +75,7 @@ class Window(QMainWindow):
         self.rotate_button.clicked.connect(self.rotate_clicked)
 
         self.save_button = QPushButton("Save image", self)
-        self.save_button.setGeometry(765, 570, 200, 30)
+        self.save_button.setGeometry(555, 580, 200, 30)
         self.save_button.clicked.connect(self.save_clicked)
 
 
