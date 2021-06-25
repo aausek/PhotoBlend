@@ -37,7 +37,7 @@ class Window(QMainWindow):
 
         self.preview_label = QLabel(self)
         self.preview_label.setText("Image preview")
-        self.preview_label.setGeometry(800, 0, 100, 25)
+        self.preview_label.setGeometry(800, 25, 100, 25)
 
         self.blend_label = QLabel(self)
         self.blend_label.setText("Blending Modes")
