@@ -37,7 +37,7 @@ class Window(QMainWindow):
 
         self.preview_label = QLabel(self)
         self.preview_label.setText("Image preview")
-        self.preview_label.setGeometry(800, 0, 100, 25)
+        self.preview_label.setGeometry(800, 25, 100, 25)
 
         self.blend_label = QLabel(self)
         self.blend_label.setText("Blending Modes")
@@ -47,11 +47,11 @@ class Window(QMainWindow):
 
     def buttons(self):
         self.file_select1 = QPushButton("Select the first image", self)
-        self.file_select1.setGeometry(25, 25, 300, 30)
+        self.file_select1.setGeometry(80, 25, 200, 30)
         self.file_select1.clicked.connect(self.image1_clicked)
 
         self.file_select2 = QPushButton("Select the second image", self)
-        self.file_select2.setGeometry(25, 100, 300, 30)
+        self.file_select2.setGeometry(80, 100, 200, 30)
         self.file_select2.clicked.connect(self.image2_clicked)
 
         self.blend = QPushButton("Blend Images", self)
