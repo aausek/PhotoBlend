@@ -33,7 +33,7 @@ class Window(QMainWindow):
     def labels(self):
         self.pane_label = QLabel(self)
         self.pane_label.setStyleSheet("border: 1px solid black")
-        self.pane_label.setGeometry(600, 50, 500, 500)
+        self.pane_label.setGeometry(600, 60, 500, 500)
 
         self.preview_label = QLabel(self)
         self.preview_label.setText("Image preview")
@@ -47,7 +47,7 @@ class Window(QMainWindow):
 
     def buttons(self):
         self.file_select1 = QPushButton("Select the first image", self)
-        self.file_select1.setGeometry(75, 25, 200, 30)
+        self.file_select1.setGeometry(75, 60, 200, 30)
         self.file_select1.clicked.connect(self.image1_clicked)
 
         self.file_select2 = QPushButton("Select the second image", self)
@@ -64,7 +64,7 @@ class Window(QMainWindow):
         self.rotate_button.clicked.connect(self.rotate_clicked)
 
         self.save_button = QPushButton("Save image", self)
-        self.save_button.setGeometry(800, 600, 200, 30)
+        self.save_button.setGeometry(765, 570, 200, 30)
         self.save_button.clicked.connect(self.save_clicked)
 
 
