@@ -186,7 +186,7 @@ class Window(QMainWindow):
         
 
     def setIcon(self):
-        appIcon = QIcon("icon.png")
+        appIcon = QIcon("./resources/icon.png")
         self.setWindowIcon(appIcon)
 
 
