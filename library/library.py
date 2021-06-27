@@ -7,7 +7,7 @@ import ctypes
 def call_blend(image1_name, image2_name, blend_type):
 
     # Loads the shared object created by the Makefile
-    _lib = ctypes.CDLL('./lib/blendlib.so')
+    _lib = ctypes.CDLL('./library/blendlib.so')
 
 
     # Sets argument and return types for C functions

@@ -4,7 +4,6 @@ from PySide2.QtWidgets import *
 from PySide2.QtGui import *
 from library import *
 import sys
-import os
 import wsl
 
 
@@ -186,7 +185,7 @@ class Window(QMainWindow):
         
 
     def setIcon(self):
-        appIcon = QIcon("./resources/icon.png")
+        appIcon = QIcon("../resources/icon.png")
         self.setWindowIcon(appIcon)
 
 
