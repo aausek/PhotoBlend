@@ -35,9 +35,7 @@ class Window(QMainWindow):
 
         self.preview_label = QLabel(self)
         self.preview_label.setText("Image preview")
-<<<<<<< HEAD:tests/main.py
         self.preview_label.setGeometry(800, 25, 100, 25)
-=======
         self.preview_label.setStyleSheet("border-bottom-width: 1px; border-bottom-style: solid;border-radius: 0px; border-color: white;")
         self.preview_label.setGeometry(600, 25, 100, 25)
 
@@ -45,7 +43,6 @@ class Window(QMainWindow):
         self.blend_label.setText("Image Selection")
         self.blend_label.setStyleSheet("border-bottom-width: 1px; border-bottom-style: solid;border-radius: 0px; border-color: white;")
         self.blend_label.setGeometry(137, 25, 100, 30)
->>>>>>> ba5850f1efaaadead77e622ea31d1f855b5bca2a:main.py
 
         self.blend_label = QLabel(self)
         self.blend_label.setText("Blending Modes")
@@ -64,19 +61,11 @@ class Window(QMainWindow):
 
     def buttons(self):
         self.file_select1 = QPushButton("Select the first image", self)
-<<<<<<< HEAD:tests/main.py
-        self.file_select1.setGeometry(80, 25, 200, 30)
-        self.file_select1.clicked.connect(self.image1_clicked)
-
-        self.file_select2 = QPushButton("Select the second image", self)
-        self.file_select2.setGeometry(80, 100, 200, 30)
-=======
         self.file_select1.setGeometry(75, 70, 200, 30)
         self.file_select1.clicked.connect(self.image1_clicked)
 
         self.file_select2 = QPushButton("Select the second image", self)
         self.file_select2.setGeometry(75, 100, 200, 30)
->>>>>>> ba5850f1efaaadead77e622ea31d1f855b5bca2a:main.py
         self.file_select2.clicked.connect(self.image2_clicked)
 
         self.blend = QPushButton("Blend Images", self)
