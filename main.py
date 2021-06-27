@@ -270,14 +270,16 @@ class Window(QMainWindow):
             # addition blend
             if self.add_checkbox.isChecked():
                call_blend(image1_name, image2_name, "add")
-               result = QPixmap("test_image.jpg")
+               result = QPixmap("temp_image.jpg")
                self.pane_label.setPixmap(result.scaled(self.pane_label.width(), self.pane_label.height(), QtCore.Qt.KeepAspectRatio))
+               os.remove("temp_image.jpg")
 
             # subtraction blend
             elif self.subtract_checkbox.isChecked():
                 call_blend(image1_name, image2_name, "subtract")
-                result = QPixmap("test_image.jpg")
+                result = QPixmap("temp_image.jpg")
                 self.pane_label.setPixmap(result.scaled(self.pane_label.width(), self.pane_label.height(), QtCore.Qt.KeepAspectRatio))
+                os.remove("temp_image.jpg")
 
             # update below when the following functions are supported
             # multiply blend
@@ -319,8 +321,6 @@ class Window(QMainWindow):
     def rotate_clicked(self):
         transform = QTransform().rotate(90.0)
         self.pane_label.setPixmap(self.pane_label.pixmap().transformed(transform))
-        self.pane_label.setGeometry(400, 75, self.pane_label.pixmap().width(), self.pane_label.pixmap().height())
-
 
     def filters_clicked(self):
         pass
