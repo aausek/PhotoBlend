@@ -11,14 +11,12 @@ class Window(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        #self.setWindowState(QtCore.Qt.WindowMaximized)
         self.setGeometry(0, 0, 1300, 800)
         self.setMinimumHeight(250)
         self.setMinimumWidth(250)
         self.setMaximumHeight(1000)
         self.setMaximumWidth(1000)
         self.setWindowTitle("PhotoBlend")
-        #self.setStyleSheet("background:black")
         self.labels()
         self.buttons()
         self.checkboxes()
@@ -36,8 +34,7 @@ class Window(QMainWindow):
 
         self.preview_label = QLabel(self)
         self.preview_label.setText("Image preview")
-        self.preview_label.setStyleSheet(
-            "border-bottom-width: 1px; border-bottom-style: solid;border-radius: 0px; border-color: white;")
+        self.preview_label.setStyleSheet("border-bottom-width: 1px; border-bottom-style: solid;border-radius: 0px; border-color: white;")
         self.preview_label.setGeometry(600, 25, 100, 25)
 
         self.blend_label = QLabel(self)
@@ -194,16 +191,21 @@ class Window(QMainWindow):
         if self.image1[0] != '': # don't update pane if user cancels file opening
             self.pixmap1 = QPixmap(self.image1[0])
             self.pane_label.setPixmap(self.pixmap1.scaled(self.pane_label.width(), self.pane_label.height(), QtCore.Qt.KeepAspectRatio))
-            self.pane_label.setGeometry(400, 75, self.pane_label.pixmap().width(), self.pane_label.pixmap().height())
             self.images_selected["image1"] = True
 
     def image2_clicked(self):
         self.image2 = QFileDialog.getOpenFileName(self, "Image 2", QDir.homePath())
         if self.image2[0] != '': # don't update pane if user cancels file opening
             self.pixmap2 = QPixmap(self.image2[0])
-            self.pane_label.setPixmap(self.pixmap2.scaled(self.pane_label.width(), self.pane_label.height(), QtCore.Qt.KeepAspectRatio))
-            self.pane_label.setGeometry(400, 75, self.pane_label.pixmap().width(), self.pane_label.pixmap().height())
-            self.images_selected["image2"] = True
+            if self.pixmap2.width() != self.pixmap1.width() and self.pixmap2.height() != self.pixmap1.height():
+                msgBox = QMessageBox()
+                msgBox.setText("Images are not the same size.")
+                msgBox.setIcon(QMessageBox.Warning)
+                msgBox.setWindowTitle("Warning")
+                msgBox.exec_()
+            else:
+                self.pane_label.setPixmap(self.pixmap2.scaled(self.pane_label.width(), self.pane_label.height(), QtCore.Qt.KeepAspectRatio))
+                self.images_selected["image2"] = True
         
         
     def num_checkboxes_selected(self):
@@ -267,12 +269,16 @@ class Window(QMainWindow):
             # addition blend
             if self.add_checkbox.isChecked():
                call_blend(image1_name, image2_name, "add")
-               result = QPixmap("test_image.jpg")
+               result = QPixmap("temp_image.jpg")
                self.pane_label.setPixmap(result.scaled(self.pane_label.width(), self.pane_label.height(), QtCore.Qt.KeepAspectRatio))
-               self.pane_label.setGeometry(400, 75, self.pane_label.pixmap().width(), self.pane_label.pixmap().height())
+               os.remove("temp_image.jpg")
+
             # subtraction blend
             elif self.subtract_checkbox.isChecked():
                 call_blend(image1_name, image2_name, "subtract")
+                result = QPixmap("temp_image.jpg")
+                self.pane_label.setPixmap(result.scaled(self.pane_label.width(), self.pane_label.height(), QtCore.Qt.KeepAspectRatio))
+                os.remove("temp_image.jpg")
 
             # update below when the following functions are supported
             # multiply blend
@@ -314,8 +320,6 @@ class Window(QMainWindow):
     def rotate_clicked(self):
         transform = QTransform().rotate(90.0)
         self.pane_label.setPixmap(self.pane_label.pixmap().transformed(transform))
-        self.pane_label.setGeometry(400, 75, self.pane_label.pixmap().width(), self.pane_label.pixmap().height())
-
 
     def filters_clicked(self):
         pass
