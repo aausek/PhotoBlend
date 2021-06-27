@@ -12,14 +12,12 @@ class Window(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        #self.setWindowState(QtCore.Qt.WindowMaximized)
         self.setGeometry(0, 0, 1300, 800)
         self.setMinimumHeight(250)
         self.setMinimumWidth(250)
-        self.setMaximumHeight(2000)
-        self.setMaximumWidth(2000)
+        self.setMaximumHeight(1000)
+        self.setMaximumWidth(1000)
         self.setWindowTitle("PhotoBlend")
-        #self.setStyleSheet("background:black")
         self.labels()
         self.buttons()
         self.checkboxes()
@@ -33,38 +31,65 @@ class Window(QMainWindow):
     def labels(self):
         self.pane_label = QLabel(self)
         self.pane_label.setStyleSheet("border: 1px solid black")
-        self.pane_label.setGeometry(600, 50, 500, 500)
+        self.pane_label.setGeometry(400, 75, 500, 500)
 
         self.preview_label = QLabel(self)
         self.preview_label.setText("Image preview")
+<<<<<<< HEAD:tests/main.py
         self.preview_label.setGeometry(800, 25, 100, 25)
+=======
+        self.preview_label.setStyleSheet("border-bottom-width: 1px; border-bottom-style: solid;border-radius: 0px; border-color: white;")
+        self.preview_label.setGeometry(600, 25, 100, 25)
+
+        self.blend_label = QLabel(self)
+        self.blend_label.setText("Image Selection")
+        self.blend_label.setStyleSheet("border-bottom-width: 1px; border-bottom-style: solid;border-radius: 0px; border-color: white;")
+        self.blend_label.setGeometry(137, 25, 100, 30)
+>>>>>>> ba5850f1efaaadead77e622ea31d1f855b5bca2a:main.py
 
         self.blend_label = QLabel(self)
         self.blend_label.setText("Blending Modes")
-        #self.blend_label.setStyleSheet("color:white")
-        self.blend_label.setGeometry(137, 150, 150, 30)
+        self.blend_label.setStyleSheet("border-bottom-width: 1px; border-bottom-style: solid;border-radius: 0px; border-color: white;")
+        self.blend_label.setGeometry(137, 150, 100, 30)
 
+        self.blend_label = QLabel(self)
+        self.blend_label.setText("Image Rotations")
+        self.blend_label.setStyleSheet("border-bottom-width: 1px; border-bottom-style: solid;border-radius: 0px; border-color: white;")
+        self.blend_label.setGeometry(137, 650, 100, 30)
+
+        self.blend_label = QLabel(self)
+        self.blend_label.setText("Other Options")
+        self.blend_label.setStyleSheet("border-bottom-width: 1px; border-bottom-style: solid;border-radius: 0px; border-color: white;")
+        self.blend_label.setGeometry(137, 400, 100, 30)
 
     def buttons(self):
         self.file_select1 = QPushButton("Select the first image", self)
+<<<<<<< HEAD:tests/main.py
         self.file_select1.setGeometry(80, 25, 200, 30)
         self.file_select1.clicked.connect(self.image1_clicked)
 
         self.file_select2 = QPushButton("Select the second image", self)
         self.file_select2.setGeometry(80, 100, 200, 30)
+=======
+        self.file_select1.setGeometry(75, 70, 200, 30)
+        self.file_select1.clicked.connect(self.image1_clicked)
+
+        self.file_select2 = QPushButton("Select the second image", self)
+        self.file_select2.setGeometry(75, 100, 200, 30)
+>>>>>>> ba5850f1efaaadead77e622ea31d1f855b5bca2a:main.py
         self.file_select2.clicked.connect(self.image2_clicked)
 
         self.blend = QPushButton("Blend Images", self)
-        self.blend.setGeometry(25, 350, 300, 30)
+        self.blend.setGeometry(75, 350, 200, 30)
         self.blend.clicked.connect(self.blend_clicked)
         
         self.rotate_button = QPushButton("Rotate", self)
         self.rotate_button.setText("Rotate Clockwise")
-        self.rotate_button.setGeometry(25, 750, 150, 30)
+        self.rotate_button.setGeometry(75, 700, 200, 30)
         self.rotate_button.clicked.connect(self.rotate_clicked)
 
         self.save_button = QPushButton("Save image", self)
-        self.save_button.setGeometry(800, 600, 100, 30)
+        self.save_button.setGeometry(555, 580, 200, 30)
         self.save_button.clicked.connect(self.save_clicked)
 
 
@@ -116,15 +141,15 @@ class Window(QMainWindow):
 
         self.crop_checkbox = QCheckBox(self, "Crop")
         self.crop_checkbox.setText("Crop")
-        self.crop_checkbox.setGeometry(25, 450, 150, 30)
+        self.crop_checkbox.setGeometry(150, 450, 150, 30)
 
         self.gray_checkbox = QCheckBox(self, "Gray Scale")
         self.gray_checkbox.setText("Gray Scale")
-        self.gray_checkbox.setGeometry(25, 500, 150, 30)
+        self.gray_checkbox.setGeometry(150, 500, 150, 30)
 
         self.filters_checkbox = QCheckBox(self, "Filters")
         self.filters_checkbox.setText("Filters")
-        self.filters_checkbox.setGeometry(25, 700, 150, 30)
+        self.filters_checkbox.setGeometry(150, 600, 150, 30)
 
 
     def update_blend_checkboxes(self):
@@ -166,11 +191,11 @@ class Window(QMainWindow):
         self.gray_slider = QSlider(Qt.Horizontal, self)
         self.gray_slider.setRange(0, 255)
         self.gray_slider.setTickInterval(1)
-        self.gray_slider.setGeometry(25, 550, 150, 30)
+        self.gray_slider.setGeometry(150, 550, 100, 30)
         
 
     def setIcon(self):
-        appIcon = QIcon("icon.png")
+        appIcon = QIcon("./resources/icon.png")
         self.setWindowIcon(appIcon)
 
 
@@ -179,16 +204,21 @@ class Window(QMainWindow):
         if self.image1[0] != '': # don't update pane if user cancels file opening
             self.pixmap1 = QPixmap(self.image1[0])
             self.pane_label.setPixmap(self.pixmap1.scaled(self.pane_label.width(), self.pane_label.height(), QtCore.Qt.KeepAspectRatio))
-            self.pane_label.setGeometry(600, 50, self.pane_label.pixmap().width(), self.pane_label.pixmap().height())
             self.images_selected["image1"] = True
 
     def image2_clicked(self):
         self.image2 = QFileDialog.getOpenFileName(self, "Image 2", QDir.homePath())
         if self.image2[0] != '': # don't update pane if user cancels file opening
             self.pixmap2 = QPixmap(self.image2[0])
-            self.pane_label.setPixmap(self.pixmap2.scaled(self.pane_label.width(), self.pane_label.height(), QtCore.Qt.KeepAspectRatio))
-            self.pane_label.setGeometry(600, 50, self.pane_label.pixmap().width(), self.pane_label.pixmap().height())
-            self.images_selected["image2"] = True
+            if self.pixmap2.width() != self.pixmap1.width() and self.pixmap2.height() != self.pixmap1.height():
+                msgBox = QMessageBox()
+                msgBox.setText("Images are not the same size.")
+                msgBox.setIcon(QMessageBox.Warning)
+                msgBox.setWindowTitle("Warning")
+                msgBox.exec_()
+            else:
+                self.pane_label.setPixmap(self.pixmap2.scaled(self.pane_label.width(), self.pane_label.height(), QtCore.Qt.KeepAspectRatio))
+                self.images_selected["image2"] = True
         
         
     def num_checkboxes_selected(self):
@@ -252,12 +282,16 @@ class Window(QMainWindow):
             # addition blend
             if self.add_checkbox.isChecked():
                call_blend(image1_name, image2_name, "add")
-               result = QPixmap("test_image.jpg")
+               result = QPixmap("temp_image.jpg")
                self.pane_label.setPixmap(result.scaled(self.pane_label.width(), self.pane_label.height(), QtCore.Qt.KeepAspectRatio))
-               self.pane_label.setGeometry(600, 50, self.pane_label.pixmap().width(), self.pane_label.pixmap().height())
+               os.remove("temp_image.jpg")
+
             # subtraction blend
             elif self.subtract_checkbox.isChecked():
                 call_blend(image1_name, image2_name, "subtract")
+                result = QPixmap("temp_image.jpg")
+                self.pane_label.setPixmap(result.scaled(self.pane_label.width(), self.pane_label.height(), QtCore.Qt.KeepAspectRatio))
+                os.remove("temp_image.jpg")
 
             # update below when the following functions are supported
             # multiply blend
@@ -299,8 +333,6 @@ class Window(QMainWindow):
     def rotate_clicked(self):
         transform = QTransform().rotate(90.0)
         self.pane_label.setPixmap(self.pane_label.pixmap().transformed(transform))
-        self.pane_label.setGeometry(600, 50, self.pane_label.pixmap().width(), self.pane_label.pixmap().height())
-
 
     def filters_clicked(self):
         pass
