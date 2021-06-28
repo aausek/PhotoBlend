@@ -36,6 +36,8 @@ in the preview screen where the user can then save the image to local drive fold
 
 ### In-Progress Features
 - Multiply, Screen, Overlay, Lighten, Darken, Color Dodge and Color Burn blending modes
+
+### Planned Features
 - Crop and Gray Scale options
 - Additional filter options
 - Support other file extensions
