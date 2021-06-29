@@ -1,5 +1,6 @@
 from setuptools import find_packages, setup
 from distutils.core import Extension
+from glob import glob
 
 module = Extension("blendlib",
                     define_macros = [("MAJOR_VERSION", "1"),
@@ -11,15 +12,17 @@ module = Extension("blendlib",
 
 setup(
     name="photoblend",
-    version="0.0.47",
+    version="0.0.50",
     url="https://github.com/aausek/PhotoBlend",
     description="Photoblend is a custom PyQt5 & C++ image editor app with blending mode features, filters and other"
                 "manipulation options to render unique and creative images.",
     license="MIT",
     author="Team Senioritis",
     install_requires=["PySide2", "Pillow", "numpy", "wsl"],
-    packages=find_packages(include=["library", "library.*"]),
-    data_files=["library/blendlib.so"],
+    packages=find_packages(include=["library", "library.*", ""]),
+    include_package_data=True,
+    data_files=["library/blendlib.so","resources/icon.png", "resources/car.jpg", "resources/green.jpg",
+                "resources/layer.jpg", "resources/layer.png"],
     ext_modules=[module],
     entry_points={"console_scripts": ["photoblend=library.main:main"]},
 )
