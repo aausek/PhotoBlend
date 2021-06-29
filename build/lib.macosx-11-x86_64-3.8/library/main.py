@@ -37,8 +37,13 @@ class Window(QMainWindow):
 
         self.preview_label = QLabel(self)
         self.preview_label.setText("Image preview")
+<<<<<<< HEAD:build/lib.macosx-11-x86_64-3.8/library/main.py
         self.preview_label.setStyleSheet(
             "border-bottom-width: 1px; border-bottom-style: solid;border-radius: 0px; border-color: white;")
+=======
+        self.preview_label.setGeometry(800, 25, 100, 25)
+        self.preview_label.setStyleSheet("border-bottom-width: 1px; border-bottom-style: solid;border-radius: 0px; border-color: white;")
+>>>>>>> ee9d3722caa9bdd95f89bddfb09a5ec1ffe4ac46:main.py
         self.preview_label.setGeometry(600, 25, 100, 25)
 
         self.blend_label = QLabel(self)

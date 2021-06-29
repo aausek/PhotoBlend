@@ -15,6 +15,7 @@
 PhotoBlend is a custom image editor application that allows users to generate new images using blending modes & filters.
 Offering a variety of blending modes and other filters, PhotoBlend allows the end user to generate images by working 
 with 1 or 2 images at a time, then selecting the desired action to be performed. Finally, the product image is displayed
+<<<<<<< HEAD
 in the preview screen where it may be saved to the user's local drive. 
 
 ### Specifications
@@ -30,6 +31,15 @@ Custom application build using a PyQt5 GUI as the frontend and C library support
 - Alternatively, download zip file from repository
 - Unpack and run `python3 library/main.py` to launch app
 
+=======
+in the preview screen where the user can then save the image to local drive folder. 
+
+### Installation
+- To install PhotoBlend simply run `pip install photoblend`
+- Run `python3 main.py` in the `/library` directory
+- You're ready to start using PhotoBlend!
+
+>>>>>>> ee9d3722caa9bdd95f89bddfb09a5ec1ffe4ac46
 ### Repository link
 - [GitHub Repo] (https://github.com/aausek/PhotoBlend)
 
@@ -44,6 +54,7 @@ Custom application build using a PyQt5 GUI as the frontend and C library support
 
 ### In-Progress Features
 - Multiply, Screen, Overlay, Lighten, Darken, Color Dodge and Color Burn blending modes
+<<<<<<< HEAD
 - Crop and Gray Scale options
 - Additional filter options
 - Support other file extensions
@@ -55,3 +66,10 @@ to `blendlib.cpython-38-darwin.so`.
 
 
 
+=======
+
+### Planned Features
+- Crop and Gray Scale options
+- Additional filter options
+- Support other file extensions
+>>>>>>> ee9d3722caa9bdd95f89bddfb09a5ec1ffe4ac46
