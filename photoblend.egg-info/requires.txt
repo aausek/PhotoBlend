@@ -1,3 +1,4 @@
 PySide2
 Pillow
 numpy
+wsl

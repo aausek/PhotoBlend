@@ -4,10 +4,11 @@ from PySide2.QtWidgets import *
 from PySide2.QtGui import *
 from library import *
 import sys
-import wsl
+#import wsl
 
 
 class Window(QMainWindow):
+
     def __init__(self):
         super().__init__()
 
@@ -72,7 +73,7 @@ class Window(QMainWindow):
         self.blend = QPushButton("Blend Images", self)
         self.blend.setGeometry(75, 350, 200, 30)
         self.blend.clicked.connect(self.blend_clicked)
-        
+
         self.rotate_button = QPushButton("Rotate", self)
         self.rotate_button.setText("Rotate Clockwise")
         self.rotate_button.setGeometry(75, 700, 200, 30)
@@ -182,7 +183,7 @@ class Window(QMainWindow):
         self.gray_slider.setRange(0, 255)
         self.gray_slider.setTickInterval(1)
         self.gray_slider.setGeometry(150, 550, 100, 30)
-        
+
 
     def setIcon(self):
         appIcon = QIcon("../resources/icon.png")
@@ -204,8 +205,8 @@ class Window(QMainWindow):
             self.pane_label.setPixmap(self.pixmap2.scaled(self.pane_label.width(), self.pane_label.height(), QtCore.Qt.KeepAspectRatio))
             self.pane_label.setGeometry(400, 75, self.pane_label.pixmap().width(), self.pane_label.pixmap().height())
             self.images_selected["image2"] = True
-        
-        
+
+
     def num_checkboxes_selected(self):
         clicked_counter = 0
         if self.add_checkbox.isChecked():
@@ -228,7 +229,7 @@ class Window(QMainWindow):
             clicked_counter += 1
 
         return clicked_counter
-        
+
 
     def blend_clicked(self):
         # check that two images have been selected
@@ -316,14 +317,13 @@ class Window(QMainWindow):
         self.pane_label.setPixmap(self.pane_label.pixmap().transformed(transform))
         self.pane_label.setGeometry(400, 75, self.pane_label.pixmap().width(), self.pane_label.pixmap().height())
 
-
     def filters_clicked(self):
         pass
 
-
 if __name__ == '__main__':
-    wsl.set_display_to_host()
+    #wsl.set_display_to_host()
     app = QApplication(sys.argv)
     window = Window()
     browse1 = QPushButton
     sys.exit(app.exec_())
+
