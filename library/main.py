@@ -34,7 +34,6 @@ class Window(QMainWindow):
 
         self.preview_label = QLabel(self)
         self.preview_label.setText("Image preview")
-        self.preview_label.setGeometry(800, 25, 100, 25)
         self.preview_label.setStyleSheet(
             "border-bottom-width: 1px; border-bottom-style: solid;border-radius: 0px; border-color: white;")
         self.preview_label.setGeometry(600, 25, 100, 25)
@@ -270,18 +269,18 @@ class Window(QMainWindow):
             # addition blend
             if self.add_checkbox.isChecked():
                 call_blend(image1_name, image2_name, "add")
-                result = QPixmap("temp_image.jpg")
+                result = QPixmap("test_image.jpg")
                 self.pane_label.setPixmap(
                     result.scaled(self.pane_label.width(), self.pane_label.height(), QtCore.Qt.KeepAspectRatio))
-                os.remove("temp_image.jpg")
+                os.remove("test_image.jpg")
 
             # subtraction blend
             elif self.subtract_checkbox.isChecked():
                 call_blend(image1_name, image2_name, "subtract")
-                result = QPixmap("temp_image.jpg")
+                result = QPixmap("test_image.jpg")
                 self.pane_label.setPixmap(
                     result.scaled(self.pane_label.width(), self.pane_label.height(), QtCore.Qt.KeepAspectRatio))
-                os.remove("temp_image.jpg")
+                os.remove("test_image.jpg")
 
             # update below when the following functions are supported
             # multiply blend

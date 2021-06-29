@@ -11,7 +11,7 @@ module = Extension("blendlib",
 
 setup(
     name="photoblend",
-    version="0.0.42",
+    version="0.0.47",
     url="https://github.com/aausek/PhotoBlend",
     description="Photoblend is a custom PyQt5 & C++ image editor app with blending mode features, filters and other"
                 "manipulation options to render unique and creative images.",
