@@ -12,7 +12,7 @@ module = Extension("blendlib",
 
 setup(
     name="photoblend",
-    version="0.0.50",
+    version="0.0.64",
     url="https://github.com/aausek/PhotoBlend",
     description="Photoblend is a custom PyQt5 & C++ image editor app with blending mode features, filters and other"
                 "manipulation options to render unique and creative images.",
@@ -25,4 +25,7 @@ setup(
                 "resources/layer.jpg", "resources/layer.png"],
     ext_modules=[module],
     entry_points={"console_scripts": ["photoblend=library.main:main"]},
+    # Issue here is that the library/main.py file that launches the app does not have a main() to call because
+    # the class launches it.
+    # Is icon not including? Present in tar file but not wheel
 )

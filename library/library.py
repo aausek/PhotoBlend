@@ -3,12 +3,14 @@ from PySide2.QtWidgets import QLabel
 from PySide2.QtGui import QPixmap
 import numpy as np
 import ctypes
+import os.path
 
 def call_blend(image1_name, image2_name, blend_type):
 
     # Loads the shared object created by the Makefile
-    #_lib = ctypes.CDLL('./library/blendlib.so') #--> Running locally only
-    _lib = ctypes.CDLL('../*.so')
+    sopath = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'blendlib.cpython-38-x86_64-linux-gnu.so'))
+    # sofile = glob.glob('*.so')
+    _lib = ctypes.CDLL(sopath)
 
     # Sets argument and return types for C functions
     _lib.AdditionBlend.argtypes = [
@@ -60,7 +62,7 @@ def call_blend(image1_name, image2_name, blend_type):
         return
 
     # Create blank image object with same dimensions
-    img3 = Image.new(mode="RGB", size=(width1, height1))
+    img3 = Image.new(mode="RGB", size=(height1, width1))
 
     # Convert the images to a 1-D numpy array
     image1 = np.asarray(img1).flatten()
@@ -88,7 +90,7 @@ def call_blend(image1_name, image2_name, blend_type):
         return
 
     # Change resulting image back to 3-D array
-    new_image = np.reshape(image3, (width1, height1, 3))
+    new_image = np.reshape(image3, (height1, width1, 3))
     result = Image.fromarray(new_image, 'RGB')
     result.save('test_image.jpg', 'JPEG')
 

@@ -2,11 +2,10 @@ from PySide2 import QtCore
 from PySide2.QtCore import *
 from PySide2.QtWidgets import *
 from PySide2.QtGui import *
-from library import *
+from library.library import call_blend
 import sys
 import os
 import wsl
-
 
 class Window(QMainWindow):
     def __init__(self):
@@ -35,31 +34,31 @@ class Window(QMainWindow):
         self.preview_label = QLabel(self)
         self.preview_label.setText("Image preview")
         self.preview_label.setStyleSheet(
-            "border-bottom-width: 1px; border-bottom-style: solid;border-radius: 0px; border-color: white;")
+            "border-bottom-width: 1px; border-bottom-style: solid;border-radius: 0px; border-color: black;")
         self.preview_label.setGeometry(600, 25, 100, 25)
 
         self.blend_label = QLabel(self)
         self.blend_label.setText("Image Selection")
         self.blend_label.setStyleSheet(
-            "border-bottom-width: 1px; border-bottom-style: solid;border-radius: 0px; border-color: white;")
+            "border-bottom-width: 1px; border-bottom-style: solid;border-radius: 0px; border-color: black;")
         self.blend_label.setGeometry(137, 25, 100, 30)
 
         self.blend_label = QLabel(self)
         self.blend_label.setText("Blending Modes")
         self.blend_label.setStyleSheet(
-            "border-bottom-width: 1px; border-bottom-style: solid;border-radius: 0px; border-color: white;")
+            "border-bottom-width: 1px; border-bottom-style: solid;border-radius: 0px; border-color: black;")
         self.blend_label.setGeometry(137, 150, 100, 30)
 
         self.blend_label = QLabel(self)
         self.blend_label.setText("Image Rotations")
         self.blend_label.setStyleSheet(
-            "border-bottom-width: 1px; border-bottom-style: solid;border-radius: 0px; border-color: white;")
+            "border-bottom-width: 1px; border-bottom-style: solid;border-radius: 0px; border-color: black;")
         self.blend_label.setGeometry(137, 650, 100, 30)
 
         self.blend_label = QLabel(self)
         self.blend_label.setText("Other Options")
         self.blend_label.setStyleSheet(
-            "border-bottom-width: 1px; border-bottom-style: solid;border-radius: 0px; border-color: white;")
+            "border-bottom-width: 1px; border-bottom-style: solid;border-radius: 0px; border-color: black;")
         self.blend_label.setGeometry(137, 400, 100, 30)
 
     def buttons(self):
@@ -322,10 +321,18 @@ class Window(QMainWindow):
     def filters_clicked(self):
         pass
 
+    def main():
+        #wsl.set_display_to_host()
+        app = QApplication(sys.argv)
+        window = Window()
+        browse1 = QPushButton
+        sys.exit(app.exec_())
 
-if __name__ == '__main__':
-    wsl.set_display_to_host()
-    app = QApplication(sys.argv)
-    window = Window()
-    browse1 = QPushButton
-    sys.exit(app.exec_())
+Window.main()
+
+# if __name__ == '__main__':
+#     wsl.set_display_to_host()
+#     app = QApplication(sys.argv)
+#     window = Window()
+#     browse1 = QPushButton
+#     sys.exit(app.exec_())

@@ -13,3 +13,8 @@ photoblend.egg-info/dependency_links.txt
 photoblend.egg-info/entry_points.txt
 photoblend.egg-info/requires.txt
 photoblend.egg-info/top_level.txt
+resources/car.jpg
+resources/green.jpg
+resources/icon.png
+resources/layer.jpg
+resources/layer.png

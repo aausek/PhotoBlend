@@ -21,19 +21,13 @@ in the preview screen where it may be saved to the user's local drive.
 Custom application build using a PyQt5 GUI as the frontend and C library supporting the backend. 
 
 ### Installation Options
-- To install PhotoBlend start a virtual environment 
-- Simply run `pip install photoblend`
-- `pip show photoblend` to locate and `cd` into file path 
-- Run `python3 library/main.py`
+- To install PhotoBlend start a virtual environment (in WSL also start XServer)
+- `pip install photoblend` then run `photoblend`
 - You're ready to start using PhotoBlend!
 
-- Alternatively, download zip file from repository
-- Unpack and run `python3 library/main.py` to launch app
-
-### Installation
-- To install PhotoBlend simply run `pip install photoblend`
-- Run `python3 main.py` in the `/library` directory
-- You're ready to start using PhotoBlend!
+- Alternatively, `git clone` this repository
+- Execute `python3 setup.py install`
+- Run `python3 library/main.py` to launch app
 
 ### Repository link
 - [GitHub Repo] (https://github.com/aausek/PhotoBlend)
@@ -52,9 +46,6 @@ Custom application build using a PyQt5 GUI as the frontend and C library support
 - Crop and Gray Scale options
 - Additional filter options
 - Support other file extensions
-
-### Known Bugs
-- `$ photoblend` does not currently launch app however improvements are underway.
 
 ### Planned Features
 - Crop and Gray Scale options
