@@ -4,6 +4,7 @@ from PySide2.QtWidgets import *
 from PySide2.QtGui import *
 #from library.library import call_blend
 from library import call_blend
+from filters import grayscale
 import sys
 import os
 import wsl
@@ -11,7 +12,6 @@ import wsl
 class Window(QMainWindow):
     def __init__(self):
         super().__init__()
-
         self.setGeometry(0, 0, 1300, 800)
         self.setMinimumHeight(250)
         self.setMinimumWidth(250)
@@ -137,6 +137,7 @@ class Window(QMainWindow):
         self.gray_checkbox = QCheckBox(self, "Gray Scale")
         self.gray_checkbox.setText("Gray Scale")
         self.gray_checkbox.setGeometry(150, 500, 150, 30)
+        self.gray_checkbox.stateChanged.connect(self.grayscale_clicked)
 
         self.filters_checkbox = QCheckBox(self, "Filters")
         self.filters_checkbox.setText("Filters")
@@ -309,7 +310,10 @@ class Window(QMainWindow):
         pass
 
     def grayscale_clicked(self):
-        pass
+        image1_name = str(self.image1)
+        image1_name = image1_name[2:]
+        image1_name = image1_name[:-19]
+        grayscale(image1_name)
 
     def save_clicked(self):
         save_name = QFileDialog.getSaveFileName(self, "Blended Image", QDir.homePath(), "Images (*.png *.xpm *.jpg)")
