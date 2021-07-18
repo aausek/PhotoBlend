@@ -4,7 +4,7 @@ from PySide2.QtWidgets import *
 from PySide2.QtGui import *
 #from library.library import call_blend
 from library import call_blend
-from filters import grayscale
+#from filters import grayscale
 import sys
 import os
 import wsl
@@ -286,25 +286,53 @@ class Window(QMainWindow):
             # update below when the following functions are supported
             # multiply blend
             elif self.mult_checkbox.isChecked():
-                pass
+                call_blend(image1_name, image2_name, "multiply")
+                result = QPixmap("test_image.jpg")
+                self.pane_label.setPixmap(
+                    result.scaled(self.pane_label.width(), self.pane_label.height(), QtCore.Qt.KeepAspectRatio))
+                os.remove("test_image.jpg")
             # screen blend
             elif self.screen_checkbox.isChecked():
-                pass
+                call_blend(image1_name, image2_name, "screen")
+                result = QPixmap("test_image.jpg")
+                self.pane_label.setPixmap(
+                    result.scaled(self.pane_label.width(), self.pane_label.height(), QtCore.Qt.KeepAspectRatio))
+                os.remove("test_image.jpg")
             # overlay blend
             elif self.overlay_checkbox.isChecked():
-                pass
+                call_blend(image1_name, image2_name, "overlay")
+                result = QPixmap("test_image.jpg")
+                self.pane_label.setPixmap(
+                    result.scaled(self.pane_label.width(), self.pane_label.height(), QtCore.Qt.KeepAspectRatio))
+                os.remove("test_image.jpg")
             # light blend
             elif self.light_checkbox.isChecked():
-                pass
+                call_blend(image1_name, image2_name, "lighten")
+                result = QPixmap("test_image.jpg")
+                self.pane_label.setPixmap(
+                    result.scaled(self.pane_label.width(), self.pane_label.height(), QtCore.Qt.KeepAspectRatio))
+                os.remove("test_image.jpg")
             # dark blend
             elif self.dark_checkbox.isChecked():
-                pass
+                call_blend(image1_name, image2_name, "darken")
+                result = QPixmap("test_image.jpg")
+                self.pane_label.setPixmap(
+                    result.scaled(self.pane_label.width(), self.pane_label.height(), QtCore.Qt.KeepAspectRatio))
+                os.remove("test_image.jpg")
             # color dodge blend
             elif self.dodge_checkbox.isChecked():
-                pass
+                call_blend(image1_name, image2_name, "color_dodge")
+                result = QPixmap("test_image.jpg")
+                self.pane_label.setPixmap(
+                    result.scaled(self.pane_label.width(), self.pane_label.height(), QtCore.Qt.KeepAspectRatio))
+                os.remove("test_image.jpg")
             # color burn blend
             elif self.burn_checkbox.isChecked():
-                pass
+                call_blend(image1_name, image2_name, "color_burn")
+                result = QPixmap("test_image.jpg")
+                self.pane_label.setPixmap(
+                    result.scaled(self.pane_label.width(), self.pane_label.height(), QtCore.Qt.KeepAspectRatio))
+                os.remove("test_image.jpg")
 
     def crop_clicked(self):
         pass
@@ -327,7 +355,7 @@ class Window(QMainWindow):
         pass
 
     def main():
-        #wsl.set_display_to_host()
+        wsl.set_display_to_host()
         app = QApplication(sys.argv)
         window = Window()
         browse1 = QPushButton

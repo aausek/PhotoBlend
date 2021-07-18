@@ -24,3 +24,42 @@ void SubtractionBlend(int size, __uint8_t* image1, __uint8_t* image2, __uint8_t*
         result[i] = Maximum(image1[i] - image2[i], PIXEL_MIN);
     }
 }
+
+void MultiplicationBlend(int size, __uint8_t* image1, __uint8_t* image2, __uint8_t* result) {
+    for (int i = 0; i < size; i++) {
+        result[i] = (image1[i] * image2[i] / PIXEL_MAX) + 0.5f;
+    }
+}
+
+void ScreenBlend(int size, __uint8_t* image1, __uint8_t* image2, __uint8_t* result) {
+    // TODO
+}
+
+void OverlayBlend(int size, __uint8_t* image1, __uint8_t* image2, __uint8_t* result) {
+    for (int i = 0; i < size; i++) {
+        if (image2[i] / PIXEL_MAX <= 0.5f) {
+            //result[i] = (2 * (image1[i] / PIXEL_MAX) * (image2[i] / PIXEL_MAX) * PIXEL_MAX) + 0.5f;
+            result[i] = (2 * (image1[i] * image2[i] / PIXEL_MAX)) + 0.5f;
+        }
+        else {
+            result[i] = ((1 - (2 * (1 - (image1[i] / PIXEL_MAX)) * (1 - (image2[i] / PIXEL_MAX)))) * PIXEL_MAX) + 0.5f;
+            //result[i] = ((1 - (2 * (1 - (image1[i] / PIXEL_MAX)) * (1 - (image2[i] / PIXEL_MAX))) / PIXEL_MAX)) + 0.5f;
+        }
+    }
+}
+
+void LightenBlend(int size, __uint8_t* image1, __uint8_t* image2, __uint8_t* result) {
+    // TODO
+}
+
+void DarkenBlend(int size, __uint8_t* image1, __uint8_t* image2, __uint8_t* result) {
+    // TODO
+}
+
+void ColorDodgeBlend(int size, __uint8_t* image1, __uint8_t* image2, __uint8_t* result) {
+    // TODO
+}
+
+void ColorBurnBlend(int size, __uint8_t* image1, __uint8_t* image2, __uint8_t* result) {
+    // TODO
+}

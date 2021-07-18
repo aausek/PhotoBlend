@@ -13,7 +13,8 @@ def call_blend(image1_name, image2_name, blend_type):
     #_lib = ctypes.CDLL(sopath)
     
     # To run locally
-    _lib = ctypes.CDLL('./library/blendlib.so')
+    _lib = ctypes.CDLL('./blendlib.so')
+    #_lib = ctypes.cdll.LoadLibrary('./blendlib.so')
 
     # Sets argument and return types for C functions
     _lib.AdditionBlend.argtypes = [
@@ -24,7 +25,6 @@ def call_blend(image1_name, image2_name, blend_type):
     ]
     _lib.AdditionBlend.restype = None
 
-
     _lib.SubtractionBlend.argtypes = [
         ctypes.c_int,
         np.ctypeslib.ndpointer(dtype=np.uint8, ndim=1, flags='C'),
@@ -33,15 +33,89 @@ def call_blend(image1_name, image2_name, blend_type):
     ]
     _lib.SubtractionBlend.restype = None
 
+    _lib.MultiplicationBlend.argtypes = [
+        ctypes.c_int,
+        np.ctypeslib.ndpointer(dtype=np.uint8, ndim=1, flags='C'),
+        np.ctypeslib.ndpointer(dtype=np.uint8, ndim=1, flags='C'),
+        np.ctypeslib.ndpointer(dtype=np.uint8, ndim=1, flags='C')
+    ]
+    _lib.MultiplicationBlend.restype = None
+
+    _lib.ScreenBlend.argtypes = [
+        ctypes.c_int,
+        np.ctypeslib.ndpointer(dtype=np.uint8, ndim=1, flags='C'),
+        np.ctypeslib.ndpointer(dtype=np.uint8, ndim=1, flags='C'),
+        np.ctypeslib.ndpointer(dtype=np.uint8, ndim=1, flags='C')
+    ]
+    _lib.ScreenBlend.restype = None
+
+    _lib.OverlayBlend.argtypes = [
+        ctypes.c_int,
+        np.ctypeslib.ndpointer(dtype=np.uint8, ndim=1, flags='C'),
+        np.ctypeslib.ndpointer(dtype=np.uint8, ndim=1, flags='C'),
+        np.ctypeslib.ndpointer(dtype=np.uint8, ndim=1, flags='C')
+    ]
+    _lib.OverlayBlend.restype = None
+
+    _lib.LightenBlend.argtypes = [
+        ctypes.c_int,
+        np.ctypeslib.ndpointer(dtype=np.uint8, ndim=1, flags='C'),
+        np.ctypeslib.ndpointer(dtype=np.uint8, ndim=1, flags='C'),
+        np.ctypeslib.ndpointer(dtype=np.uint8, ndim=1, flags='C')
+    ]
+    _lib.LightenBlend.restype = None
+
+    _lib.DarkenBlend.argtypes = [
+        ctypes.c_int,
+        np.ctypeslib.ndpointer(dtype=np.uint8, ndim=1, flags='C'),
+        np.ctypeslib.ndpointer(dtype=np.uint8, ndim=1, flags='C'),
+        np.ctypeslib.ndpointer(dtype=np.uint8, ndim=1, flags='C')
+    ]
+    _lib.DarkenBlend.restype = None
+
+    _lib.ColorDodgeBlend.argtypes = [
+        ctypes.c_int,
+        np.ctypeslib.ndpointer(dtype=np.uint8, ndim=1, flags='C'),
+        np.ctypeslib.ndpointer(dtype=np.uint8, ndim=1, flags='C'),
+        np.ctypeslib.ndpointer(dtype=np.uint8, ndim=1, flags='C')
+    ]
+    _lib.ColorDodgeBlend.restype = None
+
+    _lib.ColorBurnBlend.argtypes = [
+        ctypes.c_int,
+        np.ctypeslib.ndpointer(dtype=np.uint8, ndim=1, flags='C'),
+        np.ctypeslib.ndpointer(dtype=np.uint8, ndim=1, flags='C'),
+        np.ctypeslib.ndpointer(dtype=np.uint8, ndim=1, flags='C')
+    ]
+    _lib.ColorBurnBlend.restype = None
 
     # Functions to bridge Python to C functions
     def addition_blend(size, image1, image2, result):
         _lib.AdditionBlend(ctypes.c_int(width1 * height1 * 3), image1, image2, result)
 
-
     def subtraction_blend(size, image1, image2, result):
         _lib.SubtractionBlend(ctypes.c_int(width1 * height1 * 3), image1, image2, result)
 
+    def multiplication_blend(size, image1, image2, result):
+        _lib.MultiplicationBlend(ctypes.c_int(width1 * height1 * 3), image1, image2, result)
+
+    def screen_blend(size, image1, image2, result):
+        _lib.ScreenBlend(ctypes.c_int(width1 * height1 * 3), image1, image2, result)
+
+    def overlay_blend(size, image1, image2, result):
+        _lib.OverlayBlend(ctypes.c_int(width1 * height1 * 3), image1, image2, result)
+
+    def lighten_blend(size, image1, image2, result):
+        _lib.LightenBlend(ctypes.c_int(width1 * height1 * 3), image1, image2, result)
+
+    def darken_blend(size, image1, image2, result):
+        _lib.DarkenBlend(ctypes.c_int(width1 * height1 * 3), image1, image2, result)
+
+    def color_dodge_blend(size, image1, image2, result):
+        _lib.ColorDodgeBlend(ctypes.c_int(width1 * height1 * 3), image1, image2, result)
+
+    def color_burn_blend(size, image1, image2, result):
+        _lib.ColorBurnBlend(ctypes.c_int(width1 * height1 * 3), image1, image2, result)
 
     # Open images/get dimensions
     try:
@@ -75,19 +149,33 @@ def call_blend(image1_name, image2_name, blend_type):
     size = image1.size
 
     # Image details
-    print("Flat image Details:")
-    print("-------------------")
-    print(f"Dimensions: {image1.ndim}")
-    print(f"Shape: {image1.shape}")
-    print(f"Data Type: {image1.dtype}")
-    print(f"Object type: {type(image1)}")
-    print(f"CTypes: {image1.ctypes}\n")
+    #print("Flat image Details:")
+    #print("-------------------")
+    #print(f"Dimensions: {image1.ndim}")
+    #print(f"Shape: {image1.shape}")
+    #print(f"Data Type: {image1.dtype}")
+    #print(f"Object type: {type(image1)}")
+    #print(f"CTypes: {image1.ctypes}\n")
 
     # call to C
     if blend_type == "add":
         addition_blend(size, image1, image2, image3)
     elif blend_type == "subtract":
         subtraction_blend(size, image1, image2, image3)
+    elif blend_type == "multiply":
+        multiplication_blend(size, image1, image2, image3)
+    elif blend_type == "screen":
+        screen_blend(size, image1, image2, image3)
+    elif blend_type == "overlay":
+        overlay_blend(size, image1, image2, image3)
+    elif blend_type == "lighten":
+        lighten_blend(size, image1, image2, image3)
+    elif blend_type == "darken":
+        darken_blend(size, image1, image2, image3)
+    elif blend_type == "color_dodge":
+        color_dodge_blend(size, image1, image2, image3)
+    elif blend_type == "color_burn":
+        color_burn_blend(size, image1, image2, image3)
     else:
         print('Selected mode not currently supported.')
         return
