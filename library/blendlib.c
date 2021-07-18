@@ -48,11 +48,17 @@ void OverlayBlend(int size, __uint8_t* image1, __uint8_t* image2, __uint8_t* res
 }
 
 void LightenBlend(int size, __uint8_t* image1, __uint8_t* image2, __uint8_t* result) {
-    // TODO
+    for (int i = 0; i < size; i++) {
+        //get lighter of two colors (higher value is lighter)
+        result[i] = Maximum(image1[i], image2[i]);
+    }
 }
 
 void DarkenBlend(int size, __uint8_t* image1, __uint8_t* image2, __uint8_t* result) {
-    // TODO
+    for (int i = 0; i < size; i++) {
+        //get darker of two colors (lower value is darker)
+        result[i] = Minimum(image1[i], image2[i]);
+    }
 }
 
 void ColorDodgeBlend(int size, __uint8_t* image1, __uint8_t* image2, __uint8_t* result) {
