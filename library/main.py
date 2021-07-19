@@ -17,20 +17,41 @@ class Window(QMainWindow):
         self.setMinimumWidth(250)
         self.setMaximumHeight(1000)
         self.setMaximumWidth(1000)
+        self.images_selected = {"image1": False, "image2": False}
         self.setWindowTitle("PhotoBlend")
         self.labels()
         self.buttons()
         self.checkboxes()
-        self.sliders()
         self.setIcon()
         self.show()
 
-        self.images_selected = {"image1": False, "image2": False}
-
     def labels(self):
-        self.pane_label = QLabel(self)
-        self.pane_label.setStyleSheet("border: 1px solid black")
-        self.pane_label.setGeometry(400, 75, 500, 500)
+        if not self.images_selected["image1"] or not self.images_selected["image2"]:
+            self.pane_label = QLabel(self)
+            self.pane_label.setStyleSheet("border: 1px solid black")
+            self.pane_label.setGeometry(400, 75, 500, 500)
+
+        elif self.images_selected["image1"] and self.images_selected["image2"]:
+            self.pane_label.close()
+            self.pane_label1 = QLabel(self)
+            self.pane_label1.setStyleSheet("border: 1px solid black")
+            self.pane_label1.setGeometry(400, 75, 250, 250)
+            self.pane_label1.setPixmap(
+                self.pixmap1.scaled(self.pane_label1.width(), self.pane_label1.height(), QtCore.Qt.KeepAspectRatio))
+            self.pane_label1.setVisible(True)
+
+            self.pane_label2 = QLabel(self)
+            self.pane_label2.setStyleSheet("border: 1px solid black")
+            self.pane_label2.setGeometry(700, 75, 250, 250)
+            self.pane_label2.setPixmap(
+                self.pixmap2.scaled(self.pane_label2.width(), self.pane_label2.height(), QtCore.Qt.KeepAspectRatio))
+            self.pane_label2.setVisible(True)
+
+            self.pane_label3 = QLabel(self)
+            self.pane_label3.setStyleSheet("border: 1px solid black")
+            self.pane_label3.setGeometry(500, 350, 300, 300)
+            self.pane_label3.setVisible(True)
+
 
         self.preview_label = QLabel(self)
         self.preview_label.setText("Image preview")
@@ -44,23 +65,23 @@ class Window(QMainWindow):
             "border-bottom-width: 1px; border-bottom-style: solid;border-radius: 0px; border-color: black;")
         self.blend_label.setGeometry(137, 25, 100, 30)
 
-        self.blend_label = QLabel(self)
-        self.blend_label.setText("Blending Modes")
-        self.blend_label.setStyleSheet(
+        self.modes_label = QLabel(self)
+        self.modes_label.setText("Blending Modes")
+        self.modes_label.setStyleSheet(
             "border-bottom-width: 1px; border-bottom-style: solid;border-radius: 0px; border-color: black;")
-        self.blend_label.setGeometry(137, 150, 100, 30)
+        self.modes_label.setGeometry(137, 150, 100, 30)
 
-        self.blend_label = QLabel(self)
-        self.blend_label.setText("Image Rotations")
-        self.blend_label.setStyleSheet(
+        self.rotation_label = QLabel(self)
+        self.rotation_label.setText("Image Rotations")
+        self.rotation_label.setStyleSheet(
             "border-bottom-width: 1px; border-bottom-style: solid;border-radius: 0px; border-color: black;")
-        self.blend_label.setGeometry(137, 650, 100, 30)
+        self.rotation_label.setGeometry(137, 650, 100, 30)
 
-        self.blend_label = QLabel(self)
-        self.blend_label.setText("Other Options")
-        self.blend_label.setStyleSheet(
+        self.options_label = QLabel(self)
+        self.options_label.setText("Other Options")
+        self.options_label.setStyleSheet(
             "border-bottom-width: 1px; border-bottom-style: solid;border-radius: 0px; border-color: black;")
-        self.blend_label.setGeometry(137, 400, 100, 30)
+        self.options_label.setGeometry(137, 400, 100, 30)
 
     def buttons(self):
         self.file_select1 = QPushButton("Select the first image", self)
@@ -71,17 +92,13 @@ class Window(QMainWindow):
         self.file_select2.setGeometry(75, 100, 200, 30)
         self.file_select2.clicked.connect(self.image2_clicked)
 
-        self.blend = QPushButton("Blend Images", self)
-        self.blend.setGeometry(75, 350, 200, 30)
-        self.blend.clicked.connect(self.blend_clicked)
-
         self.rotate_button = QPushButton("Rotate", self)
         self.rotate_button.setText("Rotate Clockwise")
         self.rotate_button.setGeometry(75, 700, 200, 30)
         self.rotate_button.clicked.connect(self.rotate_clicked)
 
         self.save_button = QPushButton("Save image", self)
-        self.save_button.setGeometry(555, 580, 200, 30)
+        self.save_button.setGeometry(555, 700, 200, 30)
         self.save_button.clicked.connect(self.save_clicked)
 
     def checkboxes(self):
@@ -176,12 +193,7 @@ class Window(QMainWindow):
                 self.dodge_checkbox.setCheckable(False)
             if not self.burn_checkbox.isChecked():
                 self.burn_checkbox.setCheckable(False)
-
-    def sliders(self):
-        self.gray_slider = QSlider(Qt.Horizontal, self)
-        self.gray_slider.setRange(0, 255)
-        self.gray_slider.setTickInterval(1)
-        self.gray_slider.setGeometry(150, 550, 100, 30)
+        self.update_photo()
 
     def setIcon(self):
         appIcon = QIcon("./resources/icon.png")
@@ -209,6 +221,7 @@ class Window(QMainWindow):
                 self.pane_label.setPixmap(
                     self.pixmap2.scaled(self.pane_label.width(), self.pane_label.height(), QtCore.Qt.KeepAspectRatio))
                 self.images_selected["image2"] = True
+                self.labels()
 
     def num_checkboxes_selected(self):
         clicked_counter = 0
@@ -233,7 +246,7 @@ class Window(QMainWindow):
 
         return clicked_counter
 
-    def blend_clicked(self):
+    def update_photo(self):
         # check that two images have been selected
         if not self.images_selected["image1"] or not self.images_selected["image2"]:
             msgBox = QMessageBox()
@@ -244,95 +257,95 @@ class Window(QMainWindow):
         # check for number of blending modes selected
         # this can be updated if certain blending modes are not mutually exclusive
         num_checkboxes = self.num_checkboxes_selected()
-        if num_checkboxes == 0:
-            msgBox = QMessageBox()
-            msgBox.setText("Select a blending mode to blend images.")
-            msgBox.setIcon(QMessageBox.Warning)
-            msgBox.setWindowTitle("Warning")
-            msgBox.exec_()
-        elif num_checkboxes > 1:
-            msgBox = QMessageBox()
-            msgBox.setText("You can only use one blending mode at a time.")
-            msgBox.setIcon(QMessageBox.Warning)
-            msgBox.setWindowTitle("Warning")
-            msgBox.exec_()
-        else:
-            image1_name = str(self.image1)
-            image1_name = image1_name[2:]
-            image2_name = str(self.image2)
-            image2_name = image2_name[2:]
-            image1_name = image1_name[:-19]
-            image2_name = image2_name[:-19]
+        # if num_checkboxes == 0:
+        #     msgBox = QMessageBox()
+        #     msgBox.setText("Select a blending mode to blend images.")
+        #     msgBox.setIcon(QMessageBox.Warning)
+        #     msgBox.setWindowTitle("Warning")
+        #     msgBox.exec_()
+        # elif num_checkboxes > 1:
+        #     msgBox = QMessageBox()
+        #     msgBox.setText("You can only use one blending mode at a time.")
+        #     msgBox.setIcon(QMessageBox.Warning)
+        #     msgBox.setWindowTitle("Warning")
+        #     msgBox.exec_()
+        # else:
+        image1_name = str(self.image1)
+        image1_name = image1_name[2:]
+        image2_name = str(self.image2)
+        image2_name = image2_name[2:]
+        image1_name = image1_name[:-19]
+        image2_name = image2_name[:-19]
 
-            # call blend functions below based on user selection
-            # note that blend modes are mutually exclusive
+        # call blend functions below based on user selection
+        # note that blend modes are mutually exclusive
 
-            # addition blend
-            if self.add_checkbox.isChecked():
-                call_blend(image1_name, image2_name, "add")
-                result = QPixmap("test_image.jpg")
-                self.pane_label.setPixmap(
-                    result.scaled(self.pane_label.width(), self.pane_label.height(), QtCore.Qt.KeepAspectRatio))
-                os.remove("test_image.jpg")
+        # addition blend
+        if self.add_checkbox.isChecked():
+            call_blend(image1_name, image2_name, "add")
+            result = QPixmap("test_image.jpg")
+            self.pane_label3.setPixmap(
+                result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
+            os.remove("test_image.jpg")
 
-            # subtraction blend
-            elif self.subtract_checkbox.isChecked():
-                call_blend(image1_name, image2_name, "subtract")
-                result = QPixmap("test_image.jpg")
-                self.pane_label.setPixmap(
-                    result.scaled(self.pane_label.width(), self.pane_label.height(), QtCore.Qt.KeepAspectRatio))
-                os.remove("test_image.jpg")
+        # subtraction blend
+        elif self.subtract_checkbox.isChecked():
+            call_blend(image1_name, image2_name, "subtract")
+            result = QPixmap("test_image.jpg")
+            self.pane_label3.setPixmap(
+                result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
+            os.remove("test_image.jpg")
 
             # update below when the following functions are supported
             # multiply blend
-            elif self.mult_checkbox.isChecked():
-                call_blend(image1_name, image2_name, "multiply")
-                result = QPixmap("test_image.jpg")
-                self.pane_label.setPixmap(
-                    result.scaled(self.pane_label.width(), self.pane_label.height(), QtCore.Qt.KeepAspectRatio))
-                os.remove("test_image.jpg")
-            # screen blend
-            elif self.screen_checkbox.isChecked():
-                call_blend(image1_name, image2_name, "screen")
-                result = QPixmap("test_image.jpg")
-                self.pane_label.setPixmap(
-                    result.scaled(self.pane_label.width(), self.pane_label.height(), QtCore.Qt.KeepAspectRatio))
-                os.remove("test_image.jpg")
-            # overlay blend
-            elif self.overlay_checkbox.isChecked():
-                call_blend(image1_name, image2_name, "overlay")
-                result = QPixmap("test_image.jpg")
-                self.pane_label.setPixmap(
-                    result.scaled(self.pane_label.width(), self.pane_label.height(), QtCore.Qt.KeepAspectRatio))
-                os.remove("test_image.jpg")
-            # light blend
-            elif self.light_checkbox.isChecked():
-                call_blend(image1_name, image2_name, "lighten")
-                result = QPixmap("test_image.jpg")
-                self.pane_label.setPixmap(
-                    result.scaled(self.pane_label.width(), self.pane_label.height(), QtCore.Qt.KeepAspectRatio))
-                os.remove("test_image.jpg")
-            # dark blend
-            elif self.dark_checkbox.isChecked():
-                call_blend(image1_name, image2_name, "darken")
-                result = QPixmap("test_image.jpg")
-                self.pane_label.setPixmap(
-                    result.scaled(self.pane_label.width(), self.pane_label.height(), QtCore.Qt.KeepAspectRatio))
-                os.remove("test_image.jpg")
-            # color dodge blend
-            elif self.dodge_checkbox.isChecked():
-                call_blend(image1_name, image2_name, "color_dodge")
-                result = QPixmap("test_image.jpg")
-                self.pane_label.setPixmap(
-                    result.scaled(self.pane_label.width(), self.pane_label.height(), QtCore.Qt.KeepAspectRatio))
-                os.remove("test_image.jpg")
-            # color burn blend
-            elif self.burn_checkbox.isChecked():
-                call_blend(image1_name, image2_name, "color_burn")
-                result = QPixmap("test_image.jpg")
-                self.pane_label.setPixmap(
-                    result.scaled(self.pane_label.width(), self.pane_label.height(), QtCore.Qt.KeepAspectRatio))
-                os.remove("test_image.jpg")
+        elif self.mult_checkbox.isChecked():
+            call_blend(image1_name, image2_name, "multiply")
+            result = QPixmap("test_image.jpg")
+            self.pane_label3.setPixmap(
+                result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
+            os.remove("test_image.jpg")
+        # screen blend
+        elif self.screen_checkbox.isChecked():
+            call_blend(image1_name, image2_name, "screen")
+            result = QPixmap("test_image.jpg")
+            self.pane_label3.setPixmap(
+                result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
+            os.remove("test_image.jpg")
+        # overlay blend
+        elif self.overlay_checkbox.isChecked():
+            call_blend(image1_name, image2_name, "overlay")
+            result = QPixmap("test_image.jpg")
+            self.pane_label3.setPixmap(
+                result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
+            os.remove("test_image.jpg")
+        # light blend
+        elif self.light_checkbox.isChecked():
+            call_blend(image1_name, image2_name, "lighten")
+            result = QPixmap("test_image.jpg")
+            self.pane_label3.setPixmap(
+                result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
+            os.remove("test_image.jpg")
+        # dark blend
+        elif self.dark_checkbox.isChecked():
+            call_blend(image1_name, image2_name, "darken")
+            result = QPixmap("test_image.jpg")
+            self.pane_label3.setPixmap(
+                result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
+            os.remove("test_image.jpg")
+        # color dodge blend
+        elif self.dodge_checkbox.isChecked():
+            call_blend(image1_name, image2_name, "color_dodge")
+            result = QPixmap("test_image.jpg")
+            self.pane_label3.setPixmap(
+                result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
+            os.remove("test_image.jpg")
+        # color burn blend
+        elif self.burn_checkbox.isChecked():
+            call_blend(image1_name, image2_name, "color_burn")
+            result = QPixmap("test_image.jpg")
+            self.pane_label3.setPixmap(
+                result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
+            os.remove("test_image.jpg")
 
     def crop_clicked(self):
         pass
