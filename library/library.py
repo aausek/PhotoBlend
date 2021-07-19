@@ -5,16 +5,16 @@ import numpy as np
 import ctypes
 import os.path
 
-def call_blend(image1_name, image2_name, blend_type):
 
+def call_blend(image1_name, image2_name, blend_type):
     # Loads the shared object created by the Makefile (for pip install in WSL)
-    #sopath = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'blendlib.cpython-38-x86_64-linux-gnu.so'))
+    # sopath = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'blendlib.cpython-38-x86_64-linux-gnu.so'))
     # sofile = glob.glob('*.so')
-    #_lib = ctypes.CDLL(sopath)
-    
+    # _lib = ctypes.CDLL(sopath)
+
     # To run locally
     _lib = ctypes.CDLL('./blendlib.so')
-    #_lib = ctypes.cdll.LoadLibrary('./blendlib.so')
+    # _lib = ctypes.cdll.LoadLibrary('./blendlib.so')
 
     # Sets argument and return types for C functions
     _lib.AdditionBlend.argtypes = [
@@ -122,7 +122,7 @@ def call_blend(image1_name, image2_name, blend_type):
         img1 = Image.open(str(image1_name))
         width1, height1 = img1.size
     except FileNotFoundError as error:
-        print('File ' + str(image1_name)  + ' not found.')
+        print('File ' + str(image1_name) + ' not found.')
         return
     except:
         print('Error other than file not found.')
@@ -149,13 +149,13 @@ def call_blend(image1_name, image2_name, blend_type):
     size = image1.size
 
     # Image details
-    #print("Flat image Details:")
-    #print("-------------------")
-    #print(f"Dimensions: {image1.ndim}")
-    #print(f"Shape: {image1.shape}")
-    #print(f"Data Type: {image1.dtype}")
-    #print(f"Object type: {type(image1)}")
-    #print(f"CTypes: {image1.ctypes}\n")
+    # print("Flat image Details:")
+    # print("-------------------")
+    # print(f"Dimensions: {image1.ndim}")
+    # print(f"Shape: {image1.shape}")
+    # print(f"Data Type: {image1.dtype}")
+    # print(f"Object type: {type(image1)}")
+    # print(f"CTypes: {image1.ctypes}\n")
 
     # call to C
     if blend_type == "add":

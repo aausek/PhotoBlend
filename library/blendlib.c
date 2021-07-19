@@ -33,6 +33,9 @@ void MultiplicationBlend(int size, __uint8_t* image1, __uint8_t* image2, __uint8
 
 void ScreenBlend(int size, __uint8_t* image1, __uint8_t* image2, __uint8_t* result) {
     // TODO
+    for (int i = 0; i < size; i++) {
+        result[i] = (1 - (1 - image1[i]) * (1 - image2[i])) / PIXEL_MAX;
+    }
 }
 
 void OverlayBlend(int size, __uint8_t* image1, __uint8_t* image2, __uint8_t* result) {
