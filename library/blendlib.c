@@ -32,9 +32,14 @@ void MultiplicationBlend(int size, __uint8_t* image1, __uint8_t* image2, __uint8
 }
 
 void ScreenBlend(int size, __uint8_t* image1, __uint8_t* image2, __uint8_t* result) {
-    // TODO
     for (int i = 0; i < size; i++) {
         result[i] = (1 - (1 - image1[i]) * (1 - image2[i])) / PIXEL_MAX;
+    }
+}
+
+void OpacityBlend(int size, __uint8_t* image1, __uint8_t* image2, __uint8_t* result) {
+    for (int i = 0; i < size; i++) {
+        result[i] = 0.5 * image1[i] + (1 - 0.5) * image2[i];
     }
 }
 

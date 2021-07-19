@@ -4,7 +4,7 @@ from PySide2.QtWidgets import *
 from PySide2.QtGui import *
 #from library.library import call_blend
 from library import call_blend
-#from filters import grayscale
+# from filters import grayscale
 import sys
 import os
 import wsl
@@ -123,6 +123,11 @@ class Window(QMainWindow):
         self.screen_radio_button.setGeometry(25, 250, 150, 30)
         self.screen_radio_button.clicked.connect(self.update_blend_radio_buttons)
 
+        self.opacity_radio_button = QRadioButton(self, "80% Opacity")
+        self.opacity_radio_button.setText("Opacity")
+        self.opacity_radio_button.setGeometry(125, 350, 150, 30)
+        self.opacity_radio_button.clicked.connect(self.update_blend_radio_buttons)
+
         self.overlay_radio_button = QRadioButton(self, "Overlay")
         self.overlay_radio_button.setText("Overlay")
         self.overlay_radio_button.setGeometry(125, 250, 150, 30)
@@ -168,6 +173,7 @@ class Window(QMainWindow):
         self.subtract_radio_button.setCheckable(True)
         self.mult_radio_button.setCheckable(True)
         self.screen_radio_button.setCheckable(True)
+        self.opacity_radio_button.setCheckable(True)
         self.overlay_radio_button.setCheckable(True)
         self.light_radio_button.setCheckable(True)
         self.dark_radio_button.setCheckable(True)
@@ -298,8 +304,8 @@ class Window(QMainWindow):
                 result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
             os.remove("test_image.jpg")
 
-            # update below when the following functions are supported
-            # multiply blend
+        # update below when the following functions are supported
+        # multiply blend
         elif self.mult_radio_button.isChecked():
             call_blend(image1_name, image2_name, "multiply")
             result = QPixmap("test_image.jpg")
@@ -309,6 +315,13 @@ class Window(QMainWindow):
         # screen blend
         elif self.screen_radio_button.isChecked():
             call_blend(image1_name, image2_name, "screen")
+            result = QPixmap("test_image.jpg")
+            self.pane_label3.setPixmap(
+                result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
+            os.remove("test_image.jpg")
+        # opacity blend
+        elif self.opacity_radio_button.isChecked():
+            call_blend(image1_name, image2_name, "opacity")
             result = QPixmap("test_image.jpg")
             self.pane_label3.setPixmap(
                 result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
