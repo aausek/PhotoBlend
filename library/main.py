@@ -81,11 +81,9 @@ class Window(QMainWindow):
         self.blend_label.setGeometry(137, 25, 100, 30)
 
         self.path_label = QLabel(self)
-        self.path_label.setText("Previous image: " + self.get_previous_file())
-        # self.path_label.setStyleSheet(
-            # "border-bottom-width: 1px; border-bottom-style: solid; border-radius: 0px; border-color: black;")
-        self.path_label.setGeometry(137, 25, 100, 30)
-        self.path_label.setGeometry(555,720,300,30)
+        self.path_label.setText("Previous saved image: " + self.get_previous_file())
+        text_length = len("Previous saved image: " + self.get_previous_file())
+        self.path_label.setGeometry(655 - (7 * text_length/2),720,(text_length * 7),30)
 
         self.modes_label = QLabel(self)
         self.modes_label.setText("Blending Modes")
@@ -229,18 +227,28 @@ class Window(QMainWindow):
         if self.image1[0] != '':  # don't update pane if user cancels file opening
             self.pixmap1 = QPixmap(self.image1[0])
             if self.images_selected["image2"]:
-                self.pane_label1.setPixmap(
-                    self.pixmap1.scaled(self.pane_label1.width(), self.pane_label1.height(), QtCore.Qt.KeepAspectRatio))
+                # if a second image is already selected, ensure the images have same size
+                if self.pixmap2.width() != self.pixmap1.width() or self.pixmap2.height() != self.pixmap1.height():
+                    msgBox = QMessageBox()
+                    msgBox.setText("Images are not the same size.")
+                    msgBox.setIcon(QMessageBox.Warning)
+                    msgBox.setWindowTitle("Warning")
+                    msgBox.exec_()
+                else:
+                    self.pane_label1.setPixmap(
+                        self.pixmap1.scaled(self.pane_label1.width(), self.pane_label1.height(), QtCore.Qt.KeepAspectRatio))
+                    self.images_selected["image1"] = True
             else:
                 self.pane_label.setPixmap(
                     self.pixmap1.scaled(self.pane_label.width(), self.pane_label.height(), QtCore.Qt.KeepAspectRatio))
-            self.images_selected["image1"] = True
+                self.images_selected["image1"] = True
+
 
     def image2_clicked(self):
         self.image2 = QFileDialog.getOpenFileName(self, "Image 2", QDir.homePath())
         if self.image2[0] != '':  # don't update pane if user cancels file opening
             self.pixmap2 = QPixmap(self.image2[0])
-            if self.pixmap2.width() != self.pixmap1.width() and self.pixmap2.height() != self.pixmap1.height():
+            if self.pixmap2.width() != self.pixmap1.width() or self.pixmap2.height() != self.pixmap1.height():
                 msgBox = QMessageBox()
                 msgBox.setText("Images are not the same size.")
                 msgBox.setIcon(QMessageBox.Warning)
