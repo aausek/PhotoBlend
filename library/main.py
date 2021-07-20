@@ -219,7 +219,7 @@ class Window(QMainWindow):
         self.update_photo()
 
     def setIcon(self):
-        appIcon = QIcon("./resources/icon.png")
+        appIcon = QIcon("../assets/icon.png")
         self.setWindowIcon(appIcon)
 
     def image1_clicked(self):
