@@ -34,13 +34,14 @@ void MultiplicationBlend(int size, __uint8_t* image1, __uint8_t* image2, __uint8
 void ScreenBlend(int size, __uint8_t* image1, __uint8_t* image2, __uint8_t* result) {
     for (int i = 0; i < size; i++) {
         //result[i] = (1 - (1 - image1[i]) * (1 - image2[i])) / PIXEL_MAX; // This is the first attempt
-        result[i] = PIXEL_MAX - ((image1[i] * image2[i] / PIXEL_MAX) + 0.5f);
+        //result[i] = PIXEL_MAX - ((image1[i] * image2[i] / PIXEL_MAX) + 0.5f); // Second attempt
+        //result[i] = ((1.0f - (1.0f - (float)image1[i] / 255.0f) * (1.0f - (float)image2[i] / 255.0f)) * 255.0f) + 0.5f; // THIS WORKS
+        result[i] = ((1.0f - (1.0f - image1[i] / (float)PIXEL_MAX) * (1.0f - image2[i] / (float)PIXEL_MAX)) * (float)PIXEL_MAX) + 0.5f;
     }
 }
 
 void RedChannelBlend(int size, __uint8_t* image1, __uint8_t* image2, __uint8_t* result) {
     for (int i = 0; i < size; i+= 3) {
-        //result[i] = (1 - (1 - image1[i]) * (1 - image2[i])) / PIXEL_MAX;
         result[i] = Minimum(image1[i] * 3 + image2[i], PIXEL_MAX);
     }
 }
@@ -53,12 +54,11 @@ void OpacityBlend(int size, __uint8_t* image1, __uint8_t* image2, __uint8_t* res
 
 void OverlayBlend(int size, __uint8_t* image1, __uint8_t* image2, __uint8_t* result) {
     for (int i = 0; i < size; i++) {
-        if (image2[i] / PIXEL_MAX <= 0.5f) {
-            result[i] = (2 * (image1[i] * image2[i] / PIXEL_MAX)) + 0.5f;
+        if (image2[i] / (float)PIXEL_MAX <= 0.5f) {
+            result[i] = (2.0f * (image1[i] * image2[i] / PIXEL_MAX)) + 0.5f;
         }
         else {
-            result[i] = ((PIXEL_MAX - (2 * (PIXEL_MAX - image1[i]) * (PIXEL_MAX - image2[i])))) + 0.5f;
-            //result[i] = ((1 - (2 * (1 - (image1[i] / PIXEL_MAX)) * (1 - (image2[i] / PIXEL_MAX)))) * PIXEL_MAX) + 0.5f;
+            result[i] = ((1.0f - 2.0f * (1.0f - image1[i] / (float)PIXEL_MAX) * (1.0f - image2[i] / (float)PIXEL_MAX)) * (float)PIXEL_MAX) + 0.5f;
         }
     }
 }
@@ -80,8 +80,9 @@ void DarkenBlend(int size, __uint8_t* image1, __uint8_t* image2, __uint8_t* resu
 void ColorDodgeBlend(int size, __uint8_t* image1, __uint8_t* image2, __uint8_t* result) {
     for (int i = 0; i < size; i++) {
         // Check for potential zero division
-        if (image1[i] != PIXEL_MAX) {
-            result[i] = ((image2[i] / (PIXEL_MAX - image1[i])) * PIXEL_MAX) + 0.5f;
+        if (image1[i] < PIXEL_MAX) {
+            //result[i] = ((image2[i] / (PIXEL_MAX - image1[i])) * PIXEL_MAX) + 0.5f;
+            result[i] = Minimum((((image2[i] / (float)PIXEL_MAX) / (1.0f - image1[i] / (float)PIXEL_MAX)) * (float)PIXEL_MAX) + 0.5f, PIXEL_MAX);
         }
         else {
             result[i] = PIXEL_MAX;
@@ -92,8 +93,9 @@ void ColorDodgeBlend(int size, __uint8_t* image1, __uint8_t* image2, __uint8_t* 
 void ColorBurnBlend(int size, __uint8_t* image1, __uint8_t* image2, __uint8_t* result) {
     for (int i = 0; i < size; i++) {
         // Check for potential zero division
-        if (image1[i] != PIXEL_MIN) {
-            result[i] = (PIXEL_MAX - ((PIXEL_MAX - image2[i]) / image1[i])) + 0.5f;
+        if (image1[i] > PIXEL_MIN) {
+            //result[i] = (PIXEL_MAX - ((PIXEL_MAX - image2[i]) / image1[i])) + 0.5f;
+            result[i] = Maximum((1.0f - (1.0f - image2[i] / (float)PIXEL_MAX) / (image1[i] / (float)PIXEL_MAX)) * (float)PIXEL_MAX + 0.5f, PIXEL_MIN);
         }
         else {
             result[i] = PIXEL_MIN;
