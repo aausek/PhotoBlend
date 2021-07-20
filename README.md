@@ -27,7 +27,7 @@ Custom application build using a PyQt5 GUI as the frontend, a custom C library f
 
 - Alternatively, `git clone` this repository
 - Execute `python3 setup.py install`
-- Run `python3 library/main.py` to launch app
+- `cd library/` and run `python3 main.py` to launch app
 
 ### Repository link
 - [GitHub Repo] (https://github.com/aausek/PhotoBlend)

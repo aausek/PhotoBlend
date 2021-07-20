@@ -5,16 +5,16 @@ import numpy as np
 import ctypes
 import os.path
 
-def call_blend(image1_name, image2_name, blend_type):
 
+def call_blend(image1_name, image2_name, blend_type):
     # Loads the shared object created by the Makefile (for pip install in WSL)
-    #sopath = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'blendlib.cpython-38-x86_64-linux-gnu.so'))
+    # sopath = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'blendlib.cpython-38-x86_64-linux-gnu.so'))
     # sofile = glob.glob('*.so')
-    #_lib = ctypes.CDLL(sopath)
-    
+    # _lib = ctypes.CDLL(sopath)
+
     # To run locally
     _lib = ctypes.CDLL('./blendlib.so')
-    #_lib = ctypes.cdll.LoadLibrary('./blendlib.so')
+    # _lib = ctypes.cdll.LoadLibrary('./blendlib.so')
 
     # Sets argument and return types for C functions
     _lib.AdditionBlend.argtypes = [
@@ -48,6 +48,22 @@ def call_blend(image1_name, image2_name, blend_type):
         np.ctypeslib.ndpointer(dtype=np.uint8, ndim=1, flags='C')
     ]
     _lib.ScreenBlend.restype = None
+
+    _lib.OpacityBlend.argtypes = [
+        ctypes.c_int,
+        np.ctypeslib.ndpointer(dtype=np.uint8, ndim=1, flags='C'),
+        np.ctypeslib.ndpointer(dtype=np.uint8, ndim=1, flags='C'),
+        np.ctypeslib.ndpointer(dtype=np.uint8, ndim=1, flags='C')
+    ]
+    _lib.OpacityBlend.restype = None
+
+    _lib.RedChannelBlend.argtypes = [
+        ctypes.c_int,
+        np.ctypeslib.ndpointer(dtype=np.uint8, ndim=1, flags='C'),
+        np.ctypeslib.ndpointer(dtype=np.uint8, ndim=1, flags='C'),
+        np.ctypeslib.ndpointer(dtype=np.uint8, ndim=1, flags='C')
+    ]
+    _lib.RedChannelBlend.restype = None
 
     _lib.OverlayBlend.argtypes = [
         ctypes.c_int,
@@ -102,6 +118,12 @@ def call_blend(image1_name, image2_name, blend_type):
     def screen_blend(size, image1, image2, result):
         _lib.ScreenBlend(ctypes.c_int(width1 * height1 * 3), image1, image2, result)
 
+    def opacity_blend(size, image1, image2, result):
+        _lib.OpacityBlend(ctypes.c_int(width1 * height1 * 3), image1, image2, result)
+
+    def red_channel_blend(size, image1, image2, result):
+        _lib.RedChannelBlend(ctypes.c_int(width1 * height1 * 3), image1, image2, result)
+
     def overlay_blend(size, image1, image2, result):
         _lib.OverlayBlend(ctypes.c_int(width1 * height1 * 3), image1, image2, result)
 
@@ -122,7 +144,7 @@ def call_blend(image1_name, image2_name, blend_type):
         img1 = Image.open(str(image1_name))
         width1, height1 = img1.size
     except FileNotFoundError as error:
-        print('File ' + str(image1_name)  + ' not found.')
+        print('File ' + str(image1_name) + ' not found.')
         return
     except:
         print('Error other than file not found.')
@@ -149,13 +171,13 @@ def call_blend(image1_name, image2_name, blend_type):
     size = image1.size
 
     # Image details
-    #print("Flat image Details:")
-    #print("-------------------")
-    #print(f"Dimensions: {image1.ndim}")
-    #print(f"Shape: {image1.shape}")
-    #print(f"Data Type: {image1.dtype}")
-    #print(f"Object type: {type(image1)}")
-    #print(f"CTypes: {image1.ctypes}\n")
+    # print("Flat image Details:")
+    # print("-------------------")
+    # print(f"Dimensions: {image1.ndim}")
+    # print(f"Shape: {image1.shape}")
+    # print(f"Data Type: {image1.dtype}")
+    # print(f"Object type: {type(image1)}")
+    # print(f"CTypes: {image1.ctypes}\n")
 
     # call to C
     if blend_type == "add":
@@ -166,6 +188,10 @@ def call_blend(image1_name, image2_name, blend_type):
         multiplication_blend(size, image1, image2, image3)
     elif blend_type == "screen":
         screen_blend(size, image1, image2, image3)
+    elif blend_type == "opacity":
+        opacity_blend(size, image1, image2, image3)
+    elif blend_type == "redchannel":
+        red_channel_blend(size, image1, image2, image3)
     elif blend_type == "overlay":
         overlay_blend(size, image1, image2, image3)
     elif blend_type == "lighten":

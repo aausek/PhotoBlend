@@ -32,7 +32,23 @@ void MultiplicationBlend(int size, __uint8_t* image1, __uint8_t* image2, __uint8
 }
 
 void ScreenBlend(int size, __uint8_t* image1, __uint8_t* image2, __uint8_t* result) {
-    // TODO
+    for (int i = 0; i < size; i++) {
+        //result[i] = (1 - (1 - image1[i]) * (1 - image2[i])) / PIXEL_MAX; // This is the first attempt
+        result[i] = PIXEL_MAX - ((image1[i] * image2[i] / PIXEL_MAX) + 0.5f);
+    }
+}
+
+void RedChannelBlend(int size, __uint8_t* image1, __uint8_t* image2, __uint8_t* result) {
+    for (int i = 0; i < size; i+= 3) {
+        //result[i] = (1 - (1 - image1[i]) * (1 - image2[i])) / PIXEL_MAX;
+        result[i] = Minimum(image1[i] * 3 + image2[i], PIXEL_MAX);
+    }
+}
+
+void OpacityBlend(int size, __uint8_t* image1, __uint8_t* image2, __uint8_t* result) {
+    for (int i = 0; i < size; i++) {
+        result[i] = 0.5 * image1[i] + (1 - 0.5) * image2[i];
+    }
 }
 
 void OverlayBlend(int size, __uint8_t* image1, __uint8_t* image2, __uint8_t* result) {
