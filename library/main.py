@@ -256,7 +256,7 @@ class Window(QMainWindow):
             result = QPixmap("test_image.jpg")
             self.pane_label3.setPixmap(
                 result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
-            os.remove("test_image.jpg")
+            #os.remove("test_image.jpg")
 
         # subtraction blend
         elif self.subtract_radio_button.isChecked():
@@ -264,7 +264,7 @@ class Window(QMainWindow):
             result = QPixmap("test_image.jpg")
             self.pane_label3.setPixmap(
                 result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
-            os.remove("test_image.jpg")
+            #os.remove("test_image.jpg")
 
         # update below when the following functions are supported
         # multiply blend
@@ -273,63 +273,63 @@ class Window(QMainWindow):
             result = QPixmap("test_image.jpg")
             self.pane_label3.setPixmap(
                 result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
-            os.remove("test_image.jpg")
+            #os.remove("test_image.jpg")
         # screen blend
         elif self.screen_radio_button.isChecked():
             call_blend(image1_name, image2_name, "screen")
             result = QPixmap("test_image.jpg")
             self.pane_label3.setPixmap(
                 result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
-            os.remove("test_image.jpg")
+            #os.remove("test_image.jpg")
         # opacity blend
         elif self.opacity_radio_button.isChecked():
             call_blend(image1_name, image2_name, "opacity")
             result = QPixmap("test_image.jpg")
             self.pane_label3.setPixmap(
                 result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
-            os.remove("test_image.jpg")
+            #os.remove("test_image.jpg")
         # opacity blend
         elif self.redchannel_radio_button.isChecked():
             call_blend(image1_name, image2_name, "redchannel")
             result = QPixmap("test_image.jpg")
             self.pane_label3.setPixmap(
                 result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
-            os.remove("test_image.jpg")
+            #os.remove("test_image.jpg")
         # overlay blend
         elif self.overlay_radio_button.isChecked():
             call_blend(image1_name, image2_name, "overlay")
             result = QPixmap("test_image.jpg")
             self.pane_label3.setPixmap(
                 result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
-            os.remove("test_image.jpg")
+            #os.remove("test_image.jpg")
         # light blend
         elif self.light_radio_button.isChecked():
             call_blend(image1_name, image2_name, "lighten")
             result = QPixmap("test_image.jpg")
             self.pane_label3.setPixmap(
                 result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
-            os.remove("test_image.jpg")
+            #os.remove("test_image.jpg")
         # dark blend
         elif self.dark_radio_button.isChecked():
             call_blend(image1_name, image2_name, "darken")
             result = QPixmap("test_image.jpg")
             self.pane_label3.setPixmap(
                 result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
-            os.remove("test_image.jpg")
+            #os.remove("test_image.jpg")
         # color dodge blend
         elif self.dodge_radio_button.isChecked():
             call_blend(image1_name, image2_name, "color_dodge")
             result = QPixmap("test_image.jpg")
             self.pane_label3.setPixmap(
                 result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
-            os.remove("test_image.jpg")
+            #os.remove("test_image.jpg")
         # color burn blend
         elif self.burn_radio_button.isChecked():
             call_blend(image1_name, image2_name, "color_burn")
             result = QPixmap("test_image.jpg")
             self.pane_label3.setPixmap(
                 result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
-            os.remove("test_image.jpg")
+            #os.remove("test_image.jpg")
 
     def crop_clicked(self):
         pass
@@ -342,11 +342,10 @@ class Window(QMainWindow):
 
     def save_clicked(self):
         save_name = QFileDialog.getSaveFileName(self, "Blended Image", QDir.homePath(), "Images (*.png *.xpm *.jpg)")
-        self.pane_label.pixmap().save(save_name[0])
         if self.images_selected["image1"] and not self.images_selected["image2"]:
-            self.pane_label.pixmap().save(save_name[0])
+            QPixmap("test_image.jpg").save(save_name[0])
         else:
-            self.pane_label3.pixmap().save(save_name[0])
+            QPixmap("test_image.jpg").save(save_name[0])
 
     def rotate_clicked(self):
         transform = QTransform().rotate(90.0)
