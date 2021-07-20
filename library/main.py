@@ -2,9 +2,9 @@ from PySide2 import QtCore
 from PySide2.QtCore import *
 from PySide2.QtWidgets import *
 from PySide2.QtGui import *
-# from library.library import call_blend
+#from library.library import call_blend
 from library import call_blend
-# from filters import grayscale
+#from filters import grayscale
 import sys
 import os
 import wsl
@@ -184,7 +184,6 @@ class Window(QMainWindow):
 
     def update_blend_radio_buttons(self):
         # enable radio_buttons if one is deselected (meaning none are selected)
-        # if self.num_radio_buttons_selected() == 0:
         self.add_radio_button.setCheckable(True)
         self.subtract_radio_button.setCheckable(True)
         self.mult_radio_button.setCheckable(True)
@@ -198,26 +197,6 @@ class Window(QMainWindow):
         self.burn_radio_button.setCheckable(True)
         self.pane_label3.clear()
 
-        # otherwise, disable all non-checked blend radio_buttons
-        # else:
-        #     if not self.add_radio_button.isChecked():
-        #         self.add_radio_button.setCheckable(False)
-        #     if not self.subtract_radio_button.isChecked():
-        #         self.subtract_radio_button.setCheckable(False)
-        #     if not self.mult_radio_button.isChecked():
-        #         self.mult_radio_button.setCheckable(False)
-        #     if not self.screen_radio_button.isChecked():
-        #         self.screen_radio_button.setCheckable(False)
-        #     if not self.overlay_radio_button.isChecked():
-        #         self.overlay_radio_button.setCheckable(False)
-        #     if not self.light_radio_button.isChecked():
-        #         self.light_radio_button.setCheckable(False)
-        #     if not self.dark_radio_button.isChecked():
-        #         self.dark_radio_button.setCheckable(False)
-        #     if not self.dodge_radio_button.isChecked():
-        #         self.dodge_radio_button.setCheckable(False)
-        #     if not self.burn_radio_button.isChecked():
-        #         self.burn_radio_button.setCheckable(False)
         self.update_photo()
 
     def setIcon(self):
@@ -228,8 +207,12 @@ class Window(QMainWindow):
         self.image1 = QFileDialog.getOpenFileName(self, "Image 1", QDir.homePath())
         if self.image1[0] != '':  # don't update pane if user cancels file opening
             self.pixmap1 = QPixmap(self.image1[0])
-            self.pane_label.setPixmap(
-                self.pixmap1.scaled(self.pane_label.width(), self.pane_label.height(), QtCore.Qt.KeepAspectRatio))
+            if self.images_selected["image2"]:
+                self.pane_label1.setPixmap(
+                    self.pixmap1.scaled(self.pane_label1.width(), self.pane_label1.height(), QtCore.Qt.KeepAspectRatio))
+            else:
+                self.pane_label.setPixmap(
+                    self.pixmap1.scaled(self.pane_label.width(), self.pane_label.height(), QtCore.Qt.KeepAspectRatio))
             self.images_selected["image1"] = True
 
     def image2_clicked(self):
@@ -248,29 +231,6 @@ class Window(QMainWindow):
                 self.images_selected["image2"] = True
                 self.labels()
 
-    # def num_radio_buttons_selected(self):
-    #     clicked_counter = 0
-    #     if self.add_radio_button.isChecked():
-    #         clicked_counter += 1
-    #     if self.subtract_radio_button.isChecked():
-    #         clicked_counter += 1
-    #     if self.mult_radio_button.isChecked():
-    #         clicked_counter += 1
-    #     if self.screen_radio_button.isChecked():
-    #         clicked_counter += 1
-    #     if self.overlay_radio_button.isChecked():
-    #         clicked_counter += 1
-    #     if self.light_radio_button.isChecked():
-    #         clicked_counter += 1
-    #     if self.dark_radio_button.isChecked():
-    #         clicked_counter += 1
-    #     if self.dodge_radio_button.isChecked():
-    #         clicked_counter += 1
-    #     if self.burn_radio_button.isChecked():
-    #         clicked_counter += 1
-    #
-    #     return clicked_counter
-
     def update_photo(self):
         # check that two images have been selected
         if not self.images_selected["image1"] or not self.images_selected["image2"]:
@@ -279,22 +239,7 @@ class Window(QMainWindow):
             msgBox.setIcon(QMessageBox.Warning)
             msgBox.setWindowTitle("Warning")
             msgBox.exec_()
-        # check for number of blending modes selected
-        # this can be updated if certain blending modes are not mutually exclusive
-        # num_radio_buttons = self.num_radio_buttons_selected()
-        # if num_radio_buttons == 0:
-        #     msgBox = QMessageBox()
-        #     msgBox.setText("Select a blending mode to blend images.")
-        #     msgBox.setIcon(QMessageBox.Warning)
-        #     msgBox.setWindowTitle("Warning")
-        #     msgBox.exec_()
-        # elif num_radio_buttons > 1:
-        #     msgBox = QMessageBox()
-        #     msgBox.setText("You can only use one blending mode at a time.")
-        #     msgBox.setIcon(QMessageBox.Warning)
-        #     msgBox.setWindowTitle("Warning")
-        #     msgBox.exec_()
-        # else:
+
         image1_name = str(self.image1)
         image1_name = image1_name[2:]
         image2_name = str(self.image2)
@@ -398,6 +343,10 @@ class Window(QMainWindow):
     def save_clicked(self):
         save_name = QFileDialog.getSaveFileName(self, "Blended Image", QDir.homePath(), "Images (*.png *.xpm *.jpg)")
         self.pane_label.pixmap().save(save_name[0])
+        if self.images_selected["image1"] and not self.images_selected["image2"]:
+            self.pane_label.pixmap().save(save_name[0])
+        else:
+            self.pane_label3.pixmap().save(save_name[0])
 
     def rotate_clicked(self):
         transform = QTransform().rotate(90.0)
@@ -419,10 +368,3 @@ class Window(QMainWindow):
 
 
 Window.main()
-
-# if __name__ == '__main__':
-#     wsl.set_display_to_host()
-#     app = QApplication(sys.argv)
-#     window = Window()
-#     browse1 = QPushButton
-#     sys.exit(app.exec_())
