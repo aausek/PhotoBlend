@@ -21,22 +21,24 @@ class Window(QMainWindow):
         self.images_selected = {"image1": False, "image2": False}
         self.current_button = QRadioButton()
         self.setWindowTitle("PhotoBlend")
-        self.labels()
         self.buttons()
         self.radio_buttons()
         self.setIcon()
-        self.show()
 
         self.images_selected = {"image1": False, "image2": False}
 
         # persistence
         cwd = os.getcwd()
-        # check if persistent data exists. If not, create file for it.
+
         filename = "persistentData.txt"
         self.persistentData = cwd + "/" + filename
 
+        # check if persistent data exists. If not, create file for it.
         if not os.path.exists(filename):
             open(filename, 'w').close()
+
+        self.labels()
+        self.show()
 
 
     def labels(self):
@@ -78,6 +80,13 @@ class Window(QMainWindow):
             "border-bottom-width: 1px; border-bottom-style: solid;border-radius: 0px; border-color: black;")
         self.blend_label.setGeometry(137, 25, 100, 30)
 
+        self.path_label = QLabel(self)
+        self.path_label.setText("Previous image: " + self.get_previous_file())
+        # self.path_label.setStyleSheet(
+            # "border-bottom-width: 1px; border-bottom-style: solid; border-radius: 0px; border-color: black;")
+        self.path_label.setGeometry(137, 25, 100, 30)
+        self.path_label.setGeometry(555,720,300,30)
+
         self.modes_label = QLabel(self)
         self.modes_label.setText("Blending Modes")
         self.modes_label.setStyleSheet(
@@ -111,7 +120,7 @@ class Window(QMainWindow):
         self.rotate_button.clicked.connect(self.rotate_clicked)
 
         self.save_button = QPushButton("Save image", self)
-        self.save_button.setGeometry(555, 700, 200, 30)
+        self.save_button.setGeometry(555, 670, 200, 30)
         self.save_button.clicked.connect(self.save_clicked)
 
     def radio_buttons(self):
@@ -361,8 +370,12 @@ class Window(QMainWindow):
 
         # save created image's name in persistent data
         file = open(self.persistentData, 'a')
+        file.write("\n")
         file.write(save_name[0])
         file.close()
+
+        # update previous file shown to user
+        self.path_label.setText("Previous image: " + self.get_previous_file())
 
     def rotate_clicked(self):
         transform = QTransform().rotate(90.0)
@@ -374,6 +387,17 @@ class Window(QMainWindow):
 
     def filters_clicked(self):
         pass
+
+    # function to retrieve persistent data
+    # in this case, the previous file saved if one exists
+    def get_previous_file(self):
+        with open(self.persistentData, 'r') as file:
+            lines = file.readlines()
+            if len(lines) != 0:
+                line = lines[-1]
+            else:
+                line = "No image created yet."
+            return line
 
     def main():
         wsl.set_display_to_host()
