@@ -147,7 +147,7 @@ class Window(QMainWindow):
         self.screen_radio_button.clicked.connect(self.update_blend_radio_buttons)
 
         self.opacity_radio_button = QRadioButton(self, "Opacity")
-        self.opacity_radio_button.setText("80% Opacity")
+        self.opacity_radio_button.setText("50% Opacity")
         self.opacity_radio_button.setGeometry(25, 350, 150, 30)
         self.opacity_radio_button.setToolTip('80% Transparency mode')
         self.opacity_radio_button.clicked.connect(self.update_blend_radio_buttons)
