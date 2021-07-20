@@ -27,6 +27,16 @@ class Window(QMainWindow):
 
         self.images_selected = {"image1": False, "image2": False}
 
+        # persistence
+        cwd = os.getcwd()
+        # check if persistent data exists. If not, create file for it.
+        filename = "persistentData.txt"
+        self.persistentData = cwd + "/" + filename
+
+        if not os.path.exists(filename):
+            open(filename, 'w').close()
+
+
     def labels(self):
         self.pane_label = QLabel(self)
         self.pane_label.setStyleSheet("border: 1px solid black")
@@ -346,6 +356,11 @@ class Window(QMainWindow):
     def save_clicked(self):
         save_name = QFileDialog.getSaveFileName(self, "Blended Image", QDir.homePath(), "Images (*.png *.xpm *.jpg)")
         self.pane_label.pixmap().save(save_name[0])
+
+        # save created image's name in persistent data
+        file = open(self.persistentData, 'a')
+        file.write(save_name[0])
+        file.close()
 
     def rotate_clicked(self):
         transform = QTransform().rotate(90.0)
