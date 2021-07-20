@@ -2,12 +2,13 @@ from PySide2 import QtCore
 from PySide2.QtCore import *
 from PySide2.QtWidgets import *
 from PySide2.QtGui import *
-#from library.library import call_blend
+# from library.library import call_blend
 from library import call_blend
 # from filters import grayscale
 import sys
 import os
 import wsl
+
 
 class Window(QMainWindow):
     def __init__(self):
@@ -52,7 +53,6 @@ class Window(QMainWindow):
             self.pane_label3.setStyleSheet("border: 1px solid black")
             self.pane_label3.setGeometry(500, 350, 300, 300)
             self.pane_label3.setVisible(True)
-
 
         self.preview_label = QLabel(self)
         self.preview_label.setText("Image preview")
@@ -129,9 +129,15 @@ class Window(QMainWindow):
 
         self.opacity_radio_button = QRadioButton(self, "Opacity")
         self.opacity_radio_button.setText("80% Opacity")
-        self.opacity_radio_button.setGeometry(125, 350, 150, 30)
+        self.opacity_radio_button.setGeometry(25, 350, 150, 30)
         self.opacity_radio_button.setToolTip('80% Transparency mode')
         self.opacity_radio_button.clicked.connect(self.update_blend_radio_buttons)
+
+        self.redchannel_radio_button = QRadioButton(self, "Red Channel")
+        self.redchannel_radio_button.setText("Red Channel")
+        self.redchannel_radio_button.setGeometry(125, 350, 150, 30)
+        self.redchannel_radio_button.setToolTip('Enhances red pixels from images')
+        self.redchannel_radio_button.clicked.connect(self.update_blend_radio_buttons)
 
         self.overlay_radio_button = QRadioButton(self, "Overlay")
         self.overlay_radio_button.setText("Overlay")
@@ -178,12 +184,13 @@ class Window(QMainWindow):
 
     def update_blend_radio_buttons(self):
         # enable radio_buttons if one is deselected (meaning none are selected)
-        #if self.num_radio_buttons_selected() == 0:
+        # if self.num_radio_buttons_selected() == 0:
         self.add_radio_button.setCheckable(True)
         self.subtract_radio_button.setCheckable(True)
         self.mult_radio_button.setCheckable(True)
         self.screen_radio_button.setCheckable(True)
         self.opacity_radio_button.setCheckable(True)
+        self.redchannel_radio_button.setCheckable(True)
         self.overlay_radio_button.setCheckable(True)
         self.light_radio_button.setCheckable(True)
         self.dark_radio_button.setCheckable(True)
@@ -274,7 +281,7 @@ class Window(QMainWindow):
             msgBox.exec_()
         # check for number of blending modes selected
         # this can be updated if certain blending modes are not mutually exclusive
-        #num_radio_buttons = self.num_radio_buttons_selected()
+        # num_radio_buttons = self.num_radio_buttons_selected()
         # if num_radio_buttons == 0:
         #     msgBox = QMessageBox()
         #     msgBox.setText("Select a blending mode to blend images.")
@@ -332,6 +339,13 @@ class Window(QMainWindow):
         # opacity blend
         elif self.opacity_radio_button.isChecked():
             call_blend(image1_name, image2_name, "opacity")
+            result = QPixmap("test_image.jpg")
+            self.pane_label3.setPixmap(
+                result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
+            os.remove("test_image.jpg")
+        # opacity blend
+        elif self.redchannel_radio_button.isChecked():
+            call_blend(image1_name, image2_name, "redchannel")
             result = QPixmap("test_image.jpg")
             self.pane_label3.setPixmap(
                 result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
@@ -402,6 +416,7 @@ class Window(QMainWindow):
         window = Window()
         browse1 = QPushButton
         sys.exit(app.exec_())
+
 
 Window.main()
 
