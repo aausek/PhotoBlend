@@ -408,7 +408,7 @@ class Window(QMainWindow):
             return line
 
     def main():
-        wsl.set_display_to_host()
+        # wsl.set_display_to_host()
         app = QApplication(sys.argv)
         window = Window()
         browse1 = QPushButton
