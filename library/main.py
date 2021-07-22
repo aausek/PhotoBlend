@@ -2,9 +2,9 @@ from PySide2 import QtCore
 from PySide2.QtCore import *
 from PySide2.QtWidgets import *
 from PySide2.QtGui import *
-from library.library import call_blend
-# from library import call_blend
-# from filters import grayscale
+#from library.library import call_blend
+from library import call_blend
+#from filters import grayscale
 import sys
 import os
 import wsl
@@ -48,7 +48,9 @@ class Window(QMainWindow):
             self.pane_label.setGeometry(400, 75, 500, 500)
 
         elif self.images_selected["image1"] and self.images_selected["image2"]:
-            self.pane_label.close()
+            print("fuck")
+            self.pane_label.clear()
+            self.pane_label.setVisible(False)
             self.pane_label1 = QLabel(self)
             self.pane_label1.setStyleSheet("border: 1px solid black")
             self.pane_label1.setGeometry(400, 75, 250, 250)
@@ -118,8 +120,12 @@ class Window(QMainWindow):
         self.rotate_button.clicked.connect(self.rotate_clicked)
 
         self.save_button = QPushButton("Save image", self)
-        self.save_button.setGeometry(555, 670, 200, 30)
+        self.save_button.setGeometry(400, 700, 200, 30)
         self.save_button.clicked.connect(self.save_clicked)
+
+        self.clear_button = QPushButton("Clear images", self)
+        self.clear_button.setGeometry(700, 700, 200, 30)
+        self.clear_button.clicked.connect(self.clear_clicked)
 
     def radio_buttons(self):
         self.add_radio_button = QRadioButton(self, "Add")
@@ -245,20 +251,26 @@ class Window(QMainWindow):
 
 
     def image2_clicked(self):
-        self.image2 = QFileDialog.getOpenFileName(self, "Image 2", QDir.homePath())
-        if self.image2[0] != '':  # don't update pane if user cancels file opening
-            self.pixmap2 = QPixmap(self.image2[0])
-            if self.pixmap2.width() != self.pixmap1.width() or self.pixmap2.height() != self.pixmap1.height():
-                msgBox = QMessageBox()
-                msgBox.setText("Images are not the same size.")
-                msgBox.setIcon(QMessageBox.Warning)
-                msgBox.setWindowTitle("Warning")
-                msgBox.exec_()
-            else:
-                self.pane_label.setPixmap(
-                    self.pixmap2.scaled(self.pane_label.width(), self.pane_label.height(), QtCore.Qt.KeepAspectRatio))
-                self.images_selected["image2"] = True
-                self.labels()
+        if not self.images_selected["image1"]:
+            msgBox = QMessageBox()
+            msgBox.setText("Please select the first image.")
+            msgBox.setIcon(QMessageBox.Warning)
+            msgBox.setWindowTitle("Warning")
+            msgBox.exec_()
+
+        else:
+            self.image2 = QFileDialog.getOpenFileName(self, "Image 2", QDir.homePath())
+            if self.image2[0] != '':  # don't update pane if user cancels file opening
+                self.pixmap2 = QPixmap(self.image2[0])
+                if self.pixmap2.width() != self.pixmap1.width() or self.pixmap2.height() != self.pixmap1.height():
+                    msgBox = QMessageBox()
+                    msgBox.setText("Images are not the same size.")
+                    msgBox.setIcon(QMessageBox.Warning)
+                    msgBox.setWindowTitle("Warning")
+                    msgBox.exec_()
+                else:
+                    self.images_selected["image2"] = True
+                    self.labels()
 
     def update_photo(self):
         # check that two images have been selected
@@ -385,9 +397,30 @@ class Window(QMainWindow):
         # update previous file shown to user
         self.path_label.setText("Previous image: " + self.get_previous_file())
 
+
+    def clear_clicked(self):
+        print(self.images_selected["image1"])
+        print(self.images_selected["image2"])
+
+        if self.images_selected["image1"] and self.images_selected["image2"]:
+            print("hello")
+            self.pane_label.setVisible(True)
+            self.pane_label1.clear()
+            self.pane_label1.setVisible(False)
+            self.pane_label2.clear()
+            self.pane_label2.setVisible(False)
+            self.pane_label3.clear()
+            self.pane_label3.setVisible(False)
+
+        else:
+            self.pane_label.setVisible(True)
+            self.pane_label.clear()
+
+        self.images_selected = {"image1": False, "image2": False}
+
+
     def rotate_clicked(self):
         transform = QTransform().rotate(90.0)
-
         if self.images_selected["image1"] and not self.images_selected["image2"]:
             self.pane_label.setPixmap(self.pane_label.pixmap().transformed(transform))
         else:
@@ -408,7 +441,7 @@ class Window(QMainWindow):
             return line
 
     def main():
-        # wsl.set_display_to_host()
+        wsl.set_display_to_host()
         app = QApplication(sys.argv)
         window = Window()
         browse1 = QPushButton
