@@ -48,7 +48,6 @@ class Window(QMainWindow):
             self.pane_label.setGeometry(400, 75, 500, 500)
 
         elif self.images_selected["image1"] and self.images_selected["image2"]:
-            print("fuck")
             self.pane_label.clear()
             self.pane_label.setVisible(False)
             self.pane_label1 = QLabel(self)
@@ -399,11 +398,7 @@ class Window(QMainWindow):
 
 
     def clear_clicked(self):
-        print(self.images_selected["image1"])
-        print(self.images_selected["image2"])
-
         if self.images_selected["image1"] and self.images_selected["image2"]:
-            print("hello")
             self.pane_label.setVisible(True)
             self.pane_label1.clear()
             self.pane_label1.setVisible(False)
