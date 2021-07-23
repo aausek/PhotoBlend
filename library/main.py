@@ -223,6 +223,59 @@ class Window(QMainWindow):
 
         self.update_photo()
 
+    def clear_buttons(self):
+        self.add_radio_button.setAutoExclusive(False)
+        self.add_radio_button.setChecked(False)
+        self.add_radio_button.setAutoExclusive(True)
+
+        self.subtract_radio_button.setAutoExclusive(False)
+        self.subtract_radio_button.setChecked(False)
+        self.subtract_radio_button.setAutoExclusive(True)
+
+        self.mult_radio_button.setAutoExclusive(False)
+        self.mult_radio_button.setChecked(False)
+        self.mult_radio_button.setAutoExclusive(True)
+
+        self.screen_radio_button.setAutoExclusive(False)
+        self.screen_radio_button.setChecked(False)
+        self.screen_radio_button.setAutoExclusive(True)
+
+        self.opacity_radio_button.setAutoExclusive(False)
+        self.opacity_radio_button.setChecked(False)
+        self.opacity_radio_button.setAutoExclusive(True)
+
+        self.redchannel_radio_button.setAutoExclusive(False)
+        self.redchannel_radio_button.setChecked(False)
+        self.redchannel_radio_button.setAutoExclusive(True)
+
+        self.overlay_radio_button.setAutoExclusive(False)
+        self.overlay_radio_button.setChecked(False)
+        self.overlay_radio_button.setAutoExclusive(True)
+
+        self.light_radio_button.setAutoExclusive(False)
+        self.light_radio_button.setChecked(False)
+        self.light_radio_button.setAutoExclusive(True)
+
+        self.dark_radio_button.setAutoExclusive(False)
+        self.dark_radio_button.setChecked(False)
+        self.dark_radio_button.setAutoExclusive(True)
+
+        self.dodge_radio_button.setAutoExclusive(False)
+        self.dodge_radio_button.setChecked(False)
+        self.dodge_radio_button.setAutoExclusive(True)
+
+        self.burn_radio_button.setAutoExclusive(False)
+        self.burn_radio_button.setChecked(False)
+        self.burn_radio_button.setAutoExclusive(True)
+
+        self.crop_radio_button.setAutoExclusive(False)
+        self.crop_radio_button.setChecked(False)
+        self.crop_radio_button.setAutoExclusive(True)
+
+        self.gray_radio_button.setAutoExclusive(False)
+        self.gray_radio_button.setChecked(False)
+        self.gray_radio_button.setAutoExclusive(True)
+
     def setIcon(self):
         appIcon = QIcon("../assets/icon.png")
         self.setWindowIcon(appIcon)
@@ -411,6 +464,7 @@ class Window(QMainWindow):
             self.pane_label.setVisible(True)
             self.pane_label.clear()
 
+        self.clear_buttons()
         self.images_selected = {"image1": False, "image2": False}
 
 
