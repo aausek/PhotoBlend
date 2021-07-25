@@ -4,7 +4,7 @@ from PySide2.QtWidgets import *
 from PySide2.QtGui import *
 #from library.library import call_blend
 from library import call_blend
-#from filters import grayscale
+from filters import *
 import sys
 import os
 import wsl
@@ -153,6 +153,11 @@ class Window(QMainWindow):
         self.save_button = QPushButton("Save Image", self)
         self.save_button.setGeometry(10, 740, 150, 30)
         self.save_button.clicked.connect(self.save_clicked)
+
+        self.grayscale_button = QPushButton("Gray Scale", self)
+        self.grayscale_button.setText("Gray Scale")
+        self.grayscale_button.setGeometry(180, 660, 120, 30)
+        self.grayscale_button.clicked.connect(self.grayscale_clicked)
 
     def radio_buttons(self):
         self.add_radio_button = QRadioButton(self, "Add")
@@ -506,7 +511,11 @@ class Window(QMainWindow):
         image1_name = str(self.image1)
         image1_name = image1_name[2:]
         image1_name = image1_name[:-19]
-        grayscale(image1_name)
+        grayscale(image1_name, "result.png")
+        image1gray = QPixmap("result.png")
+        self.default_pane_label.setPixmap(
+            image1gray.scaled(self.default_pane_label.width(), self.default_pane_label.height(),
+                              QtCore.Qt.KeepAspectRatio))
 
     def save_clicked(self):
         save_name = QFileDialog.getSaveFileName(self, "Blended Image", QDir.homePath(), "Images (*.png *.xpm *.jpg)")
