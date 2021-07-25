@@ -156,7 +156,7 @@ class Window(QMainWindow):
 
         self.grayscale_button = QPushButton("Gray Scale", self)
         self.grayscale_button.setText("Gray Scale")
-        self.grayscale_button.setGeometry(180, 660, 120, 30)
+        self.grayscale_button.setGeometry(10, 150, 150, 30)
         self.grayscale_button.clicked.connect(self.grayscale_clicked)
 
     def radio_buttons(self):
