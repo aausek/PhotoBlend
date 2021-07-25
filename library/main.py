@@ -43,168 +43,205 @@ class Window(QMainWindow):
 
     def labels(self):
         if not self.images_selected["image1"] or not self.images_selected["image2"]:
-            self.pane_label = QLabel(self)
-            self.pane_label.setStyleSheet("border: 1px solid black")
-            self.pane_label.setGeometry(400, 75, 500, 500)
+            self.default_pane_label = QLabel(self)
+            self.default_pane_label.setStyleSheet("border: 1px solid black")
+            self.default_pane_label.setGeometry(300, 60, 675, 675)
 
         elif self.images_selected["image1"] and self.images_selected["image2"]:
-            self.pane_label.clear()
-            self.pane_label.setVisible(False)
+            self.default_pane_label.clear()
+            self.default_pane_label.setVisible(False)
+
+            self.layer1_label = QLabel(self)
+            self.layer1_label.setText("First Layer")
+            self.layer1_label.setStyleSheet(
+                "border-bottom-width: 1px; border-bottom-style: solid;border-radius: 0px; border-color: black;")
+            self.layer1_label.setGeometry(390, 25, 70, 25)
+            self.layer1_label.setVisible(True)
+
             self.pane_label1 = QLabel(self)
             self.pane_label1.setStyleSheet("border: 1px solid black")
-            self.pane_label1.setGeometry(400, 75, 250, 250)
+            self.pane_label1.setGeometry(300, 60, 250, 250)
             self.pane_label1.setPixmap(
                 self.pixmap1.scaled(self.pane_label1.width(), self.pane_label1.height(), QtCore.Qt.KeepAspectRatio))
             self.pane_label1.setVisible(True)
 
+            self.layer2_label = QLabel(self)
+            self.layer2_label.setText("Second Layer")
+            self.layer2_label.setStyleSheet(
+                "border-bottom-width: 1px; border-bottom-style: solid;border-radius: 0px; border-color: black;")
+            self.layer2_label.setGeometry(815, 25, 85, 25)
+            self.layer2_label.setVisible(True)
+
             self.pane_label2 = QLabel(self)
             self.pane_label2.setStyleSheet("border: 1px solid black")
-            self.pane_label2.setGeometry(700, 75, 250, 250)
+            self.pane_label2.setGeometry(725, 60, 250, 250)
             self.pane_label2.setPixmap(
                 self.pixmap2.scaled(self.pane_label2.width(), self.pane_label2.height(), QtCore.Qt.KeepAspectRatio))
             self.pane_label2.setVisible(True)
 
+            self.result_label = QLabel(self)
+            self.result_label.setText("Blend Result")
+            self.result_label.setStyleSheet(
+                "border-bottom-width: 1px; border-bottom-style: solid;border-radius: 0px; border-color: black;")
+            self.result_label.setGeometry(590, 325, 85, 25)
+            self.result_label.setVisible(True)
+
             self.pane_label3 = QLabel(self)
             self.pane_label3.setStyleSheet("border: 1px solid black")
-            self.pane_label3.setGeometry(500, 350, 300, 300)
+            self.pane_label3.setGeometry(435, 355, 400, 400)
             self.pane_label3.setVisible(True)
 
         self.preview_label = QLabel(self)
-        self.preview_label.setText("Image preview")
+        self.preview_label.setText("Image Preview")
         self.preview_label.setStyleSheet(
             "border-bottom-width: 1px; border-bottom-style: solid;border-radius: 0px; border-color: black;")
-        self.preview_label.setGeometry(600, 25, 100, 25)
+        self.preview_label.setGeometry(590, 10, 95, 25)
 
         self.blend_label = QLabel(self)
-        self.blend_label.setText("Image Selection")
+        self.blend_label.setText("First Layer")
         self.blend_label.setStyleSheet(
             "border-bottom-width: 1px; border-bottom-style: solid;border-radius: 0px; border-color: black;")
-        self.blend_label.setGeometry(137, 25, 100, 30)
+        self.blend_label.setGeometry(10, 10, 70, 30)
+
+        self.blend_label = QLabel(self)
+        self.blend_label.setText("Second Layer")
+        self.blend_label.setStyleSheet(
+            "border-bottom-width: 1px; border-bottom-style: solid;border-radius: 0px; border-color: black;")
+        self.blend_label.setGeometry(10, 295, 90, 30)
 
         self.path_label = QLabel(self)
-        self.path_label.setText("Previous saved image: " + self.get_previous_file())
+        self.path_label.setText("Previously Saved Image: " + self.get_previous_file())
         text_length = len("Previous saved image: " + self.get_previous_file())
-        self.path_label.setGeometry(655 - (7 * text_length/2),720,(text_length * 7),30)
+        self.path_label.setGeometry(655 - (7 * text_length/2),770,(text_length * 7),30)
 
         self.modes_label = QLabel(self)
-        self.modes_label.setText("Blending Modes")
+        self.modes_label.setText("Single Image Filters")
         self.modes_label.setStyleSheet(
             "border-bottom-width: 1px; border-bottom-style: solid;border-radius: 0px; border-color: black;")
-        self.modes_label.setGeometry(137, 150, 100, 30)
+        self.modes_label.setGeometry(10, 95, 125, 30)
 
         self.rotation_label = QLabel(self)
-        self.rotation_label.setText("Image Rotations")
+        self.rotation_label.setText("Other Options")
         self.rotation_label.setStyleSheet(
             "border-bottom-width: 1px; border-bottom-style: solid;border-radius: 0px; border-color: black;")
-        self.rotation_label.setGeometry(137, 650, 100, 30)
+        self.rotation_label.setGeometry(10, 620, 100, 30)
 
         self.options_label = QLabel(self)
-        self.options_label.setText("Other Options")
+        self.options_label.setText("Blending Modes")
         self.options_label.setStyleSheet(
             "border-bottom-width: 1px; border-bottom-style: solid;border-radius: 0px; border-color: black;")
-        self.options_label.setGeometry(137, 400, 100, 30)
+        self.options_label.setGeometry(10, 380, 100, 30)
 
     def buttons(self):
-        self.file_select1 = QPushButton("Select the first image", self)
-        self.file_select1.setGeometry(75, 70, 200, 30)
+        self.file_select1 = QPushButton("Image Select", self)
+        self.file_select1.setGeometry(10, 55, 150, 30)
         self.file_select1.clicked.connect(self.image1_clicked)
 
-        self.file_select2 = QPushButton("Select the second image", self)
-        self.file_select2.setGeometry(75, 100, 200, 30)
+        self.file_select2 = QPushButton("Image Select", self)
+        self.file_select2.setGeometry(10, 340, 150, 30)
         self.file_select2.clicked.connect(self.image2_clicked)
 
         self.rotate_button = QPushButton("Rotate", self)
-        self.rotate_button.setText("Rotate Clockwise")
-        self.rotate_button.setGeometry(75, 700, 200, 30)
+        self.rotate_button.setText("Rotate 90\N{DEGREE SIGN}")
+        self.rotate_button.setGeometry(10, 660, 150, 30)
         self.rotate_button.clicked.connect(self.rotate_clicked)
 
-        self.save_button = QPushButton("Save image", self)
-        self.save_button.setGeometry(400, 700, 200, 30)
-        self.save_button.clicked.connect(self.save_clicked)
-
-        self.clear_button = QPushButton("Clear images", self)
-        self.clear_button.setGeometry(700, 700, 200, 30)
+        self.clear_button = QPushButton("Clear", self)
+        self.clear_button.setGeometry(10, 700, 150, 30)
         self.clear_button.clicked.connect(self.clear_clicked)
+
+        self.save_button = QPushButton("Save Image", self)
+        self.save_button.setGeometry(10, 740, 150, 30)
+        self.save_button.clicked.connect(self.save_clicked)
 
     def radio_buttons(self):
         self.add_radio_button = QRadioButton(self, "Add")
         self.add_radio_button.setText("Add")
-        self.add_radio_button.setGeometry(25, 200, 150, 30)
+        self.add_radio_button.setGeometry(10, 420, 95, 30)
         self.add_radio_button.setToolTip('Addition of tonal values')
         self.add_radio_button.clicked.connect(self.update_blend_radio_buttons)
 
         self.subtract_radio_button = QRadioButton(self, "Subtract")
         self.subtract_radio_button.setText("Subtract")
-        self.subtract_radio_button.setGeometry(125, 200, 150, 30)
+        self.subtract_radio_button.setGeometry(80, 420, 95, 30)
         self.subtract_radio_button.setToolTip('Subtracts pixel values from image 1')
         self.subtract_radio_button.clicked.connect(self.update_blend_radio_buttons)
 
         self.mult_radio_button = QRadioButton(self, "Multiply")
         self.mult_radio_button.setText("Multiply")
-        self.mult_radio_button.setGeometry(225, 200, 150, 30)
+        self.mult_radio_button.setGeometry(180, 420, 95, 30)
         self.mult_radio_button.setToolTip('Multiplies tonal values of the fore and background''s pixels')
         self.mult_radio_button.clicked.connect(self.update_blend_radio_buttons)
 
         self.screen_radio_button = QRadioButton(self, "Screen")
         self.screen_radio_button.setText("Screen")
-        self.screen_radio_button.setGeometry(25, 250, 150, 30)
+        self.screen_radio_button.setGeometry(10, 470, 95, 30)
         self.screen_radio_button.setToolTip('Fore and background are negatively multiplied')
         self.screen_radio_button.clicked.connect(self.update_blend_radio_buttons)
 
-        self.opacity_radio_button = QRadioButton(self, "Opacity")
-        self.opacity_radio_button.setText("50% Opacity")
-        self.opacity_radio_button.setGeometry(25, 350, 150, 30)
-        self.opacity_radio_button.setToolTip('80% Transparency mode')
-        self.opacity_radio_button.clicked.connect(self.update_blend_radio_buttons)
+        # self.opacity_radio_button = QRadioButton(self, "Opacity")
+        # self.opacity_radio_button.setText("50% Opacity")
+        # self.opacity_radio_button.setGeometry(210, 470, 95, 30)
+        # self.opacity_radio_button.setToolTip('80% Transparency mode')
+        # self.opacity_radio_button.clicked.connect(self.update_blend_radio_buttons)
 
         self.redchannel_radio_button = QRadioButton(self, "Red Channel")
         self.redchannel_radio_button.setText("Red Channel")
-        self.redchannel_radio_button.setGeometry(125, 350, 150, 30)
+        self.redchannel_radio_button.setGeometry(180, 520, 125, 30)
         self.redchannel_radio_button.setToolTip('Enhances red pixels from images')
         self.redchannel_radio_button.clicked.connect(self.update_blend_radio_buttons)
 
+        self.greenchannel_radio_button = QRadioButton(self, "Green Channel")
+        self.greenchannel_radio_button.setText("Green Channel")
+        self.greenchannel_radio_button.setGeometry(180, 570, 125, 30)
+        self.greenchannel_radio_button.setToolTip('Enhances green pixels from images')
+        self.greenchannel_radio_button.clicked.connect(self.update_blend_radio_buttons)
+
+        self.bluechannel_radio_button = QRadioButton(self, "Blue Channel")
+        self.bluechannel_radio_button.setText("Blue Channel")
+        self.bluechannel_radio_button.setGeometry(180, 470, 125, 30)
+        self.bluechannel_radio_button.setToolTip('Enhances blue pixels from images')
+        self.bluechannel_radio_button.clicked.connect(self.update_blend_radio_buttons)
+
         self.overlay_radio_button = QRadioButton(self, "Overlay")
         self.overlay_radio_button.setText("Overlay")
-        self.overlay_radio_button.setGeometry(125, 250, 150, 30)
+        self.overlay_radio_button.setGeometry(80, 470, 95, 30)
         self.overlay_radio_button.setToolTip('Combination of Multiply and Screen modes')
         self.overlay_radio_button.clicked.connect(self.update_blend_radio_buttons)
 
         self.light_radio_button = QRadioButton(self, "Lighten")
         self.light_radio_button.setText("Lighten")
-        self.light_radio_button.setGeometry(225, 250, 150, 30)
+        self.light_radio_button.setGeometry(10, 570, 95, 30)
         self.light_radio_button.setToolTip('Takes the respective lighter pixel into the output image')
         self.light_radio_button.clicked.connect(self.update_blend_radio_buttons)
 
         self.dark_radio_button = QRadioButton(self, "Darken")
         self.dark_radio_button.setText("Darken")
-        self.dark_radio_button.setGeometry(25, 300, 150, 30)
+        self.dark_radio_button.setGeometry(10, 520, 95, 30)
         self.dark_radio_button.setToolTip('Takes the respective darker pixel into the output image')
         self.dark_radio_button.clicked.connect(self.update_blend_radio_buttons)
 
         self.dodge_radio_button = QRadioButton(self, "Color Dodge")
         self.dodge_radio_button.setText("Color Dodge")
-        self.dodge_radio_button.setGeometry(125, 300, 150, 30)
+        self.dodge_radio_button.setGeometry(80, 520, 95, 30)
         self.dodge_radio_button.setToolTip('Enhances brightness of background based on foreground light')
         self.dodge_radio_button.clicked.connect(self.update_blend_radio_buttons)
 
         self.burn_radio_button = QRadioButton(self, "Color Burn")
         self.burn_radio_button.setText("Color Burn")
-        self.burn_radio_button.setGeometry(225, 300, 150, 30)
+        self.burn_radio_button.setGeometry(80, 570, 95, 30)
         self.burn_radio_button.setToolTip('The background image is darkened by the foreground')
         self.burn_radio_button.clicked.connect(self.update_blend_radio_buttons)
 
-        self.crop_radio_button = QRadioButton(self, "Crop")
-        self.crop_radio_button.setText("Crop")
-        self.crop_radio_button.setGeometry(150, 450, 150, 30)
-
-        self.gray_radio_button = QRadioButton(self, "Gray Scale")
-        self.gray_radio_button.setText("Gray Scale")
-        self.gray_radio_button.setGeometry(150, 500, 150, 30)
-        self.gray_radio_button.clicked.connect(self.grayscale_clicked)
-
-        self.filters_radio_button = QRadioButton(self, "Filters")
-        self.filters_radio_button.setText("Filters")
-        self.filters_radio_button.setGeometry(150, 600, 150, 30)
+        # self.crop_radio_button = QRadioButton(self, "Crop")
+        # self.crop_radio_button.setText("Crop")
+        # self.crop_radio_button.setGeometry(150, 450, 150, 30)
+        # self.burn_radio_button.clicked.connect(self.update_blend_radio_buttons)
+        #
+        # self.gray_radio_button = QRadioButton(self, "Gray Scale")
+        # self.gray_radio_button.setText("Gray Scale")
+        # self.gray_radio_button.setGeometry(150, 500, 150, 30)
+        # self.burn_radio_button.clicked.connect(self.update_blend_radio_buttons)
 
     def update_blend_radio_buttons(self):
         # enable radio_buttons if one is deselected (meaning none are selected)
@@ -212,8 +249,10 @@ class Window(QMainWindow):
         self.subtract_radio_button.setCheckable(True)
         self.mult_radio_button.setCheckable(True)
         self.screen_radio_button.setCheckable(True)
-        self.opacity_radio_button.setCheckable(True)
+        #self.opacity_radio_button.setCheckable(True)
         self.redchannel_radio_button.setCheckable(True)
+        self.greenchannel_radio_button.setCheckable(True)
+        self.bluechannel_radio_button.setCheckable(True)
         self.overlay_radio_button.setCheckable(True)
         self.light_radio_button.setCheckable(True)
         self.dark_radio_button.setCheckable(True)
@@ -252,13 +291,21 @@ class Window(QMainWindow):
         self.screen_radio_button.setChecked(False)
         self.screen_radio_button.setAutoExclusive(True)
 
-        self.opacity_radio_button.setAutoExclusive(False)
-        self.opacity_radio_button.setChecked(False)
-        self.opacity_radio_button.setAutoExclusive(True)
+        # self.opacity_radio_button.setAutoExclusive(False)
+        # self.opacity_radio_button.setChecked(False)
+        # self.opacity_radio_button.setAutoExclusive(True)
 
         self.redchannel_radio_button.setAutoExclusive(False)
         self.redchannel_radio_button.setChecked(False)
         self.redchannel_radio_button.setAutoExclusive(True)
+
+        self.greenchannel_radio_button.setAutoExclusive(False)
+        self.greenchannel_radio_button.setChecked(False)
+        self.greenchannel_radio_button.setAutoExclusive(True)
+
+        self.bluechannel_radio_button.setAutoExclusive(False)
+        self.bluechannel_radio_button.setChecked(False)
+        self.bluechannel_radio_button.setAutoExclusive(True)
 
         self.overlay_radio_button.setAutoExclusive(False)
         self.overlay_radio_button.setChecked(False)
@@ -280,13 +327,13 @@ class Window(QMainWindow):
         self.burn_radio_button.setChecked(False)
         self.burn_radio_button.setAutoExclusive(True)
 
-        self.crop_radio_button.setAutoExclusive(False)
-        self.crop_radio_button.setChecked(False)
-        self.crop_radio_button.setAutoExclusive(True)
+        # self.crop_radio_button.setAutoExclusive(False)
+        # self.crop_radio_button.setChecked(False)
+        # self.crop_radio_button.setAutoExclusive(True)
 
-        self.gray_radio_button.setAutoExclusive(False)
-        self.gray_radio_button.setChecked(False)
-        self.gray_radio_button.setAutoExclusive(True)
+        # self.gray_radio_button.setAutoExclusive(False)
+        # self.gray_radio_button.setChecked(False)
+        # self.gray_radio_button.setAutoExclusive(True)
 
     def setIcon(self):
         appIcon = QIcon("../assets/icon.png")
@@ -309,15 +356,15 @@ class Window(QMainWindow):
                         self.pixmap1.scaled(self.pane_label1.width(), self.pane_label1.height(), QtCore.Qt.KeepAspectRatio))
                     self.images_selected["image1"] = True
             else:
-                self.pane_label.setPixmap(
-                    self.pixmap1.scaled(self.pane_label.width(), self.pane_label.height(), QtCore.Qt.KeepAspectRatio))
+                self.default_pane_label.setPixmap(
+                    self.pixmap1.scaled(self.default_pane_label.width(), self.default_pane_label.height(), QtCore.Qt.KeepAspectRatio))
                 self.images_selected["image1"] = True
 
 
     def image2_clicked(self):
         if not self.images_selected["image1"]:
             msgBox = QMessageBox()
-            msgBox.setText("Please select the first image.")
+            msgBox.setText("Please select the first layer.")
             msgBox.setIcon(QMessageBox.Warning)
             msgBox.setWindowTitle("Warning")
             msgBox.exec_()
@@ -388,19 +435,34 @@ class Window(QMainWindow):
                     result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
                 #os.remove("test_image.jpg")
             # opacity blend
-            elif self.opacity_radio_button.isChecked():
-                call_blend(image1_name, image2_name, "opacity")
-                result = QPixmap("test_image.jpg")
-                self.pane_label3.setPixmap(
-                    result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
-                #os.remove("test_image.jpg")
-            # opacity blend
+            # elif self.opacity_radio_button.isChecked():
+            #     call_blend(image1_name, image2_name, "opacity")
+            #     result = QPixmap("test_image.jpg")
+            #     self.pane_label3.setPixmap(
+            #         result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
+            #     #os.remove("test_image.jpg")
+
             elif self.redchannel_radio_button.isChecked():
                 call_blend(image1_name, image2_name, "redchannel")
                 result = QPixmap("test_image.jpg")
                 self.pane_label3.setPixmap(
                     result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
                 #os.remove("test_image.jpg")
+
+            elif self.greenchannel_radio_button.isChecked():
+                call_blend(image1_name, image2_name, "greenchannel")
+                result = QPixmap("test_image.jpg")
+                self.pane_label3.setPixmap(
+                    result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
+                # os.remove("test_image.jpg")
+
+            elif self.bluechannel_radio_button.isChecked():
+                call_blend(image1_name, image2_name, "bluechannel")
+                result = QPixmap("test_image.jpg")
+                self.pane_label3.setPixmap(
+                    result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
+                # os.remove("test_image.jpg")
+
             # overlay blend
             elif self.overlay_radio_button.isChecked():
                 call_blend(image1_name, image2_name, "overlay")
@@ -465,17 +527,23 @@ class Window(QMainWindow):
 
     def clear_clicked(self):
         if self.images_selected["image1"] and self.images_selected["image2"]:
-            self.pane_label.setVisible(True)
+            self.default_pane_label.setVisible(True)
             self.pane_label1.clear()
             self.pane_label1.setVisible(False)
+            self.layer1_label.clear()
+            self.layer1_label.setVisible(False)
             self.pane_label2.clear()
             self.pane_label2.setVisible(False)
+            self.layer2_label.clear()
+            self.layer2_label.setVisible(False)
             self.pane_label3.clear()
             self.pane_label3.setVisible(False)
+            self.result_label.clear()
+            self.result_label.setVisible(False)
 
         else:
-            self.pane_label.setVisible(True)
-            self.pane_label.clear()
+            self.default_pane_label.setVisible(True)
+            self.default_pane_label.clear()
 
         self.clear_buttons()
         self.images_selected = {"image1": False, "image2": False}
@@ -484,7 +552,7 @@ class Window(QMainWindow):
     def rotate_clicked(self):
         transform = QTransform().rotate(90.0)
         if self.images_selected["image1"] and not self.images_selected["image2"]:
-            self.pane_label.setPixmap(self.pane_label.pixmap().transformed(transform))
+            self.default_pane_label.setPixmap(self.default_pane_label.pixmap().transformed(transform))
         else:
             self.pane_label3.setPixmap(self.pane_label3.pixmap().transformed(transform))
 
