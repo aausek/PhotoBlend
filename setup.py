@@ -25,7 +25,4 @@ setup(
                 "assets/layer.jpg", "assets/layer.png"],
     ext_modules=[module],
     entry_points={"console_scripts": ["photoblend=library.main:main"]},
-    # Issue here is that the library/main.py file that launches the app does not have a main() to call because
-    # the class launches it.
-    # Is icon not including? Present in tar file but not wheel
 )

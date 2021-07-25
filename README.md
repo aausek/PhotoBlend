@@ -21,7 +21,7 @@ in the preview screen where it may be saved to the user's local drive.
 Custom application build using a PyQt5 GUI as the frontend, a custom C library for blending images, and the [imagefilters](https://github.com/gatorpazz/imagefilters) Pip package (a rust based library) for image filters. 
 
 ### Installation Options
-- To install PhotoBlend start a virtual environment (in WSL also start XServer)
+- To install PhotoBlend start XServer and Ubuntu terminal
 - `pip install photoblend` then run `photoblend`
 - You're ready to start using PhotoBlend!
 
