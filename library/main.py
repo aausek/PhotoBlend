@@ -40,7 +40,6 @@ class Window(QMainWindow):
         self.labels()
         self.show()
 
-
     def labels(self):
         if not self.images_selected["image1"] or not self.images_selected["image2"]:
             self.default_pane_label = QLabel(self)
@@ -111,7 +110,7 @@ class Window(QMainWindow):
 
         self.path_label = QLabel(self)
         self.path_label.setText("Previously Saved Image: " + self.get_previous_file())
-        text_length = len("Previous saved image: " + self.get_previous_file())
+        text_length = len("Previously Saved Image: " + self.get_previous_file())
         self.path_label.setGeometry(655 - (7 * text_length/2),770,(text_length * 7),30)
 
         self.modes_label = QLabel(self)
@@ -154,11 +153,7 @@ class Window(QMainWindow):
         self.save_button.setGeometry(10, 740, 150, 30)
         self.save_button.clicked.connect(self.save_clicked)
 
-        self.grayscale_button = QPushButton("Gray Scale", self)
-        self.grayscale_button.setText("Gray Scale")
-        self.grayscale_button.setGeometry(10, 150, 150, 30)
-        self.grayscale_button.clicked.connect(self.grayscale_clicked)
-
+    #Follow same format here when adding new radio button
     def radio_buttons(self):
         self.add_radio_button = QRadioButton(self, "Add")
         self.add_radio_button.setText("Add")
@@ -242,14 +237,15 @@ class Window(QMainWindow):
         # self.crop_radio_button.setText("Crop")
         # self.crop_radio_button.setGeometry(150, 450, 150, 30)
         # self.burn_radio_button.clicked.connect(self.update_blend_radio_buttons)
-        #
-        # self.gray_radio_button = QRadioButton(self, "Gray Scale")
-        # self.gray_radio_button.setText("Gray Scale")
-        # self.gray_radio_button.setGeometry(150, 500, 150, 30)
-        # self.burn_radio_button.clicked.connect(self.update_blend_radio_buttons)
 
+        self.grayscale_radio_button = QRadioButton("Gray Scale", self)
+        self.grayscale_radio_button.setText("Gray Scale")
+        self.grayscale_radio_button.setGeometry(10, 150, 95, 30)
+        self.grayscale_radio_button.clicked.connect(self.update_blend_radio_buttons)
+
+
+    #Follow same format as below when adding new radio button
     def update_blend_radio_buttons(self):
-        # enable radio_buttons if one is deselected (meaning none are selected)
         self.add_radio_button.setCheckable(True)
         self.subtract_radio_button.setCheckable(True)
         self.mult_radio_button.setCheckable(True)
@@ -263,13 +259,14 @@ class Window(QMainWindow):
         self.dark_radio_button.setCheckable(True)
         self.dodge_radio_button.setCheckable(True)
         self.burn_radio_button.setCheckable(True)
+        self.grayscale_radio_button.setCheckable(True)
 
         if self.images_selected["image1"] and self.images_selected["image2"]:
             self.pane_label3.clear()
-            self.update_photo()
+            self.update_blend_photo()
 
         elif self.images_selected["image1"] and not self.images_selected["image2"]:
-            self.update_photo()
+            self.update_blend_photo()
 
         else:
             msgBox = QMessageBox()
@@ -279,6 +276,8 @@ class Window(QMainWindow):
             msgBox.exec_()
             self.clear_buttons()
 
+    #Follow same format as below when adding a new radio button
+    #This function unchecks all radio buttons whenever clear is clicked
     def clear_buttons(self):
         self.add_radio_button.setAutoExclusive(False)
         self.add_radio_button.setChecked(False)
@@ -336,14 +335,15 @@ class Window(QMainWindow):
         # self.crop_radio_button.setChecked(False)
         # self.crop_radio_button.setAutoExclusive(True)
 
-        # self.gray_radio_button.setAutoExclusive(False)
-        # self.gray_radio_button.setChecked(False)
-        # self.gray_radio_button.setAutoExclusive(True)
+        self.grayscale_radio_button.setAutoExclusive(False)
+        self.grayscale_radio_button.setChecked(False)
+        self.grayscale_radio_button.setAutoExclusive(True)
 
     def setIcon(self):
         appIcon = QIcon("../assets/icon.png")
         self.setWindowIcon(appIcon)
 
+    #This function handles the event whenever the first Image Select button is clicked
     def image1_clicked(self):
         self.image1 = QFileDialog.getOpenFileName(self, "Image 1", QDir.homePath())
         if self.image1[0] != '':  # don't update pane if user cancels file opening
@@ -365,7 +365,7 @@ class Window(QMainWindow):
                     self.pixmap1.scaled(self.default_pane_label.width(), self.default_pane_label.height(), QtCore.Qt.KeepAspectRatio))
                 self.images_selected["image1"] = True
 
-
+    # This function handles the event whenever the second Image Select button is clicked
     def image2_clicked(self):
         if not self.images_selected["image1"]:
             msgBox = QMessageBox()
@@ -388,15 +388,38 @@ class Window(QMainWindow):
                     self.images_selected["image2"] = True
                     self.labels()
 
-    def update_photo(self):
+
+    #Where all the blending/image filtering happens
+    def update_blend_photo(self):
+        #Follow the same format here to add single image filters
+        if self.grayscale_radio_button.isChecked():
+            if self.images_selected["image1"] and not self.images_selected["image2"]:
+                image1_name = str(self.image1)
+                image1_name = image1_name[2:]
+                image1_name = image1_name[:-19]
+                grayscale(image1_name, "result.jpg")
+                result = QPixmap("result.jpg")
+                self.pixmap1 = result
+                self.default_pane_label.setPixmap(
+                    result.scaled(self.default_pane_label.width(), self.default_pane_label.height(),
+                                  QtCore.Qt.KeepAspectRatio))
+            else:
+                grayscale("test_image.jpg", "result.jpg")
+                result = QPixmap("result.jpg")
+                self.pane_label3.setPixmap(
+                    result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
+
+        #End of single image filters
+
         # check that two images have been selected
-        if not self.images_selected["image1"] or not self.images_selected["image2"]:
+        elif not self.images_selected["image1"] or not self.images_selected["image2"]:
             msgBox = QMessageBox()
             msgBox.setText("Ensure two images are selected to blend.")
             msgBox.setIcon(QMessageBox.Warning)
             msgBox.setWindowTitle("Warning")
             msgBox.exec_()
 
+        #Two image blending modes go here (All implemented blending functions are working as intended)
         else:
             image1_name = str(self.image1)
             image1_name = image1_name[2:]
@@ -414,7 +437,6 @@ class Window(QMainWindow):
                 result = QPixmap("test_image.jpg")
                 self.pane_label3.setPixmap(
                     result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
-                #os.remove("test_image.jpg")
 
             # subtraction blend
             elif self.subtract_radio_button.isChecked():
@@ -422,51 +444,45 @@ class Window(QMainWindow):
                 result = QPixmap("test_image.jpg")
                 self.pane_label3.setPixmap(
                     result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
-                #os.remove("test_image.jpg")
 
-            # update below when the following functions are supported
             # multiply blend
             elif self.mult_radio_button.isChecked():
                 call_blend(image1_name, image2_name, "multiply")
                 result = QPixmap("test_image.jpg")
                 self.pane_label3.setPixmap(
                     result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
-                #os.remove("test_image.jpg")
+
             # screen blend
             elif self.screen_radio_button.isChecked():
                 call_blend(image1_name, image2_name, "screen")
                 result = QPixmap("test_image.jpg")
                 self.pane_label3.setPixmap(
                     result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
-                #os.remove("test_image.jpg")
+
             # opacity blend
             # elif self.opacity_radio_button.isChecked():
             #     call_blend(image1_name, image2_name, "opacity")
             #     result = QPixmap("test_image.jpg")
             #     self.pane_label3.setPixmap(
             #         result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
-            #     #os.remove("test_image.jpg")
 
             elif self.redchannel_radio_button.isChecked():
                 call_blend(image1_name, image2_name, "redchannel")
                 result = QPixmap("test_image.jpg")
                 self.pane_label3.setPixmap(
                     result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
-                #os.remove("test_image.jpg")
 
             elif self.greenchannel_radio_button.isChecked():
                 call_blend(image1_name, image2_name, "greenchannel")
                 result = QPixmap("test_image.jpg")
                 self.pane_label3.setPixmap(
                     result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
-                # os.remove("test_image.jpg")
 
             elif self.bluechannel_radio_button.isChecked():
                 call_blend(image1_name, image2_name, "bluechannel")
                 result = QPixmap("test_image.jpg")
                 self.pane_label3.setPixmap(
                     result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
-                # os.remove("test_image.jpg")
 
             # overlay blend
             elif self.overlay_radio_button.isChecked():
@@ -474,53 +490,40 @@ class Window(QMainWindow):
                 result = QPixmap("test_image.jpg")
                 self.pane_label3.setPixmap(
                     result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
-                #os.remove("test_image.jpg")
+
             # light blend
             elif self.light_radio_button.isChecked():
                 call_blend(image1_name, image2_name, "lighten")
                 result = QPixmap("test_image.jpg")
                 self.pane_label3.setPixmap(
                     result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
-                #os.remove("test_image.jpg")
+
             # dark blend
             elif self.dark_radio_button.isChecked():
                 call_blend(image1_name, image2_name, "darken")
                 result = QPixmap("test_image.jpg")
                 self.pane_label3.setPixmap(
                     result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
-                #os.remove("test_image.jpg")
+
             # color dodge blend
             elif self.dodge_radio_button.isChecked():
                 call_blend(image1_name, image2_name, "color_dodge")
                 result = QPixmap("test_image.jpg")
                 self.pane_label3.setPixmap(
                     result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
-                #os.remove("test_image.jpg")
+
             # color burn blend
             elif self.burn_radio_button.isChecked():
                 call_blend(image1_name, image2_name, "color_burn")
                 result = QPixmap("test_image.jpg")
                 self.pane_label3.setPixmap(
                     result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
-                #os.remove("test_image.jpg")
 
-    def crop_clicked(self):
-        pass
-
-    def grayscale_clicked(self):
-        image1_name = str(self.image1)
-        image1_name = image1_name[2:]
-        image1_name = image1_name[:-19]
-        grayscale(image1_name, "result.png")
-        image1gray = QPixmap("result.png")
-        self.default_pane_label.setPixmap(
-            image1gray.scaled(self.default_pane_label.width(), self.default_pane_label.height(),
-                              QtCore.Qt.KeepAspectRatio))
 
     def save_clicked(self):
         save_name = QFileDialog.getSaveFileName(self, "Blended Image", QDir.homePath(), "Images (*.png *.xpm *.jpg)")
         if self.images_selected["image1"] and not self.images_selected["image2"]:
-            QPixmap("test_image.jpg").save(save_name[0])
+            self.pixmap1.save(save_name[0])
         else:
             QPixmap("test_image.jpg").save(save_name[0])
 
@@ -531,9 +534,11 @@ class Window(QMainWindow):
         file.close()
 
         # update previous file shown to user
-        self.path_label.setText("Previous image: " + self.get_previous_file())
+        self.path_label.clear()
+        self.path_label.setText("Previously Saved Image: " + self.get_previous_file())
+        self.path_label.show()
 
-
+    #Resets display to initial state
     def clear_clicked(self):
         if self.images_selected["image1"] and self.images_selected["image2"]:
             self.default_pane_label.setVisible(True)
@@ -557,16 +562,13 @@ class Window(QMainWindow):
         self.clear_buttons()
         self.images_selected = {"image1": False, "image2": False}
 
-
+    #Handles rotating either the default pane or the blend result pane
     def rotate_clicked(self):
         transform = QTransform().rotate(90.0)
         if self.images_selected["image1"] and not self.images_selected["image2"]:
             self.default_pane_label.setPixmap(self.default_pane_label.pixmap().transformed(transform))
         else:
             self.pane_label3.setPixmap(self.pane_label3.pixmap().transformed(transform))
-
-    def filters_clicked(self):
-        pass
 
     # function to retrieve persistent data
     # in this case, the previous file saved if one exists
