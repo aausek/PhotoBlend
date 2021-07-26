@@ -240,8 +240,28 @@ class Window(QMainWindow):
 
         self.grayscale_radio_button = QRadioButton("Gray Scale", self)
         self.grayscale_radio_button.setText("Gray Scale")
-        self.grayscale_radio_button.setGeometry(10, 150, 95, 30)
+        self.grayscale_radio_button.setGeometry(150, 150, 95, 30)
         self.grayscale_radio_button.clicked.connect(self.update_blend_radio_buttons)
+
+        self.blur_radio_button = QRadioButton("Blur", self)
+        self.blur_radio_button.setText("Blur")
+        self.blur_radio_button.setGeometry(10, 150, 95, 30)
+        self.blur_radio_button.clicked.connect(self.update_blend_radio_buttons)
+
+        self.bright_radio_button = QRadioButton("Bright", self)
+        self.bright_radio_button.setText("Bright")
+        self.bright_radio_button.setGeometry(80, 150, 95, 30)
+        self.bright_radio_button.clicked.connect(self.update_blend_radio_buttons)
+
+        self.hflip_radio_button = QRadioButton("Flip Horizontal", self)
+        self.hflip_radio_button.setText("Flip Horizontal")
+        self.hflip_radio_button.setGeometry(150, 200, 150, 30)
+        self.hflip_radio_button.clicked.connect(self.update_blend_radio_buttons)
+
+        self.vflip_radio_button = QRadioButton("Flip Vertical", self)
+        self.vflip_radio_button.setText("Flip Vertical")
+        self.vflip_radio_button.setGeometry(10, 200, 150, 30)
+        self.vflip_radio_button.clicked.connect(self.update_blend_radio_buttons)
 
 
     #Follow same format as below when adding new radio button
@@ -260,6 +280,10 @@ class Window(QMainWindow):
         self.dodge_radio_button.setCheckable(True)
         self.burn_radio_button.setCheckable(True)
         self.grayscale_radio_button.setCheckable(True)
+        self.blur_radio_button.setCheckable(True)
+        self.bright_radio_button.setCheckable(True)
+        self.hflip_radio_button.setCheckable(True)
+        self.vflip_radio_button.setCheckable(True)
 
         if self.images_selected["image1"] and self.images_selected["image2"]:
             self.pane_label3.clear()
@@ -339,6 +363,22 @@ class Window(QMainWindow):
         self.grayscale_radio_button.setChecked(False)
         self.grayscale_radio_button.setAutoExclusive(True)
 
+        self.blur_radio_button.setAutoExclusive(False)
+        self.blur_radio_button.setChecked(False)
+        self.blur_radio_button.setAutoExclusive(True)
+
+        self.bright_radio_button.setAutoExclusive(False)
+        self.bright_radio_button.setChecked(False)
+        self.bright_radio_button.setAutoExclusive(True)
+
+        self.hflip_radio_button.setAutoExclusive(False)
+        self.hflip_radio_button.setChecked(False)
+        self.hflip_radio_button.setAutoExclusive(True)
+
+        self.vflip_radio_button.setAutoExclusive(False)
+        self.vflip_radio_button.setChecked(False)
+        self.vflip_radio_button.setAutoExclusive(True)
+
     def setIcon(self):
         appIcon = QIcon("../assets/icon.png")
         self.setWindowIcon(appIcon)
@@ -405,6 +445,74 @@ class Window(QMainWindow):
                                   QtCore.Qt.KeepAspectRatio))
             else:
                 grayscale("test_image.jpg", "result.jpg")
+                result = QPixmap("result.jpg")
+                self.pane_label3.setPixmap(
+                    result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
+
+        elif self.blur_radio_button.isChecked():
+            if self.images_selected["image1"] and not self.images_selected["image2"]:
+                image1_name = str(self.image1)
+                image1_name = image1_name[2:]
+                image1_name = image1_name[:-19]
+                blur(image1_name, "result.jpg")
+                result = QPixmap("result.jpg")
+                self.pixmap1 = result
+                self.default_pane_label.setPixmap(
+                    result.scaled(self.default_pane_label.width(), self.default_pane_label.height(),
+                                  QtCore.Qt.KeepAspectRatio))
+            else:
+                blur("test_image.jpg", "result.jpg")
+                result = QPixmap("result.jpg")
+                self.pane_label3.setPixmap(
+                    result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
+
+        elif self.bright_radio_button.isChecked():
+            if self.images_selected["image1"] and not self.images_selected["image2"]:
+                image1_name = str(self.image1)
+                image1_name = image1_name[2:]
+                image1_name = image1_name[:-19]
+                brighten(image1_name, "result.jpg")
+                result = QPixmap("result.jpg")
+                self.pixmap1 = result
+                self.default_pane_label.setPixmap(
+                    result.scaled(self.default_pane_label.width(), self.default_pane_label.height(),
+                                  QtCore.Qt.KeepAspectRatio))
+            else:
+                brighten("test_image.jpg", "result.jpg")
+                result = QPixmap("result.jpg")
+                self.pane_label3.setPixmap(
+                    result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
+
+        elif self.hflip_radio_button.isChecked():
+            if self.images_selected["image1"] and not self.images_selected["image2"]:
+                image1_name = str(self.image1)
+                image1_name = image1_name[2:]
+                image1_name = image1_name[:-19]
+                flip_horizontal(image1_name, "result.jpg")
+                result = QPixmap("result.jpg")
+                self.pixmap1 = result
+                self.default_pane_label.setPixmap(
+                    result.scaled(self.default_pane_label.width(), self.default_pane_label.height(),
+                                  QtCore.Qt.KeepAspectRatio))
+            else:
+                flip_horizontal("test_image.jpg", "result.jpg")
+                result = QPixmap("result.jpg")
+                self.pane_label3.setPixmap(
+                    result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
+
+        elif self.vflip_radio_button.isChecked():
+            if self.images_selected["image1"] and not self.images_selected["image2"]:
+                image1_name = str(self.image1)
+                image1_name = image1_name[2:]
+                image1_name = image1_name[:-19]
+                flip_vertical(image1_name, "result.jpg")
+                result = QPixmap("result.jpg")
+                self.pixmap1 = result
+                self.default_pane_label.setPixmap(
+                    result.scaled(self.default_pane_label.width(), self.default_pane_label.height(),
+                                  QtCore.Qt.KeepAspectRatio))
+            else:
+                flip_vertical("test_image.jpg", "result.jpg")
                 result = QPixmap("result.jpg")
                 self.pane_label3.setPixmap(
                     result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
