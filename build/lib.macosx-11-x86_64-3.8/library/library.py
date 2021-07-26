@@ -67,6 +67,22 @@ def call_blend(image1_name, image2_name, blend_type):
     ]
     _lib.RedChannelBlend.restype = None
 
+    _lib.GreenChannelBlend.argtypes = [
+        ctypes.c_int,
+        np.ctypeslib.ndpointer(dtype=np.uint8, ndim=1, flags='C'),
+        np.ctypeslib.ndpointer(dtype=np.uint8, ndim=1, flags='C'),
+        np.ctypeslib.ndpointer(dtype=np.uint8, ndim=1, flags='C')
+    ]
+    _lib.GreenChannelBlend.restype = None
+
+    _lib.BlueChannelBlend.argtypes = [
+        ctypes.c_int,
+        np.ctypeslib.ndpointer(dtype=np.uint8, ndim=1, flags='C'),
+        np.ctypeslib.ndpointer(dtype=np.uint8, ndim=1, flags='C'),
+        np.ctypeslib.ndpointer(dtype=np.uint8, ndim=1, flags='C')
+    ]
+    _lib.BlueChannelBlend.restype = None
+
     _lib.OverlayBlend.argtypes = [
         ctypes.c_int,
         np.ctypeslib.ndpointer(dtype=np.uint8, ndim=1, flags='C'),
@@ -125,6 +141,12 @@ def call_blend(image1_name, image2_name, blend_type):
 
     def red_channel_blend(size, image1, image2, result):
         _lib.RedChannelBlend(ctypes.c_int(width1 * height1 * 3), image1, image2, result)
+
+    def green_channel_blend(size, image1, image2, result):
+        _lib.GreenChannelBlend(ctypes.c_int(width1 * height1 * 3), image1, image2, result)
+
+    def blue_channel_blend(size, image1, image2, result):
+        _lib.BlueChannelBlend(ctypes.c_int(width1 * height1 * 3), image1, image2, result)
 
     def overlay_blend(size, image1, image2, result):
         _lib.OverlayBlend(ctypes.c_int(width1 * height1 * 3), image1, image2, result)
@@ -194,6 +216,10 @@ def call_blend(image1_name, image2_name, blend_type):
         opacity_blend(size, image1, image2, image3)
     elif blend_type == "redchannel":
         red_channel_blend(size, image1, image2, image3)
+    elif blend_type == "greenchannel":
+        green_channel_blend(size, image1, image2, image3)
+    elif blend_type == "bluechannel":
+        blue_channel_blend(size, image1, image2, image3)
     elif blend_type == "overlay":
         overlay_blend(size, image1, image2, image3)
     elif blend_type == "lighten":

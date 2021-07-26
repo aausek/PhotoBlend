@@ -46,6 +46,18 @@ void RedChannelBlend(int size, __uint8_t* image1, __uint8_t* image2, __uint8_t* 
     }
 }
 
+void GreenChannelBlend(int size, __uint8_t* image1, __uint8_t* image2, __uint8_t* result) {
+    for (int i = 1; i < size; i+= 3) {
+        result[i] = Minimum(image1[i] * 3 + image2[i], PIXEL_MAX);
+    }
+}
+
+void BlueChannelBlend(int size, __uint8_t* image1, __uint8_t* image2, __uint8_t* result) {
+    for (int i = 2; i < size; i+= 3) {
+        result[i] = Minimum(image1[i] * 3 + image2[i], PIXEL_MAX);
+    }
+}
+
 void OpacityBlend(int size, __uint8_t* image1, __uint8_t* image2, __uint8_t* result) {
     for (int i = 0; i < size; i++) {
         result[i] = 0.5 * image1[i] + (1 - 0.5) * image2[i];

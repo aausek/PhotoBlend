@@ -454,14 +454,14 @@ class Window(QMainWindow):
                 image1_name = str(self.image1)
                 image1_name = image1_name[2:]
                 image1_name = image1_name[:-19]
-                blur(image1_name, "result.jpg")
+                blur(image1_name, "result.jpg", 20)
                 result = QPixmap("result.jpg")
                 self.pixmap1 = result
                 self.default_pane_label.setPixmap(
                     result.scaled(self.default_pane_label.width(), self.default_pane_label.height(),
                                   QtCore.Qt.KeepAspectRatio))
             else:
-                blur("test_image.jpg", "result.jpg")
+                blur("test_image.jpg", "result.jpg", 20)
                 result = QPixmap("result.jpg")
                 self.pane_label3.setPixmap(
                     result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
@@ -471,14 +471,14 @@ class Window(QMainWindow):
                 image1_name = str(self.image1)
                 image1_name = image1_name[2:]
                 image1_name = image1_name[:-19]
-                brighten(image1_name, "result.jpg")
+                brighten(image1_name, "result.jpg", 20)
                 result = QPixmap("result.jpg")
                 self.pixmap1 = result
                 self.default_pane_label.setPixmap(
                     result.scaled(self.default_pane_label.width(), self.default_pane_label.height(),
                                   QtCore.Qt.KeepAspectRatio))
             else:
-                brighten("test_image.jpg", "result.jpg")
+                brighten("test_image.jpg", "result.jpg", 20)
                 result = QPixmap("result.jpg")
                 self.pane_label3.setPixmap(
                     result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
@@ -690,7 +690,7 @@ class Window(QMainWindow):
             return line
 
     def main():
-        wsl.set_display_to_host()
+        #wsl.set_display_to_host()
         app = QApplication(sys.argv)
         window = Window()
         browse1 = QPushButton
