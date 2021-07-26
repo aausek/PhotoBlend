@@ -471,7 +471,7 @@ class Window(QMainWindow):
                 image1_name = str(self.image1)
                 image1_name = image1_name[2:]
                 image1_name = image1_name[:-19]
-                brighten(image1_name, "result.jpg", 20)
+                brighten(image1_name, "result.jpg", 50)
                 result = QPixmap("result.jpg")
                 self.pixmap1 = result
                 self.default_pane_label.setPixmap(
