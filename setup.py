@@ -18,7 +18,7 @@ setup(
                 "manipulation options to render unique and creative images.",
     license="MIT",
     author="Team Senioritis",
-    install_requires=["PySide2", "Pillow", "numpy", "wsl", "imagefilters"],
+    install_requires=["PySide2", "Pillow", "numpy", "wsl", "imagefilters", "wheel"],
     packages=find_packages(include=["library", "library.*", ""]),
     include_package_data=True,
     data_files=["library/blendlib.so","assets/icon.png", "assets/car.jpg", "assets/green.jpg",
