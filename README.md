@@ -18,36 +18,35 @@ with 1 or 2 images at a time, then selecting the desired action to be performed.
 in the preview screen where it may be saved to the user's local drive. 
 
 ### Specifications
-Custom application build using a PyQt5 GUI as the frontend, a custom C library for blending images, and the [imagefilters](https://github.com/gatorpazz/imagefilters) Pip package (a rust based library) for image filters. 
+Custom application build using a PyQt5 GUI as the frontend, a custom C library for blending images, and the [imagefilters](https://github.com/gatorpazz/imagefilters) PIP package (a Rust-based library) for image filters. 
 
 ### Installation Options
 - To install PhotoBlend start XServer and Ubuntu terminal
 - `pip install photoblend` then run `photoblend`
-- You're ready to start using PhotoBlend!
+
 
 - Alternatively, `git clone` this repository
 - Execute `python3 setup.py install`
-- `cd library/` and run `python3 main.py` to launch app
+- `cd library/` and run `python3 main.py` to use PhotoBlend!
 
 ### Repository link
-- [GitHub Repo] (https://github.com/aausek/PhotoBlend)
+- https://github.com/aausek/PhotoBlend
 
 ### Completed Features
-- Select 2 starter images
-- Add and Subtract blending modes
-- Clockwise image rotation 
-- Image preview
-- Save product image to local drive   
-- Buttons for all remaining modes and filters
-- Supporting .jpg and .png files
+- Select 1 or 2 image layers.
+- Single image filters: blur, bright, gray scale, flip vertical and flip horizontal.
+- Blending modes: add, subtract, multiply, screen, overlay, lighten, darken, color dodge, color burn, 
+  red/green/blue channel.
+- 90° image rotation
+- Single and/or double image preview
+- Clear image selections
+- Save product image to local drive
+- Supported file formats: BMP, GIF, JPG, JPEG, PNG, PBM, PGM, PPM, XBM, XPM.
 
-### In-Progress Features
-- Multiply, Screen, Overlay, Lighten, Darken, Color Dodge and Color Burn blending modes
-- Crop and Gray Scale options
-- Additional filter options
-- Support other file extensions
+### Shelved Features
+- Crop filter
+- Preload image resizing
 
-### Planned Features
-- Crop and Gray Scale options
-- Additional filter options
-- Support other file extensions
+
+
+
