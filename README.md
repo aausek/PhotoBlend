@@ -25,6 +25,7 @@ Custom application build using a PyQt5 GUI as the frontend, a custom C library f
 - `pip install photoblend` then run `photoblend`
 - **Make sure you have the latest version of pip installed. (upgrade with 'pip install --upgrade pip')
 
+
 - Alternatively, `git clone` this repository
 - Execute `python3 setup.py install`
 - `cd library/` and run `python3 main.py` to use PhotoBlend!
