@@ -240,7 +240,7 @@ class Window(QMainWindow):
 
         self.grayscale_radio_button = QRadioButton("Gray Scale", self)
         self.grayscale_radio_button.setText("Gray Scale")
-        self.grayscale_radio_button.setGeometry(150, 150, 95, 30)
+        self.grayscale_radio_button.setGeometry(10, 200, 150, 30)
         self.grayscale_radio_button.clicked.connect(self.update_blend_radio_buttons)
 
         self.blur_radio_button = QRadioButton("Blur", self)
@@ -250,17 +250,17 @@ class Window(QMainWindow):
 
         self.bright_radio_button = QRadioButton("Bright", self)
         self.bright_radio_button.setText("Bright")
-        self.bright_radio_button.setGeometry(80, 150, 95, 30)
+        self.bright_radio_button.setGeometry(80, 150, 70, 30)
         self.bright_radio_button.clicked.connect(self.update_blend_radio_buttons)
 
         self.hflip_radio_button = QRadioButton("Flip Horizontal", self)
         self.hflip_radio_button.setText("Flip Horizontal")
-        self.hflip_radio_button.setGeometry(150, 200, 150, 30)
+        self.hflip_radio_button.setGeometry(150, 150, 150, 30)
         self.hflip_radio_button.clicked.connect(self.update_blend_radio_buttons)
 
         self.vflip_radio_button = QRadioButton("Flip Vertical", self)
         self.vflip_radio_button.setText("Flip Vertical")
-        self.vflip_radio_button.setGeometry(10, 200, 150, 30)
+        self.vflip_radio_button.setGeometry(150, 200, 150, 30)
         self.vflip_radio_button.clicked.connect(self.update_blend_radio_buttons)
 
 
@@ -294,7 +294,7 @@ class Window(QMainWindow):
 
         else:
             msgBox = QMessageBox()
-            msgBox.setText("Ensure two images are selected to blend.")
+            msgBox.setText("Ensure an image is selected.")
             msgBox.setIcon(QMessageBox.Warning)
             msgBox.setWindowTitle("Warning")
             msgBox.exec_()
@@ -690,7 +690,7 @@ class Window(QMainWindow):
             return line
 
     def main():
-        #wsl.set_display_to_host()
+        wsl.set_display_to_host()
         app = QApplication(sys.argv)
         window = Window()
         browse1 = QPushButton
