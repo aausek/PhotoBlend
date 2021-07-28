@@ -23,7 +23,7 @@ Custom application build using a PyQt5 GUI as the frontend, a custom C library f
 ### Installation Options
 - To install PhotoBlend start XServer and Ubuntu terminal
 - `pip install photoblend` then run `photoblend`
-- **Make sure you have the latest version of pip installed. (upgrade with 'pip install --upgrade pip')
+- **Make sure you have the latest version of pip installed. (upgrade with `pip install --upgrade pip`)
 
 
 - Alternatively, `git clone` this repository
