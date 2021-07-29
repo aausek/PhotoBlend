@@ -240,7 +240,7 @@ class Window(QMainWindow):
 
         self.grayscale_radio_button = QRadioButton("Gray Scale", self)
         self.grayscale_radio_button.setText("Gray Scale")
-        self.grayscale_radio_button.setGeometry(10, 200, 150, 30)
+        self.grayscale_radio_button.setGeometry(180, 250, 150, 30)
         self.grayscale_radio_button.clicked.connect(self.update_blend_radio_buttons)
 
         self.blur_radio_button = QRadioButton("Blur", self)
@@ -250,18 +250,38 @@ class Window(QMainWindow):
 
         self.bright_radio_button = QRadioButton("Bright", self)
         self.bright_radio_button.setText("Bright")
-        self.bright_radio_button.setGeometry(80, 150, 70, 30)
+        self.bright_radio_button.setGeometry(100, 150, 70, 30)
         self.bright_radio_button.clicked.connect(self.update_blend_radio_buttons)
 
         self.hflip_radio_button = QRadioButton("Flip Horizontal", self)
         self.hflip_radio_button.setText("Flip Horizontal")
-        self.hflip_radio_button.setGeometry(150, 150, 150, 30)
+        self.hflip_radio_button.setGeometry(180, 150, 150, 30)
         self.hflip_radio_button.clicked.connect(self.update_blend_radio_buttons)
 
         self.vflip_radio_button = QRadioButton("Flip Vertical", self)
         self.vflip_radio_button.setText("Flip Vertical")
-        self.vflip_radio_button.setGeometry(150, 200, 150, 30)
+        self.vflip_radio_button.setGeometry(180, 200, 150, 30)
         self.vflip_radio_button.clicked.connect(self.update_blend_radio_buttons)
+
+        self.unsharpen_radio_button = QRadioButton("Unsharpen", self)
+        self.unsharpen_radio_button.setText("Unsharpen")
+        self.unsharpen_radio_button.setGeometry(10, 200, 90, 30)
+        self.unsharpen_radio_button.clicked.connect(self.update_blend_radio_buttons)
+
+        self.huerotate_radio_button = QRadioButton("Hue Rotate", self)
+        self.huerotate_radio_button.setText("Hue Rotate")
+        self.huerotate_radio_button.setGeometry(10, 250, 90, 30)
+        self.huerotate_radio_button.clicked.connect(self.update_blend_radio_buttons)
+
+        self.contrast_radio_button = QRadioButton("Contrast", self)
+        self.contrast_radio_button.setText("Contrast")
+        self.contrast_radio_button.setGeometry(100, 200, 70, 30)
+        self.contrast_radio_button.clicked.connect(self.update_blend_radio_buttons)
+
+        self.invert_radio_button = QRadioButton("Invert", self)
+        self.invert_radio_button.setText("Invert")
+        self.invert_radio_button.setGeometry(100, 250, 70, 30)
+        self.invert_radio_button.clicked.connect(self.update_blend_radio_buttons)
 
 
     #Follow same format as below when adding new radio button
@@ -284,6 +304,10 @@ class Window(QMainWindow):
         self.bright_radio_button.setCheckable(True)
         self.hflip_radio_button.setCheckable(True)
         self.vflip_radio_button.setCheckable(True)
+        self.unsharpen_radio_button.setCheckable(True)
+        self.huerotate_radio_button.setCheckable(True)
+        self.contrast_radio_button.setCheckable(True)
+        self.invert_radio_button.setCheckable(True)
 
         if self.images_selected["image1"] and self.images_selected["image2"]:
             self.pane_label3.clear()
@@ -378,6 +402,22 @@ class Window(QMainWindow):
         self.vflip_radio_button.setAutoExclusive(False)
         self.vflip_radio_button.setChecked(False)
         self.vflip_radio_button.setAutoExclusive(True)
+
+        self.unsharpen_radio_button.setAutoExclusive(False)
+        self.unsharpen_radio_button.setChecked(False)
+        self.unsharpen_radio_button.setAutoExclusive(True)
+
+        self.huerotate_radio_button.setAutoExclusive(False)
+        self.huerotate_radio_button.setChecked(False)
+        self.huerotate_radio_button.setAutoExclusive(True)
+
+        self.contrast_radio_button.setAutoExclusive(False)
+        self.contrast_radio_button.setChecked(False)
+        self.contrast_radio_button.setAutoExclusive(True)
+
+        self.invert_radio_button.setAutoExclusive(False)
+        self.invert_radio_button.setChecked(False)
+        self.invert_radio_button.setAutoExclusive(True)
 
     def setIcon(self):
         appIcon = QIcon("../assets/icon.png")
@@ -516,6 +556,75 @@ class Window(QMainWindow):
                 result = QPixmap("result.jpg")
                 self.pane_label3.setPixmap(
                     result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
+
+        elif self.unsharpen_radio_button.isChecked():
+            if self.images_selected["image1"] and not self.images_selected["image2"]:
+                image1_name = str(self.image1)
+                image1_name = image1_name[2:]
+                image1_name = image1_name[:-19]
+                unsharpen(image1_name, "result.jpg", 20, 20)
+                result = QPixmap("result.jpg")
+                self.pixmap1 = result
+                self.default_pane_label.setPixmap(
+                    result.scaled(self.default_pane_label.width(), self.default_pane_label.height(),
+                                  QtCore.Qt.KeepAspectRatio))
+            else:
+                unsharpen("test_image.jpg", "result.jpg", 20, 20)
+                result = QPixmap("result.jpg")
+                self.pane_label3.setPixmap(
+                    result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
+
+        elif self.huerotate_radio_button.isChecked():
+            if self.images_selected["image1"] and not self.images_selected["image2"]:
+                image1_name = str(self.image1)
+                image1_name = image1_name[2:]
+                image1_name = image1_name[:-19]
+                huerotate(image1_name, "result.jpg", 100)
+                result = QPixmap("result.jpg")
+                self.pixmap1 = result
+                self.default_pane_label.setPixmap(
+                    result.scaled(self.default_pane_label.width(), self.default_pane_label.height(),
+                                  QtCore.Qt.KeepAspectRatio))
+            else:
+                huerotate("test_image.jpg", "result.jpg", 100)
+                result = QPixmap("result.jpg")
+                self.pane_label3.setPixmap(
+                    result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
+
+        elif self.contrast_radio_button.isChecked():
+            if self.images_selected["image1"] and not self.images_selected["image2"]:
+                image1_name = str(self.image1)
+                image1_name = image1_name[2:]
+                image1_name = image1_name[:-19]
+                contrast(image1_name, "result.jpg", 50)
+                result = QPixmap("result.jpg")
+                self.pixmap1 = result
+                self.default_pane_label.setPixmap(
+                    result.scaled(self.default_pane_label.width(), self.default_pane_label.height(),
+                                  QtCore.Qt.KeepAspectRatio))
+            else:
+                contrast("test_image.jpg", "result.jpg", 100)
+                result = QPixmap("result.jpg")
+                self.pane_label3.setPixmap(
+                    result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
+
+        elif self.invert_radio_button.isChecked():
+            if self.images_selected["image1"] and not self.images_selected["image2"]:
+                image1_name = str(self.image1)
+                image1_name = image1_name[2:]
+                image1_name = image1_name[:-19]
+                invert(image1_name, "result.jpg")
+                result = QPixmap("result.jpg")
+                self.pixmap1 = result
+                self.default_pane_label.setPixmap(
+                    result.scaled(self.default_pane_label.width(), self.default_pane_label.height(),
+                                  QtCore.Qt.KeepAspectRatio))
+            else:
+                invert("test_image.jpg", "result.jpg")
+                result = QPixmap("result.jpg")
+                self.pane_label3.setPixmap(
+                    result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
+
 
         #End of single image filters
 
