@@ -37,8 +37,9 @@ Custom application build using a PyQt5 GUI as the frontend, a custom C library f
 - Execute `python3 setup.py install`
 - `cd library/` and run `make` then `python3 main.py` to use PhotoBlend!
 
-### Repository link
+### Links
 - https://github.com/aausek/PhotoBlend
+- https://pypi.org/project/photoblend/
 
 ### Completed Features
 - Select 1 or 2 image layers.
