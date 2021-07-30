@@ -22,10 +22,12 @@ with 1 or 2 images at a time, then selecting the desired action to be performed.
 in the preview screen where it may be saved to the user's local drive.
 
 ### Specifications
-Custom application build using a PyQt5 GUI as the frontend, a custom C library for blending images, and the [imagefilters](https://github.com/gatorpazz/imagefilters) PIP package (a Rust-based library) for image filters. 
+Custom application build using a PyQt5 GUI as the frontend, a custom C library for blending images, 
+and the [imagefilters](https://github.com/gatorpazz/imagefilters) PIP package (a Rust-based library) for image filters. 
 
 ### External libraries and Dependencies
 - PySide2, Pillow, numpy, wsl, imagefilters, wheel
+ - `assets/` includes sample images for test run
 
 ### Installation Options
 - To install PhotoBlend start XServer and Ubuntu terminal
@@ -50,7 +52,8 @@ Custom application build using a PyQt5 GUI as the frontend, a custom C library f
 - Single and/or double image preview
 - Clear image selections
 - Save product image to local drive
-- Supported file formats: BMP, GIF, JPG, JPEG, PNG, PBM, PGM, PPM, XBM, XPM.
+- Mix and match supported file extensions
+- Supported file formats: JPG, JPEG, PNG
 
 ### Shelved Features
 - Crop filter

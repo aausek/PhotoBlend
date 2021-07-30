@@ -12,7 +12,7 @@ module = Extension("blendlib",
 
 setup(
     name="photoblend",
-    version="0.1.2",
+    version="1.2.2",
     url="https://github.com/aausek/PhotoBlend",
     description="Photoblend is a custom PyQt5 & C++ image editor app with blending mode features, filters and other"
                 "manipulation options to render unique and creative images.",
@@ -22,7 +22,7 @@ setup(
     packages=find_packages(include=["library", "library.*", ""]),
     include_package_data=True,
     data_files=["library/blendlib.so","assets/icon.png", "assets/blue.jpg", "assets/red.jpg",
-                "assets/desert.jpg", "assets/fractal2.png", "assets/white.jpg"],
+                "assets/desert.jpg", "assets/fractal2.png", "assets/white.jpg", "assets/colorful.png", "assets/ring.png"],
     ext_modules=[module],
     entry_points={"console_scripts": ["photoblend=library.main:main"]},
 )
