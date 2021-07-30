@@ -5,6 +5,7 @@ from PySide2.QtGui import *
 #from library.library import call_blend
 from library import call_blend
 from filters import *
+from filters import huerotate
 import sys
 import os
 import wsl
@@ -223,7 +224,7 @@ class Window(QMainWindow):
 
         self.dodge_radio_button = QRadioButton(self, "Color Dodge")
         self.dodge_radio_button.setText("Color Dodge")
-        self.dodge_radio_button.setGeometry(80, 520, 95, 30)
+        self.dodge_radio_button.setGeometry(80, 520, 100, 30)
         self.dodge_radio_button.setToolTip('Enhances brightness of background based on foreground light')
         self.dodge_radio_button.clicked.connect(self.update_blend_radio_buttons)
 
@@ -241,46 +242,55 @@ class Window(QMainWindow):
         self.grayscale_radio_button = QRadioButton("Gray Scale", self)
         self.grayscale_radio_button.setText("Gray Scale")
         self.grayscale_radio_button.setGeometry(180, 250, 150, 30)
+        self.grayscale_radio_button.setToolTip('Convert the supplied image to grayscale')
         self.grayscale_radio_button.clicked.connect(self.update_blend_radio_buttons)
 
         self.blur_radio_button = QRadioButton("Blur", self)
         self.blur_radio_button.setText("Blur")
         self.blur_radio_button.setGeometry(10, 150, 95, 30)
+        self.blur_radio_button.setToolTip('Performs a Gaussian blur on the supplied image')
         self.blur_radio_button.clicked.connect(self.update_blend_radio_buttons)
 
         self.bright_radio_button = QRadioButton("Bright", self)
         self.bright_radio_button.setText("Bright")
         self.bright_radio_button.setGeometry(100, 150, 70, 30)
+        self.bright_radio_button.setToolTip('Brighten the supplied image')
         self.bright_radio_button.clicked.connect(self.update_blend_radio_buttons)
 
         self.hflip_radio_button = QRadioButton("Flip Horizontal", self)
         self.hflip_radio_button.setText("Flip Horizontal")
         self.hflip_radio_button.setGeometry(180, 150, 150, 30)
+        self.hflip_radio_button.setToolTip('Flip an image horizontally')
         self.hflip_radio_button.clicked.connect(self.update_blend_radio_buttons)
 
         self.vflip_radio_button = QRadioButton("Flip Vertical", self)
         self.vflip_radio_button.setText("Flip Vertical")
         self.vflip_radio_button.setGeometry(180, 200, 150, 30)
+        self.vflip_radio_button.setToolTip('Flip an image vertically')
         self.vflip_radio_button.clicked.connect(self.update_blend_radio_buttons)
 
         self.unsharpen_radio_button = QRadioButton("Unsharpen", self)
         self.unsharpen_radio_button.setText("Unsharpen")
         self.unsharpen_radio_button.setGeometry(10, 200, 90, 30)
+        self.unsharpen_radio_button.setToolTip('Performs an unsharpen mask on the supplied image')
         self.unsharpen_radio_button.clicked.connect(self.update_blend_radio_buttons)
 
         self.huerotate_radio_button = QRadioButton("Hue Rotate", self)
         self.huerotate_radio_button.setText("Hue Rotate")
         self.huerotate_radio_button.setGeometry(10, 250, 90, 30)
+        self.huerotate_radio_button.setToolTip('Hue rotate the supplied image by degrees')
         self.huerotate_radio_button.clicked.connect(self.update_blend_radio_buttons)
 
         self.contrast_radio_button = QRadioButton("Contrast", self)
         self.contrast_radio_button.setText("Contrast")
-        self.contrast_radio_button.setGeometry(100, 200, 70, 30)
+        self.contrast_radio_button.setGeometry(100, 200, 75, 30)
+        self.contrast_radio_button.setToolTip('Adjust the contrast of the supplied image')
         self.contrast_radio_button.clicked.connect(self.update_blend_radio_buttons)
 
         self.invert_radio_button = QRadioButton("Invert", self)
         self.invert_radio_button.setText("Invert")
         self.invert_radio_button.setGeometry(100, 250, 70, 30)
+        self.invert_radio_button.setToolTip('Invert each pixel within the supplied image')
         self.invert_radio_button.clicked.connect(self.update_blend_radio_buttons)
 
 
@@ -799,7 +809,7 @@ class Window(QMainWindow):
             return line
 
     def main():
-        wsl.set_display_to_host()
+        #wsl.set_display_to_host()
         app = QApplication(sys.argv)
         window = Window()
         browse1 = QPushButton
