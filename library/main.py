@@ -438,6 +438,7 @@ class Window(QMainWindow):
         self.image1 = QFileDialog.getOpenFileName(self, "Image 1", QDir.homePath())
         if self.image1[0] != '':  # don't update pane if user cancels file opening
             self.pixmap1 = QPixmap(self.image1[0])
+            self.image1_name = self.image1[0]
             if self.images_selected["image2"]:
                 # if a second image is already selected, ensure the images have same size
                 if self.pixmap2.width() != self.pixmap1.width() or self.pixmap2.height() != self.pixmap1.height():
@@ -484,11 +485,12 @@ class Window(QMainWindow):
         #Follow the same format here to add single image filters
         if self.grayscale_radio_button.isChecked():
             if self.images_selected["image1"] and not self.images_selected["image2"]:
-                image1_name = str(self.image1)
-                image1_name = image1_name[2:]
-                image1_name = image1_name[:-19]
-                grayscale(image1_name, "result.jpg")
+                self.image1_name = str(self.image1)
+                self.image1_name = self.image1_name[2:]
+                self.image1_name = self.image1_name[:-19]
+                grayscale(self.image1_name, "result.jpg")
                 result = QPixmap("result.jpg")
+                self.image1_name = "result.jpg"
                 self.pixmap1 = result
                 self.default_pane_label.setPixmap(
                     result.scaled(self.default_pane_label.width(), self.default_pane_label.height(),
@@ -496,16 +498,18 @@ class Window(QMainWindow):
             else:
                 grayscale("test_image.jpg", "result.jpg")
                 result = QPixmap("result.jpg")
+                self.image1_name = "result.jpg"
                 self.pane_label3.setPixmap(
                     result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
 
         elif self.blur_radio_button.isChecked():
             if self.images_selected["image1"] and not self.images_selected["image2"]:
-                image1_name = str(self.image1)
-                image1_name = image1_name[2:]
-                image1_name = image1_name[:-19]
-                blur(image1_name, "result.jpg", 20)
+                self.image1_name = str(self.image1)
+                self.image1_name = self.image1_name[2:]
+                self.image1_name = self.image1_name[:-19]
+                blur(self.image1_name, "result.jpg", 20)
                 result = QPixmap("result.jpg")
+                self.image1_name = "result.jpg"
                 self.pixmap1 = result
                 self.default_pane_label.setPixmap(
                     result.scaled(self.default_pane_label.width(), self.default_pane_label.height(),
@@ -513,16 +517,18 @@ class Window(QMainWindow):
             else:
                 blur("test_image.jpg", "result.jpg", 20)
                 result = QPixmap("result.jpg")
+                self.image1_name = "result.jpg"
                 self.pane_label3.setPixmap(
                     result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
 
         elif self.bright_radio_button.isChecked():
             if self.images_selected["image1"] and not self.images_selected["image2"]:
-                image1_name = str(self.image1)
-                image1_name = image1_name[2:]
-                image1_name = image1_name[:-19]
-                brighten(image1_name, "result.jpg", 50)
+                self.image1_name = str(self.image1)
+                self.image1_name = self.image1_name[2:]
+                self.image1_name = self.image1_name[:-19]
+                brighten(self.image1_name, "result.jpg", 50)
                 result = QPixmap("result.jpg")
+                self.image1_name = "result.jpg"
                 self.pixmap1 = result
                 self.default_pane_label.setPixmap(
                     result.scaled(self.default_pane_label.width(), self.default_pane_label.height(),
@@ -530,16 +536,18 @@ class Window(QMainWindow):
             else:
                 brighten("test_image.jpg", "result.jpg", 20)
                 result = QPixmap("result.jpg")
+                self.image1_name = "result.jpg"
                 self.pane_label3.setPixmap(
                     result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
 
         elif self.hflip_radio_button.isChecked():
             if self.images_selected["image1"] and not self.images_selected["image2"]:
-                image1_name = str(self.image1)
-                image1_name = image1_name[2:]
-                image1_name = image1_name[:-19]
-                flip_horizontal(image1_name, "result.jpg")
+                self.image1_name = str(self.image1)
+                self.image1_name = self.image1_name[2:]
+                self.image1_name = self.image1_name[:-19]
+                flip_horizontal(self.image1_name, "result.jpg")
                 result = QPixmap("result.jpg")
+                self.image1_name = "result.jpg"
                 self.pixmap1 = result
                 self.default_pane_label.setPixmap(
                     result.scaled(self.default_pane_label.width(), self.default_pane_label.height(),
@@ -547,16 +555,18 @@ class Window(QMainWindow):
             else:
                 flip_horizontal("test_image.jpg", "result.jpg")
                 result = QPixmap("result.jpg")
+                self.image1_name = "result.jpg"
                 self.pane_label3.setPixmap(
                     result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
 
         elif self.vflip_radio_button.isChecked():
             if self.images_selected["image1"] and not self.images_selected["image2"]:
-                image1_name = str(self.image1)
-                image1_name = image1_name[2:]
-                image1_name = image1_name[:-19]
-                flip_vertical(image1_name, "result.jpg")
+                self.image1_name = str(self.image1)
+                self.image1_name = self.image1_name[2:]
+                self.image1_name = self.image1_name[:-19]
+                flip_vertical(self.image1_name, "result.jpg")
                 result = QPixmap("result.jpg")
+                self.image1_name = "result.jpg"
                 self.pixmap1 = result
                 self.default_pane_label.setPixmap(
                     result.scaled(self.default_pane_label.width(), self.default_pane_label.height(),
@@ -564,16 +574,18 @@ class Window(QMainWindow):
             else:
                 flip_vertical("test_image.jpg", "result.jpg")
                 result = QPixmap("result.jpg")
+                self.image1_name = "result.jpg"
                 self.pane_label3.setPixmap(
                     result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
 
         elif self.unsharpen_radio_button.isChecked():
             if self.images_selected["image1"] and not self.images_selected["image2"]:
-                image1_name = str(self.image1)
-                image1_name = image1_name[2:]
-                image1_name = image1_name[:-19]
-                unsharpen(image1_name, "result.jpg", 20, 20)
+                self.image1_name = str(self.image1)
+                self.image1_name = self.image1_name[2:]
+                self.image1_name = self.image1_name[:-19]
+                unsharpen(self.image1_name, "result.jpg", 20, 20)
                 result = QPixmap("result.jpg")
+                self.image1_name = "result.jpg"
                 self.pixmap1 = result
                 self.default_pane_label.setPixmap(
                     result.scaled(self.default_pane_label.width(), self.default_pane_label.height(),
@@ -581,16 +593,18 @@ class Window(QMainWindow):
             else:
                 unsharpen("test_image.jpg", "result.jpg", 20, 20)
                 result = QPixmap("result.jpg")
+                self.image1_name = "result.jpg"
                 self.pane_label3.setPixmap(
                     result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
 
         elif self.huerotate_radio_button.isChecked():
             if self.images_selected["image1"] and not self.images_selected["image2"]:
-                image1_name = str(self.image1)
-                image1_name = image1_name[2:]
-                image1_name = image1_name[:-19]
-                huerotate(image1_name, "result.jpg", 100)
+                self.image1_name = str(self.image1)
+                self.image1_name = self.image1_name[2:]
+                self.image1_name = self.image1_name[:-19]
+                huerotate(self.image1_name, "result.jpg", 100)
                 result = QPixmap("result.jpg")
+                self.image1_name = "result.jpg"
                 self.pixmap1 = result
                 self.default_pane_label.setPixmap(
                     result.scaled(self.default_pane_label.width(), self.default_pane_label.height(),
@@ -598,16 +612,18 @@ class Window(QMainWindow):
             else:
                 huerotate("test_image.jpg", "result.jpg", 100)
                 result = QPixmap("result.jpg")
+                self.image1_name = "result.jpg"
                 self.pane_label3.setPixmap(
                     result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
 
         elif self.contrast_radio_button.isChecked():
             if self.images_selected["image1"] and not self.images_selected["image2"]:
-                image1_name = str(self.image1)
-                image1_name = image1_name[2:]
-                image1_name = image1_name[:-19]
-                contrast(image1_name, "result.jpg", 50)
+                self.image1_name = str(self.image1)
+                self.image1_name = self.image1_name[2:]
+                self.image1_name = self.image1_name[:-19]
+                contrast(self.image1_name, "result.jpg", 50)
                 result = QPixmap("result.jpg")
+                self.image1_name = "result.jpg"
                 self.pixmap1 = result
                 self.default_pane_label.setPixmap(
                     result.scaled(self.default_pane_label.width(), self.default_pane_label.height(),
@@ -615,16 +631,18 @@ class Window(QMainWindow):
             else:
                 contrast("test_image.jpg", "result.jpg", 100)
                 result = QPixmap("result.jpg")
+                self.image1_name = "result.jpg"
                 self.pane_label3.setPixmap(
                     result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
 
         elif self.invert_radio_button.isChecked():
             if self.images_selected["image1"] and not self.images_selected["image2"]:
-                image1_name = str(self.image1)
-                image1_name = image1_name[2:]
-                image1_name = image1_name[:-19]
-                invert(image1_name, "result.jpg")
+                self.image1_name = str(self.image1)
+                self.image1_name = self.image1_name[2:]
+                self.image1_name = self.image1_name[:-19]
+                invert(self.image1_name, "result.jpg")
                 result = QPixmap("result.jpg")
+                self.image1_name = "result.jpg"
                 self.pixmap1 = result
                 self.default_pane_label.setPixmap(
                     result.scaled(self.default_pane_label.width(), self.default_pane_label.height(),
@@ -632,6 +650,7 @@ class Window(QMainWindow):
             else:
                 invert("test_image.jpg", "result.jpg")
                 result = QPixmap("result.jpg")
+                self.image1_name = "result.jpg"
                 self.pane_label3.setPixmap(
                     result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
 
@@ -648,11 +667,12 @@ class Window(QMainWindow):
 
         #Two image blending modes go here (All implemented blending functions are working as intended)
         else:
-            image1_name = str(self.image1)
-            image1_name = image1_name[2:]
+            if self.image1_name != "result.jpg":
+                self.image1_name = str(self.image1)
+                self.image1_name = self.image1_name[2:]
+                self.image1_name = self.image1_name[:-19]
             image2_name = str(self.image2)
             image2_name = image2_name[2:]
-            image1_name = image1_name[:-19]
             image2_name = image2_name[:-19]
 
             # call blend functions below based on user selection
@@ -660,88 +680,88 @@ class Window(QMainWindow):
 
             # addition blend
             if self.add_radio_button.isChecked():
-                call_blend(image1_name, image2_name, "add")
+                call_blend(self.image1_name, image2_name, "add")
                 result = QPixmap("test_image.jpg")
                 self.pane_label3.setPixmap(
                     result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
 
             # subtraction blend
             elif self.subtract_radio_button.isChecked():
-                call_blend(image1_name, image2_name, "subtract")
+                call_blend(self.image1_name, image2_name, "subtract")
                 result = QPixmap("test_image.jpg")
                 self.pane_label3.setPixmap(
                     result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
 
             # multiply blend
             elif self.mult_radio_button.isChecked():
-                call_blend(image1_name, image2_name, "multiply")
+                call_blend(self.image1_name, image2_name, "multiply")
                 result = QPixmap("test_image.jpg")
                 self.pane_label3.setPixmap(
                     result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
 
             # screen blend
             elif self.screen_radio_button.isChecked():
-                call_blend(image1_name, image2_name, "screen")
+                call_blend(self.image1_name, image2_name, "screen")
                 result = QPixmap("test_image.jpg")
                 self.pane_label3.setPixmap(
                     result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
 
             # opacity blend
             # elif self.opacity_radio_button.isChecked():
-            #     call_blend(image1_name, image2_name, "opacity")
+            #     call_blend(self.image1_name, image2_name, "opacity")
             #     result = QPixmap("test_image.jpg")
             #     self.pane_label3.setPixmap(
             #         result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
 
             elif self.redchannel_radio_button.isChecked():
-                call_blend(image1_name, image2_name, "redchannel")
+                call_blend(self.image1_name, image2_name, "redchannel")
                 result = QPixmap("test_image.jpg")
                 self.pane_label3.setPixmap(
                     result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
 
             elif self.greenchannel_radio_button.isChecked():
-                call_blend(image1_name, image2_name, "greenchannel")
+                call_blend(self.image1_name, image2_name, "greenchannel")
                 result = QPixmap("test_image.jpg")
                 self.pane_label3.setPixmap(
                     result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
 
             elif self.bluechannel_radio_button.isChecked():
-                call_blend(image1_name, image2_name, "bluechannel")
+                call_blend(self.image1_name, image2_name, "bluechannel")
                 result = QPixmap("test_image.jpg")
                 self.pane_label3.setPixmap(
                     result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
 
             # overlay blend
             elif self.overlay_radio_button.isChecked():
-                call_blend(image1_name, image2_name, "overlay")
+                call_blend(self.image1_name, image2_name, "overlay")
                 result = QPixmap("test_image.jpg")
                 self.pane_label3.setPixmap(
                     result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
 
             # light blend
             elif self.light_radio_button.isChecked():
-                call_blend(image1_name, image2_name, "lighten")
+                call_blend(self.image1_name, image2_name, "lighten")
                 result = QPixmap("test_image.jpg")
                 self.pane_label3.setPixmap(
                     result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
 
             # dark blend
             elif self.dark_radio_button.isChecked():
-                call_blend(image1_name, image2_name, "darken")
+                call_blend(self.image1_name, image2_name, "darken")
                 result = QPixmap("test_image.jpg")
                 self.pane_label3.setPixmap(
                     result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
 
             # color dodge blend
             elif self.dodge_radio_button.isChecked():
-                call_blend(image1_name, image2_name, "color_dodge")
+                call_blend(self.image1_name, image2_name, "color_dodge")
                 result = QPixmap("test_image.jpg")
                 self.pane_label3.setPixmap(
                     result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
 
             # color burn blend
             elif self.burn_radio_button.isChecked():
-                call_blend(image1_name, image2_name, "color_burn")
+                call_blend(self.image1_name, image2_name, "color_burn")
                 result = QPixmap("test_image.jpg")
                 self.pane_label3.setPixmap(
                     result.scaled(self.pane_label3.width(), self.pane_label3.height(), QtCore.Qt.KeepAspectRatio))
@@ -788,6 +808,7 @@ class Window(QMainWindow):
             self.default_pane_label.clear()
 
         self.clear_buttons()
+        self.image1_name = ""
         self.images_selected = {"image1": False, "image2": False}
 
     #Handles rotating either the default pane or the blend result pane
