@@ -22,7 +22,7 @@ setup(
     packages=find_packages(include=["library", "library.*", ""]),
     include_package_data=True,
     data_files=["library/blendlib.so","assets/icon.png", "assets/blue.jpg", "assets/red.jpg",
-                "assets/desert.jpg", "assets/fractal2.png", "assets/white.jpg", "assets/colorful.png", "assets/ring.png"],
+                "assets/desert.jpg", "assets/fractal2.jpg", "assets/white.jpg", "assets/colorful.png", "assets/ring.png"],
     ext_modules=[module],
     entry_points={"console_scripts": ["photoblend=library.main:main"]},
 )
