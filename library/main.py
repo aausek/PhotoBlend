@@ -5,7 +5,6 @@ from PySide2.QtGui import *
 #from library.library import call_blend
 from library import call_blend
 from filters import *
-from filters import huerotate
 import sys
 import os
 import wsl

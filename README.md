@@ -33,12 +33,13 @@ Custom application build using a PyQt5 GUI as the frontend, a custom C library f
 - **Make sure you have the latest version of pip installed. (upgrade with `pip install --upgrade pip`)
 
 
-- Alternatively, `git clone` this repository
+- For a local install, `git clone` this repository
 - Execute `python3 setup.py install`
 - `cd library/` and run `make` then `python3 main.py` to use PhotoBlend!
 
-### Repository link
-- https://github.com/aausek/PhotoBlend
+### Links
+- [Repository](https://github.com/aausek/PhotoBlend)
+- [PIP Package](https://pypi.org/project/photoblend/)
 
 ### Completed Features
 - Select 1 or 2 image layers.

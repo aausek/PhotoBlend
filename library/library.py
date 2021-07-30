@@ -10,11 +10,13 @@ import glob
 def call_blend(image1_name, image2_name, blend_type):
     # Loads the shared object created by the Makefile (for pip install in WSL)
     # sofile = "blendlib.cpython-38-x86_64-linux-gnu.so"
+    # sofile = glob.glob('./*.so')[0]
     # sopath = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', sofile))
     # _lib = ctypes.CDLL(sopath)
 
     # To run locally
-    dll_name = "blendlib.so"
+    #dll_name = "blendlib.so"
+    dll_name = glob.glob('./*.so')[0]
     dllabspath = os.path.dirname(os.path.abspath(__file__)) + os.path.sep + dll_name
     _lib = ctypes.CDLL(dllabspath)
 
