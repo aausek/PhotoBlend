@@ -112,7 +112,7 @@ class Window(QMainWindow):
         self.path_label = QLabel(self)
         self.path_label.setText("Previously Saved Image: " + self.get_previous_file())
         text_length = len("Previously Saved Image: " + self.get_previous_file())
-        self.path_label.setGeometry(655 - (7 * text_length/2),770,(text_length * 7),30)
+        self.path_label.setGeometry(655 - (8 * text_length/2),770,(text_length * 8),30)
 
         self.modes_label = QLabel(self)
         self.modes_label.setText("Single Image Filters")
@@ -755,10 +755,11 @@ class Window(QMainWindow):
             QPixmap("test_image.jpg").save(save_name[0])
 
         # save created image's name in persistent data
-        file = open(self.persistentData, 'a')
-        file.write("\n")
-        file.write(save_name[0])
-        file.close()
+        if (save_name[0] != ""):
+            file = open(self.persistentData, 'a')
+            file.write("\n")
+            file.write(save_name[0])
+            file.close()
 
         # update previous file shown to user
         self.path_label.clear()
