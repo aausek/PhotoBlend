@@ -11,7 +11,7 @@
 ```
 
 <p align="center">
-  <img src="demo.gif" alt="animated" />
+  <img src="gif.gif"/>
 </p>
 
 ### Application Description
