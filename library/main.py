@@ -767,7 +767,7 @@ class Window(QMainWindow):
 
 
     def save_clicked(self):
-        save_name = QFileDialog.getSaveFileName(self, "Blended Image", QDir.homePath(), "Images (*.png *.xpm *.jpg)")
+        save_name = QFileDialog.getSaveFileName(self, "Blended Image", QDir.homePath(), "Images (*.png *.jpg)")
         if self.images_selected["image1"] and not self.images_selected["image2"]:
             self.pixmap1.save(save_name[0])
         else:
