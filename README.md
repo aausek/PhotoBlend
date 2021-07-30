@@ -10,6 +10,8 @@
                                          Summer 2021
 ```
 
+![](gif.gif)
+
 ### Application Description
 
 PhotoBlend is a custom image editor application that allows users to generate new images using blending modes & filters.
