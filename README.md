@@ -10,7 +10,9 @@
                                          Summer 2021
 ```
 
-![](gif.gif)
+<p align="center">
+  <img src="demo.gif" alt="animated" />
+</p>
 
 ### Application Description
 
